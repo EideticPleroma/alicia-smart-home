@@ -1,14 +1,13 @@
 #!/bin/bash
 
 # Install system dependencies
-apt-get update
-apt-get install -y python3 python3-pip fastapi uvicorn
+apt-get update && apt-get install -y python3 python3-pip fastapi uvicorn
 
 # Install Python packages
 pip3 install fastapi uvicorn
 
-# Create the Python application
-cat > /app/porcupine_app.py << 'EOF'
+# Create the Python application file
+cat > /app/porcupine_app.py << 'PYTHON_EOF'
 from fastapi import FastAPI
 import uvicorn
 
@@ -24,7 +23,8 @@ async def listen_for_wake_word():
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=10400)
-EOF
+PYTHON_EOF
 
-# Run the application
+# Make sure the file is executable and run the application
+chmod +x /app/porcupine_app.py
 python3 /app/porcupine_app.py

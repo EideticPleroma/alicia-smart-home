@@ -184,11 +184,11 @@
   },
   "active": "ce3a0323607bf983",
   "lastOpenFiles": [
+    "postgres/pg-data/pg_logical/replorigin_checkpoint.tmp",
     "README.md",
     "mqtt/data/mosquitto.db.new",
     "voice-processing/start-porcupine.sh",
     "voice-processing/start-piper.sh",
-    "postgres/pg-data/pg_logical/replorigin_checkpoint.tmp",
     "voice-processing/start-whisper.sh",
     "14-Tools-Reference.md",
     "13-Phase-3-Complete-Voice-Pipeline.md",

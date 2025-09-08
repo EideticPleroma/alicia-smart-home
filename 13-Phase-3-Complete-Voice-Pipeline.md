@@ -16,7 +16,9 @@ piper-tts:
   image: ubuntu:22.04
   ports:
     - "10200:10200"
-  command: ["bash", "-c", "apt-get update && apt-get install -y wget python3 python3-pip alsa-utils pulseaudio && wget -O piper_amd64.tar.gz https://github.com/rhasspy/piper/releases/download/v1.2.0/piper_amd64.tar.gz && tar -xzf piper_amd64.tar.gz && wget -O en_US-lessac-medium.onnx https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/lessac/medium/en_US-lessac-medium.onnx && wget -O en_US-lessac-medium.onnx.json https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/lessac/medium/en_US-lessac-medium.onnx.json && python3 -c 'from fastapi import FastAPI; import subprocess, uvicorn; app = FastAPI(); @app.post(\"/synthesize\"); async def synthesize_text(text: str): open(\"/tmp/text.txt\", \"w\").write(text); subprocess.run([\"./piper/piper\", \"--model\", \"en_US-lessac-medium.onnx\", \"--output_file\", \"/tmp/output.wav\"], input=text.encode(), text=True); return open(\"/tmp/output.wav\", \"rb\").read(); uvicorn.run(app, host=\"0.0.0.0\", port=10200)'"]
+  volumes:
+    - ./start-piper.sh:/app/start.sh
+  command: ["bash", "/app/start.sh"]
   restart: unless-stopped
   networks:
     - alicia_network
@@ -26,6 +28,50 @@ piper-tts:
     timeout: 10s
     retries: 3
     start_period: 120s
+```
+
+#### Startup Script (start-piper.sh)
+
+```bash
+#!/bin/bash
+
+# Install system dependencies
+apt-get update && apt-get install -y wget python3 python3-pip alsa-utils pulseaudio
+
+# Download Piper
+wget -O piper_amd64.tar.gz https://github.com/rhasspy/piper/releases/download/v1.2.0/piper_amd64.tar.gz
+tar -xzf piper_amd64.tar.gz
+
+# Download voice model
+wget -O en_US-lessac-medium.onnx https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/lessac/medium/en_US-lessac-medium.onnx
+wget -O en_US-lessac-medium.onnx.json https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/lessac/medium/en_US-lessac-medium.onnx.json
+
+# Install Python packages
+pip3 install fastapi uvicorn
+
+# Create the Python application file
+cat > /app/piper_app.py << 'PYTHON_EOF'
+from fastapi import FastAPI
+import subprocess
+import uvicorn
+
+app = FastAPI()
+
+@app.post("/synthesize")
+async def synthesize_text(text: str):
+    with open("/tmp/text.txt", "w") as f:
+        f.write(text)
+    subprocess.run(["./piper/piper", "--model", "en_US-lessac-medium.onnx", "--output_file", "/tmp/output.wav"], input=text.encode(), text=True)
+    with open("/tmp/output.wav", "rb") as f:
+        return f.read()
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=10200)
+PYTHON_EOF
+
+# Make sure the file is executable and run the application
+chmod +x /app/piper_app.py
+python3 /app/piper_app.py
 ```
 
 ### Service Architecture

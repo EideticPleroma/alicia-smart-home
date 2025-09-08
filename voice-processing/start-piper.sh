@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Install system dependencies
-apt-get update
-apt-get install -y wget python3 python3-pip alsa-utils pulseaudio
+apt-get update && apt-get install -y wget python3 python3-pip alsa-utils pulseaudio
 
 # Download Piper
 wget -O piper_amd64.tar.gz https://github.com/rhasspy/piper/releases/download/v1.2.0/piper_amd64.tar.gz
@@ -15,8 +14,8 @@ wget -O en_US-lessac-medium.onnx.json https://huggingface.co/rhasspy/piper-voice
 # Install Python packages
 pip3 install fastapi uvicorn
 
-# Create the Python application
-cat > /app/piper_app.py << 'EOF'
+# Create the Python application file
+cat > /app/piper_app.py << 'PYTHON_EOF'
 from fastapi import FastAPI
 import subprocess
 import uvicorn
@@ -33,7 +32,8 @@ async def synthesize_text(text: str):
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=10200)
-EOF
+PYTHON_EOF
 
-# Run the application
+# Make sure the file is executable and run the application
+chmod +x /app/piper_app.py
 python3 /app/piper_app.py

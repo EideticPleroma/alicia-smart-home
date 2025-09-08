@@ -1,14 +1,13 @@
 #!/bin/bash
 
 # Install system dependencies
-apt-get update
-apt-get install -y python3 python3-pip ffmpeg
+apt-get update && apt-get install -y python3 python3-pip ffmpeg
 
 # Install Python packages
 pip3 install openai-whisper fastapi uvicorn
 
-# Create the Python application
-cat > /app/whisper_app.py << 'EOF'
+# Create the Python application file
+cat > /app/whisper_app.py << 'PYTHON_EOF'
 from fastapi import FastAPI, UploadFile
 import whisper
 import uvicorn
@@ -26,7 +25,8 @@ async def transcribe_audio(file: UploadFile):
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=9000)
-EOF
+PYTHON_EOF
 
-# Run the application
+# Make sure the file is executable and run the application
+chmod +x /app/whisper_app.py
 python3 /app/whisper_app.py

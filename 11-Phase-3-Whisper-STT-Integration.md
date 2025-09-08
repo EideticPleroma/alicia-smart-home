@@ -16,9 +16,10 @@ whisper-stt:
   image: ubuntu:22.04
   ports:
     - "9000:9000"
-  command: ["bash", "-c", "apt-get update && apt-get install -y python3 python3-pip ffmpeg && pip3 install openai-whisper fastapi uvicorn && python3 -c 'from fastapi import FastAPI, UploadFile; import whisper, uvicorn; app = FastAPI(); model = whisper.load_model(\"base\"); @app.post(\"/transcribe\"); async def transcribe_audio(file: UploadFile): audio_data = await file.read(); open(\"/tmp/audio.wav\", \"wb\").write(audio_data); result = model.transcribe(\"/tmp/audio.wav\"); return {\"text\": result[\"text\"]}; uvicorn.run(app, host=\"0.0.0.0\", port=9000)'"]
   volumes:
+    - ./start-whisper.sh:/app/start.sh
     - ./models:/root/.cache/whisper
+  command: ["bash", "/app/start.sh"]
   restart: unless-stopped
   networks:
     - alicia_network
@@ -28,6 +29,43 @@ whisper-stt:
     timeout: 10s
     retries: 3
     start_period: 120s
+```
+
+#### Startup Script (start-whisper.sh)
+
+```bash
+#!/bin/bash
+
+# Install system dependencies
+apt-get update && apt-get install -y python3 python3-pip ffmpeg
+
+# Install Python packages
+pip3 install openai-whisper fastapi uvicorn
+
+# Create the Python application file
+cat > /app/whisper_app.py << 'PYTHON_EOF'
+from fastapi import FastAPI, UploadFile
+import whisper
+import uvicorn
+
+app = FastAPI()
+model = whisper.load_model("base")
+
+@app.post("/transcribe")
+async def transcribe_audio(file: UploadFile):
+    audio_data = await file.read()
+    with open("/tmp/audio.wav", "wb") as f:
+        f.write(audio_data)
+    result = model.transcribe("/tmp/audio.wav")
+    return {"text": result["text"]}
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=9000)
+PYTHON_EOF
+
+# Make sure the file is executable and run the application
+chmod +x /app/whisper_app.py
+python3 /app/whisper_app.py
 ```
 
 ### Service Architecture
