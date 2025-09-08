@@ -1,52 +1,31 @@
-# Cline Rules and Workflows Index
+# Cline Rules and Workflows Index for Alicia Project
 
-This document categorizes and indexes all Cline rules and workflows for the Alicia project, providing usage tips and navigation.
+This index categorizes the prompts in .clinerules/ into **Rules** (static guidelines for best practices) and **Workflows** (step-by-step processes for tasks). Use this to select and feed into Cline. All are versioned (e.g., v1.1) and integrate with each other for consistency.
 
 ## Rules (Foundational Guidelines)
-These provide static standards referenced in workflows.
-
-1. **gitFlow.md**: Branching, semantic commits, PRs, with security scans and phase-aligned examples.
-   - Usage: Always follow for code/repo changes.
-   - Example: Create feature branches from develop.
-
-2. **projectFlowPhasing.md**: Maps tasks to phases, with resource allocation and security checks.
-   - Usage: Classify queries and plan phased tasks.
-   - Example: Phase 1 for setup, Phase 3 for voice.
-
-3. **featureScenarioWorkflow.md**: BDD workflows for feature to scenario bidirectional development.
-   - Usage: When working on features or code, suggest BDD scenarios.
-   - Example: Parse features to generate Gherkin scenarios.
+These provide overarching standards, often referenced in workflows.
+- **gitFlow.md** (v1.1): Version control and branching rules.
+- **projectFlowPhasing.md** (v1.1): Phase mapping and dependency checks.
+- **securityRules.md** (v1.0): Security and privacy guidelines for data and credentials.
+- **errorHandlingRules.md** (v1.0): Systematic error diagnosis and prevention.
+- **codeStyleRules.md** (v1.0): Code formatting and quality standards.
 
 ## Workflows (Action-Oriented Processes)
-These guide specific tasks with step-by-step processes.
+These guide specific tasks with structured steps.
+- **dockerManagement.md** (v1.1): Managing Docker configurations and errors.
+- **voiceProcessing.md** (v1.1): Handling voice pipeline components and integrations.
+- **documentationUpdate.md** (v1.1): Updating project documentation.
+- **integrationTesting.md** (v1.1): Planning and executing integration tests.
+- **phaseDeployment.md** (v1.1): Deploying to project phases.
+- **hardwareIntegrationWorkflow.md** (v1.0): Integrating hardware like mics and sensors.
+- **ciCdAutomationWorkflow.md** (v1.0): Automating builds, tests, and deployments.
+- **featureScenarioWorkflow.md** (v1.0): BDD for features to scenarios.
 
-4. **dockerManagement.md**: Manages Docker configs with Windows tips and security.
-   - Usage: For container setup and troubleshooting.
-   - Example: Safe commands for service management.
+### Usage Tips
+- Feed a file into Cline as a prompt to activate.
+- For combined use: Reference multiple (e.g., "Follow gitFlow.md and dockerManagement.md").
+- Updates: Core at v1.1; new additions at v1.0—review and version as needed.
+- Suggestions: Add more for AI/ML training or cloud integrations if project evolves.
+- Cross-Referencing: All rules encourage integration (e.g., security in deployments).
 
-5. **voiceProcessing.md**: Handles voice components with hardware integration.
-   - Usage: Voice pipeline setup and testing.
-   - Example: Audio security and automated testing.
-
-6. **documentationUpdate.md**: Ensures doc updates with changelogs and versioning.
-   - Usage: After changes, suggest doc updates.
-   - Example: Add to README for new features.
-
-7. **integrationTesting.md**: Plans tests with automation and metrics.
-   - Usage: For system integration and validation.
-   - Example: Quantifiable metrics in test plans.
-
-8. **phaseDeployment.md**: Manages deployments with security scans.
-   - Usage: Phased rollouts and monitoring.
-   - Example: Rollback strategies for failures.
-
-## Additional Files
-- **styleRules.md**: Code style guidelines.
-- **rulesIndex.md**: This index file.
-
-## Usage Tips
-- Rules are always-on; workflows for specific tasks.
-- Cross-reference between rules for integration.
-- Update this index when adding new rules.
-
-Confirm: "Using rules index for navigation."
+Last Updated: [Current Date]
