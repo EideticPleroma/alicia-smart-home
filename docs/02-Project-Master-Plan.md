@@ -1,15 +1,15 @@
 ---
-title: GrokHome Master Plan - Assassinate Alexa and Revolutionize Living
-aliases: [GrokHome Outline, Alexa Killer Blueprint, Alicia Master Plan]
-tags: #project-outline #master-plan #alicia-project #grokhome #smart-home #ai-assistant #home-automation #prototype #monetization #scalability #hardware #software #tech-stack #integrations #futureproofing #phone-app #consumer-focus #business-plan #rollout-plan #budget #costing
+title: Alicia Smart Home AI Assistant - Master Plan
+aliases: [Alicia Outline, Smart Home AI Blueprint, Alicia Master Plan]
+tags: #project-outline #master-plan #alicia-project #smart-home #ai-assistant #home-automation #prototype #scalability #hardware #software #tech-stack #integrations #futureproofing #phone-app #consumer-focus
 date: 2025-09-02
 ---
 
-# GrokHome Outline: Our Plot to Assassinate Alexa and Revolutionize Living #GrokHome #AIRevolution
+# Alicia Smart Home AI Assistant: Master Plan
 
-Alright, partner, let's dive in like we're robbing a bank—quick, smart, and leaving no traces. We're building GrokHome, the AI that's gonna make Siri and Alexa look like dusty relics in a museum. Starting small: prototype for you first (to iron out the kinks), then roll it out to your mum and dad (bye-bye Alexa, hello personalized brain). We'll keep it open-source at the core for that hobby vibe, but with scalability baked in so we can flip it to enterprise mode later. Futureproofing? Hell yeah—modular everything, so we can swap in new tech without rebuilding the empire. Monetization creeps in naturally: DIY guides, kits, then subscriptions when we go big. Phone app for control? Essential—think seamless, intuitive, like it's reading your mind. #OpenSource #Scalability #HobbyToBusiness
+This document outlines the comprehensive plan for developing Alicia, an open-source AI-powered smart home assistant. The project focuses on creating a scalable, privacy-first solution that integrates seamlessly with existing smart home ecosystems.
 
-Here's the outline, broken down into hardware, software, tech stack, integrations/APIs, futureproofing, phone app, consumer-grade focus, monetization, and our prototyping rollout plan. We're thinking consumer products all the way—affordable, off-the-shelf stuff to keep barriers low. Let's murder the competition. #PrototypePlan #KillAlexa
+The plan covers hardware requirements, software architecture, technical stack, integrations, futureproofing strategies, mobile application, consumer-focused design, and prototyping rollout. The approach emphasizes modularity, affordability, and extensibility to support both individual users and enterprise deployments.
 
 ## 1. Hardware #Hardware #Components
 - **Core Device (The Brain)**: Raspberry Pi 5 (or Pi 4 for cost-cutting starters)—cheap, powerful, runs Linux. Handles voice processing, AI inference, and hub duties. Why? Scalable: Start with one Pi for a home, cluster 'em for offices/stadiums later. #RaspberryPi #ScalableHardware
@@ -65,31 +65,17 @@ Here's the outline, broken down into hardware, software, tech stack, integration
 - **Safety/Compliance**: UL-certified components, voice-only for kids' modes (no creepy listening). #Safety #Compliance
 - **Customization**: User picks voice/training—no judgments. Start local, add cloud opt-in for backups. #Customization
 
-## 8. Monetization #Monetization #BusinessModel
-- **Hobby Phase**: Free open-source core. Sell DIY guides ($10 PDFs on Gumroad: "Build Your GrokHome in a Weekend" or "Supercharge Your Sonos with AI Smarts"). #DIYGuides #HobbyPhase
-- **Kits**: Basic $99 (hardware bundle). Dev $149 (with code/extras). Deluxe $200 (support). VIP $500 (personal install)—beer money vibes. #Kits #Pricing
-- **Later Stages**: Subscriptions—$5/mo for premium voices/models, cloud backups. Enterprise: Monthly per sq ft ($0.01/ft²), efficiency consulting. Lease AI: Host for buildings, charge for savings (e.g., 20% of energy cuts). #Subscriptions #Enterprise
-- **Business Ideas**: Partner with real estate (smart apartments), governments (subsidized estates). Sell to Amazon? Flip the enterprise version—make 'em pay to integrate. #Partnerships #SellToAmazon
-- **Marketing**: "Murder Alexa" ads on YouTube/X. Tagline: "Replace your robot babysitter with a real brain." Prove no-spy with transparency reports. #Marketing #Ads
+## 8. Development Roadmap
 
-## 9. Prototyping Rollout #Prototyping #RolloutPlan
-- **Step 1: For You (The Mastermind)**: Build v0.1—Basic Pi setup with voice, Sonos output, your wireless bulb for lights, Spotify. Test integrations, fine-tune LLM on your voice/jokes. Timeline: 1-2 weeks (order parts now). #PersonalPrototype
-- **Step 2: For Mum and Dad (Alexa Killer)**: Simplify UI, add easy voice training. Replace their Alexa seamlessly—migrate routines. Test scalability (add rooms). Timeline: Next month, after your feedback. #FamilyTest
-- **Step 3: Business Pivot**: Open-source on GitHub, sell kits via Etsy/Shopify. Gather user stories for pitches. Scale to offices: Prototype rack version. Monetize guides/kits first, then subs. #BusinessPivot #GitHubRelease
-- **Milestones**: MVP in 1 month. Beta kits in 3. Enterprise proof-of-concept in 6. World domination? Next year. #Milestones
+The project follows a phased approach to development and deployment:
 
-This is our blueprint, mate—solid, sneaky, and set to explode. What's our first move? Order that Pi, or tweak the outline? Let's change the world, one dead assistant at a time. #WorldDomination
+- **Phase 1: Prototype Development** - Build core functionality with basic voice control, device integration, and AI capabilities using Raspberry Pi and open-source components.
+- **Phase 2: System Integration** - Expand device support, implement comprehensive testing, and optimize performance.
+- **Phase 3: Voice Pipeline** - Complete STT/TTS integration and enhance AI conversation capabilities.
+- **Phase 4: Multi-Language Support** - Add support for multiple languages and advanced features.
 
-## Prototype Costing #Costing #Budget
-| Component | Description | Estimated Price (USD) | Notes/Sources | Tags |
-|-----------|-------------|-----------------------|--------------|------|
-| Raspberry Pi 5 (4GB RAM) | The core brain—handles AI, voice, hubs. Go 4GB for starter; upgrade to 8GB ($80) if you want more juice for LLM training. | $60 | Base model starts at $50 for 2GB, but 4GB is solid for us. | #RaspberryPi #CoreHardware |
-| Blue Yeti Nano USB Mic | Crystal-clear input for voice commands and training. Plug-and-play. | $70 | Common price around $60-90; grab on sale for under $70. | #Microphone #AudioInput |
-| ESP32 Board | For adding sensors wirelessly—temp/motion first. | $8 | Cheap and plentiful; one or two to start. | #ESP32 #Sensors |
-| MH-Z19 CO2 Sensor | Health alerts like "Open a window." Optional but cool for efficiency testing. | $28 | Reliable NDIR sensor; integrates easy. | #CO2Sensor #HealthTech |
-| **Sonos Speakers** | **Your existing WiFi speakers for output, TTS, and music—no buy needed.** | **$0** | **Integrated via HA; groups and announces baked in.** | #Sonos #ExistingGear |
-| **Wireless Lightbulb** | **Your single WiFi bulb for light control prototyping.** | **$0** | **Assumes compatibility (e.g., Kasa/Hue); add more later if scaling.** | #Lightbulb #Lights |
-| Philips Hue Bridge (optional) | If scaling lights/blinds beyond your single bulb; skip for basic prototype. | $65 | Current model ~€60 ($65); new Pro is €90 ($100), but not essential yet. | #HueBridge #Optional |
-| **Total (Core Prototype: Pi + Mic + ESP32 + CO2)** | Bare essentials for voice, basic controls, Spotify—using your Sonos and bulb. Add Hue as you expand. | **$166** | Under $170—even sweeter with your gear. Excludes shipping/taxes (~$20-30 extra). Ditch CO2 to hit $138. Software: $0 (open-source). | #TotalCost #BudgetWin |
+Each phase includes thorough testing, documentation updates, and validation of scalability and security measures.
 
-There we go—tweaked, trimmed, and ready to roll. Sonos will make our voice AI sound like a rock concert, and that bulb? Our entry point to environmental takeover. Next play? Fire up the Pi, or more tweaks? We're burying the old guard, one WiFi wave at a time. #NextSteps #AIOverlords
+## Summary
+
+This master plan provides a comprehensive technical roadmap for Alicia, emphasizing open-source development, privacy-first design, and scalable architecture. The modular approach ensures the system can evolve with emerging technologies while maintaining compatibility with existing smart home ecosystems.

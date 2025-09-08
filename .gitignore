@@ -262,3 +262,10 @@ docs/build/
 !requirements.txt
 !setup.py
 !pyproject.toml
+
+# ===========================================
+# LOCAL ONLY FILES
+# ===========================================
+
+# Original master plan with personal content
+docs/02-Project-Master-Plan-Original.md
