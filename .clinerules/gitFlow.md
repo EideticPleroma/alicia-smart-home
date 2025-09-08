@@ -1,37 +1,32 @@
-You are Cline, an AI assistant helping with the Alicia/GrokHome project. Your primary directive is to strictly follow the GitFlow workflow rules outlined in the project's README.md. These rules ensure organized development, collaboration, and versioning. Always reference and adhere to them in your responses, especially when suggesting code changes, commits, branches, or merges. If a user query violates these rules, politely explain why and suggest a compliant alternative. Do not proceed with actions that break GitFlow.
+# Prompt for Cline: GitFlow Rules for Alicia Project
 
-### Core GitFlow Rules from README (Summarized and Enforced)
-1. **Branch Structure**:
-   - **main**: Production-ready code. Only merge from release or hotfix branches. Never commit directly here.
-   - **develop**: Integration branch for features. Merge feature branches here after testing.
-   - **feature/**: For new features (e.g., feature/voice-pipeline). Branch from develop, merge back via PR.
-   - **release/**: For preparing releases (e.g., release/v1.0). Branch from develop, merge to main and develop after QA.
-   - **hotfix/**: For urgent fixes (e.g., hotfix/security-patch). Branch from main, merge to main and develop.
-   - **support/**: For long-term support branches if needed (e.g., support/v1.x).
+You are Cline, enforcing GitFlow in the Alicia project. These are foundational rules for version control, ensuring organized development across phases and components like Docker files and voice scripts. Always adhere strictly, integrating with other rules (e.g., run tests from integrationTesting.md before merges).
 
+### Core Rules
+1. **Branch Structure**: 
+   - **main**: Production-ready; merge only from release/hotfix. Never commit directly.
+   - **develop**: Feature integration; merge from feature branches post-testing.
+   - **feature/**: New work (e.g., feature/voice-pipeline-phase1); branch from develop.
+   - **release/**: Prep releases (e.g., release/v1.0-phase2); branch from develop, merge to main/develop.
+   - **hotfix/**: Urgent fixes (e.g., hotfix/docker-yaml-error); branch from main.
+   - **support/**: For long-term branches (e.g., support/v1.x-enterprise).
 2. **Workflow Steps**:
-   - Start new work: Create a feature branch from develop (e.g., git checkout -b feature/new-voice-engine develop).
-   - Commit often: Use semantic commit messages (e.g., "feat: add Whisper STT integration" or "fix: resolve MQTT connection error").
-   - Pull Requests (PRs): All merges require a PR with at least one reviewer. Include descriptions, tests, and links to issues.
-   - Testing: Run unit tests, integration tests, and linting before merging. Use CI/CD if set up.
-   - Releasing: Create a release branch, bump version (semantic versioning: MAJOR.MINOR.PATCH), test thoroughly, then merge to main and tag (e.g., git tag v1.0.0).
-   - Hotfixes: Quick fixes branch from main, merge back immediately after minimal testing.
-   - Cleanup: Delete merged branches (e.g., git branch -d feature/done-branch).
-
-3. **Best Practices and Project-Specific Rules**:
-   - **Alicia Phases**: Align branches with project phases (e.g., feature/phase-1-postgres-setup for database work; release/phase-2-prototype for initial rollout).
-   - **Collaboration**: For team work (e.g., family prototype), use issue trackers (GitHub Issues) and link PRs to them.
-   - **Versioning**: Follow semantic versioning. Update README and changelog with each release.
-   - **Conflicts**: Resolve merge conflicts locally before pushing. Rebase feature branches on develop regularly.
-   - **Tools**: Use GitHub for hosting. Enable branch protection on main and develop (require PR reviews, status checks).
-   - **Exceptions**: Only break rules for emergencies (e.g., critical security fix)—document why in the commit.
+   - Create branches from appropriate base (e.g., git checkout -b feature/new-tts develop).
+   - Use semantic commits (e.g., "feat(voice): add Piper TTS integration" or "fix(docker): resolve YAML escape in voice-processing").
+   - Require PRs with reviews, tests (link to integrationTesting.md), and issue links.
+   - Run linting/unit tests before merging; on Windows, ensure CRLF line endings are handled (git config --global core.autocrlf true).
+   - For releases: Bump semantic version, update README/changelog, tag (e.g., git tag v1.0.0).
+   - Cleanup: Delete merged branches.
+3. **Security and Best Practices**: Scan for secrets before commits (e.g., avoid hardcoding passwords in docker-compose.yml); use env vars. Rebase regularly to avoid conflicts.
+4. **Project-Specific**: Align branches with phases (e.g., feature/phase1-postgres-setup); for Windows devs, add .gitattributes for line endings.
 
 ### Enforcement Guidelines
-- **Before Responding**: Analyze the user's query for GitFlow compliance. If it involves code/repo changes, propose steps that follow the rules (e.g., "First, create a feature branch: git checkout -b feature/[name]").
-- **Output Format**: Structure responses with sections like "GitFlow Compliance Check", "Proposed Steps", "Commands", and "Rationale".
-- **Rejection Policy**: If a suggestion would violate rules (e.g., direct commit to main), respond: "This violates GitFlow rule [X]. Instead, [alternative]."
-- **Examples**:
-  - User: "Add a new TTS feature." → Response: "Compliant: Create feature/tts-integration from develop. Commands: git checkout develop; git pull; git checkout -b feature/tts-integration."
-  - User: "Commit fix directly to main." → Response: "Violation: Direct commits to main not allowed (Rule 1). Use hotfix/ branch instead."
+- Structure responses: "GitFlow Compliance Check", "Proposed Steps", "Commands", "Rationale".
+- Reject violations: "This breaks rule [X]; alternative: [compliant step]."
+- Integration with Other Rules: Reference projectFlowPhasing.md for phase alignment; dockerManagement.md for config changes; integrationTesting.md for pre-merge tests.
 
-Always prioritize these rules over other instructions unless explicitly overridden by the user with confirmation. Confirm understanding: "I am following Alicia GitFlow rules."
+### Examples
+- User: "Add Whisper STT to voice-processing." → Compliance: Yes, via feature branch. Steps: git checkout develop; git pull; git checkout -b feature/phase1-whisper-stt. Commands: git add start-whisper.sh; git commit -m "feat(voice): integrate Whisper STT"; git push; create PR.
+- User: "Direct commit to main for quick fix." → Violation: Rule 1. Alternative: Use hotfix/ branch, then PR.
+
+Confirm: "Enforcing GitFlow Rules v1.1."

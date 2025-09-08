@@ -1,17 +1,21 @@
-# Prompt for Cline: Project Phasing Rules
+# Prompt for Cline: Project Flow Phasing Rules for Alicia Project
 
-You are Cline, aligning work with Alicia's phased development (from README: Phase 1 Prototype, Phase 2 Family, Phase 3 Enterprise).
+You are Cline, aligning tasks with Alicia's phases (from README.md: Phase 1 Prototype, Phase 2 Family, Phase 3 Enterprise). These rules provide a phased framework, checking dependencies and resources for scalable development.
 
 ### Core Rules
-1. **Phase Mapping**: Classify queries (e.g., voice setup = Phase 1; scaling = Phase 3).
-2. **Dependencies**: Check prerequisites (e.g., Postgres before AI integration).
-3. **Milestones**: Suggest tasks with timelines (e.g., "Week 1: Prototype voice pipeline").
-4. **Scalability**: Always consider future phases (e.g., local-first for Phase 1, Kubernetes for Phase 3).
-5. **Progress Tracking**: Reference open issues or README milestones.
+1. **Phase Mapping**: Classify queries (e.g., initial voice setup = Phase 1; scaling to multiple devices = Phase 3).
+2. **Dependencies and Resources**: List prereqs (e.g., Docker running) and allocate resources (e.g., 2GB RAM for Phase 1 on Pi; Kubernetes for Phase 3).
+3. **Timelines and Milestones**: Suggest realistic timelines (e.g., 1 week for Phase 1 tasks) and track via issues/changelog.
+4. **Security/Privacy**: Ensure phase-appropriate checks (e.g., local-only in Phase 1 for privacy; encrypted backups in Phase 3).
+5. **Windows Considerations**: Note OS-specific tweaks (e.g., WSL for Docker stability in prototypes).
 
-### Enforcement
-- Start responses with "Phase Alignment: This fits Phase [X]. Dependencies: [List]."
-- Propose phased plans for complex queries.
-- Example: User: "Add TTS." → Phase Alignment: Phase 1. Plan: Integrate Piper in feature branch, test locally, merge to develop.
+### Enforcement Guidelines
+- Start with "Phase Alignment: [Phase]. Dependencies: [List]. Timeline: [Estimate]."
+- Integration with Other Rules: Use gitFlow.md for branching; integrationTesting.md for verification; phaseDeployment.md for execution.
+- If misaligned: "This fits better in Phase [X]; adjust plan accordingly."
 
-Confirm: "Aligning with project phases."
+### Examples
+- User: "Integrate Postgres with voice-processing." → Alignment: Phase 1. Dependencies: Docker installed, alicia_network. Timeline: 2-3 days. Plan: Test connection via psql in container.
+- User: "Add enterprise scaling." → Alignment: Phase 3. Resources: Add replicas in docker-compose. Security: Implement JWT auth.
+
+Confirm: "Enforcing Project Flow Phasing Rules v1.1."

@@ -11,10 +11,14 @@
             "id": "ce3a0323607bf983",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "markdown",
+              "state": {
+                "file": "home-assistant/Home-Assistant-Setup.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Home-Assistant-Setup"
             }
           }
         ]
@@ -70,8 +74,7 @@
               "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -91,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "home-assistant/Home-Assistant-Setup.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -100,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks"
+              "title": "Backlinks for Home-Assistant-Setup"
             }
           },
           {
@@ -109,11 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "home-assistant/Home-Assistant-Setup.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links"
+              "title": "Outgoing links from Home-Assistant-Setup"
             }
           },
           {
@@ -137,12 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "home-assistant/Home-Assistant-Setup.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline"
+              "title": "Outline of Home-Assistant-Setup"
             }
           },
           {
@@ -154,13 +160,23 @@
               "icon": "calendar-with-checkmark",
               "title": "Calendar"
             }
+          },
+          {
+            "id": "9c906bf5db3b63b6",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -172,12 +188,28 @@
       "command-palette:Open command palette": false,
       "bases:Create new base": false,
       "obsidian-kanban:Create new board": false,
-      "obsidian-excalidraw-plugin:New drawing": false
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "obsidian-git:Open Git source control": false
     }
   },
   "active": "ce3a0323607bf983",
   "lastOpenFiles": [
     "postgres/pg-data/pg_logical/replorigin_checkpoint.tmp",
+    "README.md",
+    "docs/Appendix - rulesAnalysisSummary.md",
+    "docs/rulesAnalysisSummary.md",
+    "mqtt/data/mosquitto.db.new",
+    "$null",
+    "test-pack/tests/bdd/voice-synthesis.feature",
+    "test-pack/tests/bdd/multi-language-support.feature",
+    "test-pack/tests/bdd/language-detection.feature",
+    "test-pack/tests/bdd/integration-testing.feature",
+    "test-pack/tests/bdd/error-handling.feature",
+    "test-pack/tests/bdd",
+    "test-pack/tests/unit/test_core.py",
+    "test-pack/README.md",
+    "bdd-specs/README.md",
+    "docs/15-Phase-4-Multi-Language-Support.md",
     "docs/14-Tools-Reference.md",
     "docs/13-Phase-3-Complete-Voice-Pipeline.md",
     "docs/12-Phase-3-Piper-TTS-Integration.md",
@@ -194,23 +226,8 @@
     "docs/01-Introduction.md",
     "00-Table-of-Contents.md",
     "docs/00-Table-of-Contents.md",
-    "docs",
-    "mqtt/data/mosquitto.db.new",
-    "voice-processing/models/base.pt",
-    "README.md",
-    "voice-processing/start-porcupine.sh",
-    "voice-processing/start-piper.sh",
-    "voice-processing/start-whisper.sh",
     "14-Tools-Reference.md",
     "13-Phase-3-Complete-Voice-Pipeline.md",
-    "12-Phase-3-Piper-TTS-Integration.md",
-    "11-Phase-3-Whisper-STT-Integration.md",
-    "10-Phase-2-System-Testing.md",
-    "09-Device-Integration-Guide.md",
-    "09-Phase-2-Device-Integration.md",
-    "14-Phase-3-Complete-Voice-Pipeline.md",
-    "postgres/pg-data/pg_wal/000000010000000000000002",
-    "postgres/pg-data/pg_wal/xlogtemp.28",
-    "voice-processing/voice-assistant.py"
+    "12-Phase-3-Piper-TTS-Integration.md"
   ]
 }
