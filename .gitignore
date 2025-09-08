@@ -97,8 +97,10 @@ coverage.xml
 .env.production
 .env.staging
 
-# Home Assistant secrets
+# Home Assistant secrets and runtime state
 home-assistant/secrets.yaml
+home-assistant/config/.storage/
+home-assistant/config/.HA_VERSION
 
 # MQTT passwords and ACL files
 mqtt/config/passwords
@@ -132,6 +134,10 @@ voice-processing/logs/
 .vscode/
 *.code-workspace
 
+# Obsidian (Markdown editor)
+.obsidian/
+.obsidian/workspace.json
+
 # PyCharm
 .idea/
 *.iml
@@ -150,7 +156,7 @@ voice-processing/logs/
 # Emacs
 *~
 \#*\#
-/.emacs.desktop
+//.emacs.desktop
 /.emacs.desktop.lock
 *.elc
 auto-save-list

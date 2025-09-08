@@ -34,15 +34,20 @@ pip3 install fastapi uvicorn
 # Create the Python application file
 cat > /app/piper_app.py << 'PYTHON_EOF'
 from fastapi import FastAPI
+from pydantic import BaseModel
 import subprocess
 import uvicorn
+
+class SynthesizeRequest(BaseModel):
+    text: str
+    language: str = "en"
 
 app = FastAPI()
 
 @app.post("/synthesize")
-async def synthesize_text(data: dict):
-    text = data.get("text", "")
-    language = data.get("language", "en")
+async def synthesize_text(request: SynthesizeRequest):
+    text = request.text
+    language = request.language
     
     # Map language codes to model files
     model_map = {
