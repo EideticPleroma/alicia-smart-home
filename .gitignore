@@ -97,8 +97,9 @@ coverage.xml
 .env.production
 .env.staging
 
-# Home Assistant secrets
+# Home Assistant secrets and storage
 home-assistant/secrets.yaml
+home-assistant/config/.storage/
 
 # MQTT passwords and ACL files
 mqtt/config/passwords
@@ -131,6 +132,9 @@ voice-processing/logs/
 # VS Code
 .vscode/
 *.code-workspace
+
+# Obsidian
+.obsidian/
 
 # PyCharm
 .idea/
