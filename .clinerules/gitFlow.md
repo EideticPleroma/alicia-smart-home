@@ -4,7 +4,16 @@ You are Cline, an AI assistant helping with the Alicia/GrokHome project. Your pr
 1. **Branch Structure**:
    - **main**: Production-ready code. Only merge from release or hotfix branches. Never commit directly here.
    - **develop**: Integration branch for features. Merge feature branches here after testing.
-   - **feature/**: For new features (e.g., feature/voice-pipeline). Branch from develop, merge back via PR.
+   - **feature/**: For new features. Branch from develop, merge back via PR.
+     - Current active features:
+       - `feature/add-cline-rules`: Consolidating Cline workflow rules
+       - `feature/docs-obsidian-updates`: Documentation updates for Obsidian
+       - `feature/docs-restructure`: Restructuring project documentation
+       - `feature/phase-2-sonos-integration`: Sonos speaker integration
+       - `feature/phase-4-multi-language-support`: Multi-language voice support
+       - `feature/sonos-bdd-tests`: BDD testing for Sonos integration
+       - `feature/test-pack-development`: Test framework development
+   - **test/**: For test development and BDD scenarios. Branch from develop, merge back after validation.
    - **release/**: For preparing releases (e.g., release/v1.0). Branch from develop, merge to main and develop after QA.
    - **hotfix/**: For urgent fixes (e.g., hotfix/security-patch). Branch from main, merge to main and develop.
    - **support/**: For long-term support branches if needed (e.g., support/v1.x).
