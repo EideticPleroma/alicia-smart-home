@@ -136,6 +136,9 @@ voice-processing/logs/
 # Obsidian
 .obsidian/
 
+# Cline Rules
+.clinerules/
+
 # PyCharm
 .idea/
 *.iml
