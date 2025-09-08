@@ -11,7 +11,7 @@
 
 **A complete voice-controlled smart home AI assistant with speech-to-text, text-to-speech, and intelligent command processing.**
 
-[📖 Documentation](00-Table-of-Contents.md) • [🚀 Quick Start](#quick-start) • [📋 Features](#features) • [🏗️ Architecture](#architecture)
+[📖 Documentation](docs/00-Table-of-Contents.md) • [🚀 Quick Start](#quick-start) • [📋 Features](#features) • [🏗️ Architecture](#architecture)
 
 </div>
 
@@ -141,7 +141,8 @@ curl -X POST http://localhost:10200/synthesize \
 
 ```
 alicia-smart-home/
-├── 📚 Documentation (14 Chapters)
+├── 📖 README.md
+├── 📚 docs/ (Complete Documentation)
 │   ├── 00-Table-of-Contents.md
 │   ├── 01-Introduction.md
 │   ├── 02-Project-Master-Plan.md
@@ -158,7 +159,7 @@ alicia-smart-home/
 │   ├── 13-Phase-3-Complete-Voice-Pipeline.md
 │   └── 14-Tools-Reference.md
 │
-├── 🏠 Home Assistant
+├── 🏠 home-assistant/
 │   ├── docker-compose.yml
 │   ├── config/
 │   │   ├── configuration.yaml
@@ -166,7 +167,7 @@ alicia-smart-home/
 │   │   └── ...
 │   └── .env
 │
-├── 📡 MQTT Broker
+├── 📡 mqtt/
 │   ├── config/
 │   │   ├── mosquitto.conf
 │   │   ├── passwords
@@ -174,19 +175,19 @@ alicia-smart-home/
 │   ├── data/
 │   └── log/
 │
-├── 🎤 Voice Processing
+├── 🎤 voice-processing/
 │   ├── docker-compose.yml
 │   ├── voice-assistant.py
 │   ├── start-whisper.sh
 │   ├── start-piper.sh
 │   └── start-porcupine.sh
 │
-├── 🗄️ PostgreSQL
+├── 🗄️ postgres/
 │   ├── docker-compose.yml
 │   └── init-scripts/
 │
-└── 🧪 Testing
-    ├── mqtt-testing/
+└── 🧪 mqtt-testing/
+    ├── scripts/
     └── results/
 ```
 
@@ -507,7 +508,7 @@ Examples:
 
 ### Getting Help
 
-- **📖 Documentation**: [Complete Technical Guide](00-Table-of-Contents.md)
+- **📖 Documentation**: [Complete Technical Guide](docs/00-Table-of-Contents.md)
 - **🐛 Issues**: [GitHub Issues](https://github.com/yourusername/alicia-smart-home/issues)
 - **💬 Discussions**: [GitHub Discussions](https://github.com/yourusername/alicia-smart-home/discussions)
 - **📧 Email**: support@alicia-assistant.com
@@ -537,11 +538,10 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - **PostgreSQL**: Robust data storage
 - **Docker**: Containerization platform
 
-### Contributors
-- **Project Lead**: Alicia Development Team
-- **Voice Processing**: AI/ML Integration Specialists
-- **Home Automation**: Smart Home Engineers
-- **Documentation**: Technical Writers
+### Project Developer
+- **Solo Developer**: Independent implementation of complete smart home AI system
+- **Full-Stack Development**: Infrastructure, AI integration, and documentation
+- **Self-Learning Project**: Comprehensive exploration of modern AI and IoT technologies
 
 ---
 

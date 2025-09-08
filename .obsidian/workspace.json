@@ -11,14 +11,10 @@
             "id": "ce3a0323607bf983",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "00-Table-of-Contents.md",
-                "mode": "preview",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "00-Table-of-Contents"
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
             }
           }
         ]
@@ -95,7 +91,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "00-Table-of-Contents.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +100,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for 00-Table-of-Contents"
+              "title": "Backlinks"
             }
           },
           {
@@ -114,12 +109,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "00-Table-of-Contents.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from 00-Table-of-Contents"
+              "title": "Outgoing links"
             }
           },
           {
@@ -143,13 +137,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "00-Table-of-Contents.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of 00-Table-of-Contents"
+              "title": "Outline"
             }
           },
           {
@@ -185,8 +178,26 @@
   "active": "ce3a0323607bf983",
   "lastOpenFiles": [
     "postgres/pg-data/pg_logical/replorigin_checkpoint.tmp",
-    "README.md",
+    "docs/14-Tools-Reference.md",
+    "docs/13-Phase-3-Complete-Voice-Pipeline.md",
+    "docs/12-Phase-3-Piper-TTS-Integration.md",
+    "docs/11-Phase-3-Whisper-STT-Integration.md",
+    "docs/10-Phase-2-System-Testing.md",
+    "docs/09-Phase-2-Device-Integration.md",
+    "docs/08-Phase-2-Device-Discovery.md",
+    "docs/07-Phase-2-System-Integration.md",
+    "docs/06-Phase-2-MQTT-Broker-Integration.md",
+    "docs/05-Phase-1-Home-Assistant-Setup.md",
+    "docs/04-Infrastructure-Setup.md",
+    "docs/03-System-Architecture.md",
+    "docs/02-Project-Master-Plan.md",
+    "docs/01-Introduction.md",
+    "00-Table-of-Contents.md",
+    "docs/00-Table-of-Contents.md",
+    "docs",
     "mqtt/data/mosquitto.db.new",
+    "voice-processing/models/base.pt",
+    "README.md",
     "voice-processing/start-porcupine.sh",
     "voice-processing/start-piper.sh",
     "voice-processing/start-whisper.sh",
@@ -198,26 +209,8 @@
     "09-Device-Integration-Guide.md",
     "09-Phase-2-Device-Integration.md",
     "14-Phase-3-Complete-Voice-Pipeline.md",
-    "13-Phase-3-Piper-TTS-Integration.md",
     "postgres/pg-data/pg_wal/000000010000000000000002",
     "postgres/pg-data/pg_wal/xlogtemp.28",
-    "12-Phase-3-Whisper-STT-Integration.md",
-    "voice-processing/voice-assistant.py",
-    "voice-processing/models",
-    "voice-processing/docker-compose.yml",
-    "00-Table-of-Contents.md",
-    "02-Project-Master-Plan.md",
-    "11-Obsidian-Setup-Guide.md",
-    "10-System-Testing-Report.md",
-    "08-Phase-2-Device-Discovery.md",
-    "07-Phase-2-System-Integration.md",
-    "06-Phase-2-MQTT-Broker-Integration.md",
-    "05-Phase-1-Home-Assistant-Setup.md",
-    "04-Infrastructure-Setup.md",
-    "03-System-Architecture.md",
-    "01-Introduction.md",
-    "Obsidian-Setup-Guide.md",
-    "Phase-2-Step-3-Device-Simulation-Report.md",
-    "Phase-2-Step-2-Final-Report.md"
+    "voice-processing/voice-assistant.py"
   ]
 }

@@ -4,7 +4,7 @@
 apt-get update && apt-get install -y python3 python3-pip ffmpeg
 
 # Install Python packages
-pip3 install openai-whisper fastapi uvicorn
+pip3 install openai-whisper fastapi uvicorn python-multipart
 
 # Create the Python application file
 cat > /app/whisper_app.py << 'PYTHON_EOF'
