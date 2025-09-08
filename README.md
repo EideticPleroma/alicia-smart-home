@@ -401,6 +401,90 @@ git push origin feature/new-voice-command
 - **Documentation**: Clear, comprehensive guides
 - **Testing**: Automated test coverage
 
+### GitFlow Workflow
+
+This project follows the **GitFlow branching model** for organized development and releases:
+
+#### Branch Structure
+```
+main (production) ← develop ← feature/* ← release/* ← hotfix/*
+```
+
+#### Development Workflow
+
+1. **Start New Feature**
+   ```bash
+   # Create feature branch from develop
+   git checkout develop
+   git pull origin develop
+   git checkout -b feature/new-voice-command
+   ```
+
+2. **Develop and Test**
+   ```bash
+   # Make changes and commit
+   git add .
+   git commit -m "feat: add new voice command processing"
+
+   # Push feature branch
+   git push origin feature/new-voice-command
+   ```
+
+3. **Create Pull Request**
+   - Open PR from `feature/*` → `develop`
+   - Request review from maintainers
+   - Ensure CI/CD passes
+
+4. **Release Process**
+   ```bash
+   # Create release branch
+   git checkout develop
+   git checkout -b release/v1.1.0
+
+   # Final testing and bug fixes
+   git commit -m "release: version 1.1.0"
+
+   # Merge to main and develop
+   git checkout main
+   git merge release/v1.1.0
+   git tag -a v1.1.0 -m "Release version 1.1.0"
+
+   git checkout develop
+   git merge release/v1.1.0
+   ```
+
+#### Branch Naming Convention
+
+- **Features**: `feature/description-of-feature`
+- **Releases**: `release/v1.2.0`
+- **Hotfixes**: `hotfix/critical-bug-fix`
+- **Bugs**: `bugfix/issue-description`
+
+#### Commit Message Format
+
+```
+type(scope): description
+
+Types: feat, fix, docs, style, refactor, test, chore
+Examples:
+- feat(voice): add support for multiple languages
+- fix(mqtt): resolve connection timeout issue
+- docs(readme): update installation instructions
+- test(whisper): add integration tests for STT
+```
+
+#### Release Tags
+
+- **Major**: `v2.0.0` - Breaking changes
+- **Minor**: `v1.1.0` - New features
+- **Patch**: `v1.0.1` - Bug fixes
+
+#### Protected Branches
+
+- **`main`**: Production code, only accepts merges from release branches
+- **`develop`**: Integration branch for features
+- **Feature branches**: Short-lived, merged back to develop
+
 ---
 
 ## 📈 Roadmap
