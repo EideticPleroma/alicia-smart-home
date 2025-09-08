@@ -1,0 +1,82 @@
+# Home Assistant Configuration for Alicia Project
+# This configuration connects HA to PostgreSQL and sets up basic integrations
+
+# Basic Home Assistant Configuration
+homeassistant:
+  name: Alicia Home Assistant
+  latitude: !env_var HA_LATITUDE
+  longitude: !env_var HA_LONGITUDE
+  elevation: !env_var HA_ELEVATION
+  unit_system: !env_var HA_UNIT_SYSTEM
+  time_zone: !env_var HA_TIME_ZONE
+  external_url: "http://localhost:8123"
+
+# HTTP Configuration
+http:
+  server_host: 0.0.0.0
+  server_port: 8123
+  use_x_forwarded_for: true
+  trusted_proxies: []
+
+# Database Configuration (PostgreSQL)
+recorder:
+  db_url: !env_var POSTGRES_DB_URL
+  purge_keep_days: 365
+  commit_interval: 1
+
+# History Configuration
+history:
+  exclude:
+    domains:
+      - automation
+      - script
+      - updater
+
+# Logbook Configuration
+logbook:
+  exclude:
+    domains:
+      - automation
+      - script
+      - updater
+
+# Frontend Configuration
+frontend:
+  themes: !include_dir_merge_named themes/
+
+# API Configuration
+api:
+
+# System Health
+system_health:
+
+# MQTT Integration
+mqtt:
+  host: !env_var MQTT_HOST
+  port: !env_var MQTT_PORT
+  username: !env_var MQTT_USERNAME
+  password: !env_var MQTT_PASSWORD
+
+# Discovery
+discovery:
+  ignore:
+    - sonos
+
+# Logger Configuration
+logger:
+  default: info
+  logs:
+    homeassistant.components.recorder: warning
+    homeassistant.components.http: warning
+    sqlalchemy: warning
+
+# Automation and Script Storage
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+# Include additional configuration files
+group: !include groups.yaml
+sensor: !include sensors.yaml
+switch: !include switches.yaml
+binary_sensor: !include binary_sensors.yaml

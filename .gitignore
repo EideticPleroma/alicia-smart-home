@@ -1,0 +1,264 @@
+# Alicia Smart Home AI Assistant - GitIgnore
+
+# ===========================================
+# DOCKER & CONTAINER DATA
+# ===========================================
+
+# Docker volumes and data
+**/pg-data/
+**/mqtt/data/
+**/mqtt/log/
+**/*.db
+**/*.db-wal
+**/*.db-shm
+
+# Docker build cache
+.dockerignore
+
+# ===========================================
+# PYTHON & DEPENDENCIES
+# ===========================================
+
+# Python virtual environments
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# ===========================================
+# AI MODELS & CACHE
+# ===========================================
+
+# Whisper models
+**/models/
+**/.cache/whisper/
+**/.cache/huggingface/
+
+# Piper voice models
+**/en_US-lessac-medium.onnx
+**/en_US-lessac-medium.onnx.json
+**/piper_amd64/
+
+# Porcupine wake word files
+**/*.ppn
+
+# ===========================================
+# CONFIGURATION & SECRETS
+# ===========================================
+
+# Environment files
+.env
+.env.local
+.env.production
+.env.staging
+
+# Home Assistant secrets
+home-assistant/secrets.yaml
+
+# MQTT passwords and ACL files
+mqtt/config/passwords
+mqtt/config/acl
+
+# API keys and secrets
+**/*key*
+**/*secret*
+**/*token*
+
+# ===========================================
+# LOGS & DEBUG FILES
+# ===========================================
+
+# Application logs
+*.log
+logs/
+home-assistant/logs/
+mqtt/log/
+voice-processing/logs/
+
+# Debug files
+*.debug
+*.pdb
+
+# ===========================================
+# IDE & EDITOR FILES
+# ===========================================
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ===========================================
+# OS GENERATED FILES
+# ===========================================
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ===========================================
+# TEMPORARY FILES
+# ===========================================
+
+# Temporary audio files
+**/*.wav
+**/*.mp3
+**/*.tmp
+
+# Test files
+test_*
+*_test.*
+
+# ===========================================
+# BACKUP FILES
+# ===========================================
+
+*.bak
+*.backup
+*.old
+*.orig
+*.swp
+*.swo
+
+# ===========================================
+# PROJECT SPECIFIC
+# ===========================================
+
+# Voice processing temp files
+voice-processing/temp/
+voice-processing/cache/
+
+# MQTT testing results
+mqtt-testing/results/
+
+# Documentation build files
+docs/_build/
+docs/build/
+
+# ===========================================
+# SENSITIVE DATA PATTERNS
+# ===========================================
+
+# Any file containing these patterns
+*password*
+*secret*
+*key*
+*token*
+*auth*
+*credential*
+
+# ===========================================
+# LARGE FILES
+# ===========================================
+
+# Files larger than 100MB
+*.zip
+*.tar.gz
+*.7z
+*.rar
+
+# Model files (already covered above but explicit)
+*.onnx
+*.bin
+*.pkl
+*.h5
+
+# ===========================================
+# EXCEPTIONS (FILES TO KEEP)
+# ===========================================
+
+# Keep these files even if they match patterns above
+!.env.example
+!.gitignore
+!README.md
+!LICENSE
+!requirements.txt
+!setup.py
+!pyproject.toml

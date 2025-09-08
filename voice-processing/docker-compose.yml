@@ -1,0 +1,60 @@
+services:
+  whisper-stt:
+    container_name: alicia_whisper
+    image: ubuntu:22.04
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./start-whisper.sh:/app/start.sh
+      - ./models:/root/.cache/whisper
+    command: ["bash", "/app/start.sh"]
+    restart: unless-stopped
+    networks:
+      - alicia_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/docs"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+
+  piper-tts:
+    container_name: alicia_piper
+    image: ubuntu:22.04
+    ports:
+      - "10200:10200"
+    volumes:
+      - ./start-piper.sh:/app/start.sh
+    command: ["bash", "/app/start.sh"]
+    restart: unless-stopped
+    networks:
+      - alicia_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:10200/docs"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+
+  porcupine-wake-word:
+    container_name: alicia_porcupine
+    image: ubuntu:22.04
+    ports:
+      - "10400:10400"
+    volumes:
+      - ./start-porcupine.sh:/app/start.sh
+    command: ["bash", "/app/start.sh"]
+    restart: unless-stopped
+    networks:
+      - alicia_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:10400/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+networks:
+  alicia_network:
+    external: true
+    name: postgres_alicia_network

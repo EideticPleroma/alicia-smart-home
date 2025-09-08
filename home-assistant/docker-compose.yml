@@ -1,0 +1,50 @@
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    env_file:
+      - .env
+    environment:
+      - TZ=${TIMEZONE:-UTC}
+    volumes:
+      - ./config:/config
+      - ./logs:/config/logs
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "18123:8123"
+    restart: unless-stopped
+    depends_on:
+      - mqtt
+    networks:
+      - alicia_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8123"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  mqtt:
+    container_name: alicia_mqtt
+    image: eclipse-mosquitto:2.0
+    volumes:
+      - ../mqtt/config:/mosquitto/config
+      - ../mqtt/data:/mosquitto/data
+      - ../mqtt/log:/mosquitto/log
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    restart: unless-stopped
+    networks:
+      - alicia_network
+    healthcheck:
+      test: ["CMD-SHELL", "mosquitto_sub -t '$$SYS/#' -C 1 -h localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+networks:
+  alicia_network:
+    external: true
+    name: postgres_alicia_network
