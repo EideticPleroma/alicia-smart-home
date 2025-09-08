@@ -57,6 +57,24 @@ mqtt:
   username: !env_var MQTT_USERNAME
   password: !env_var MQTT_PASSWORD
 
+# Sonos Integration
+sonos:
+  media_player:
+    - host: !env_var SONOS_HOST_LIVING_ROOM
+      name: "Living Room Sonos"
+    - host: !env_var SONOS_HOST_KITCHEN
+      name: "Kitchen Sonos"
+    - host: !env_var SONOS_HOST_BEDROOM
+      name: "Bedroom Sonos"
+
+# Text-to-Speech Integration
+tts:
+  - platform: google_translate
+    language: 'en'
+    cache: true
+    cache_dir: /tmp/tts
+    time_memory: 300
+
 # Discovery
 discovery:
   ignore:
@@ -69,6 +87,8 @@ logger:
     homeassistant.components.recorder: warning
     homeassistant.components.http: warning
     sqlalchemy: warning
+    homeassistant.components.sonos: debug
+    homeassistant.components.mqtt: debug
 
 # Automation and Script Storage
 automation: !include automations.yaml
