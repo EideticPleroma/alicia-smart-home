@@ -92,14 +92,16 @@ class VoiceAssistant:
                 time.sleep(10)
             logger.info(f"{service_name} is ready!")
 
-    def transcribe_audio(self, audio_data: bytes) -> Optional[str]:
+    def transcribe_audio(self, audio_data: bytes) -> Optional[tuple]:
         """Transcribe audio using Whisper"""
         try:
             files = {'file': ('audio.wav', audio_data, 'audio/wav')}
             response = requests.post(f"{self.whisper_url}/transcribe", files=files, timeout=30)
             if response.status_code == 200:
                 result = response.json()
-                return result.get('text', '').strip()
+                text = result.get('text', '').strip()
+                language = result.get('language', 'en')
+                return text, language
             else:
                 logger.error(f"Whisper transcription failed: {response.status_code}")
                 return None
@@ -107,10 +109,10 @@ class VoiceAssistant:
             logger.error(f"Error transcribing audio: {e}")
             return None
 
-    def synthesize_speech(self, text: str) -> Optional[bytes]:
+    def synthesize_speech(self, text: str, language: str = "en") -> Optional[bytes]:
         """Synthesize speech using Piper"""
         try:
-            response = requests.post(f"{self.piper_url}/synthesize", json={"text": text}, timeout=30)
+            response = requests.post(f"{self.piper_url}/synthesize", json={"text": text, "language": language}, timeout=30)
             if response.status_code == 200:
                 return response.content
             else:
@@ -198,15 +200,16 @@ class VoiceAssistant:
                 return device
         return None
 
-    def speak_response(self, text: str):
+    def speak_response(self, text: str, language: str = "en"):
         """Speak a response using TTS"""
-        audio_data = self.synthesize_speech(text)
+        audio_data = self.synthesize_speech(text, language)
         if audio_data:
             # In a real implementation, this would play the audio
             logger.info(f"Speaking: {text}")
             # For now, just publish to MQTT for other systems to handle
             self.publish_mqtt("alicia/voice/response", json.dumps({
                 "text": text,
+                "language": language,
                 "audio_available": True
             }))
 

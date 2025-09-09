@@ -13,15 +13,15 @@ import whisper
 import uvicorn
 
 app = FastAPI()
-model = whisper.load_model("base")
+model = whisper.load_model("medium")
 
 @app.post("/transcribe")
 async def transcribe_audio(file: UploadFile):
     audio_data = await file.read()
     with open("/tmp/audio.wav", "wb") as f:
         f.write(audio_data)
-    result = model.transcribe("/tmp/audio.wav")
-    return {"text": result["text"]}
+    result = model.transcribe("/tmp/audio.wav", language=None)  # Detect language automatically
+    return {"text": result["text"], "language": result["language"]}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=9000)
