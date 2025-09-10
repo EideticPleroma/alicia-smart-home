@@ -99,13 +99,14 @@ models/
 
 ### Language Support
 
-| Language | Model | Quality |
-|----------|-------|---------|
-| English (US) | en_US-lessac-medium | High |
-| English (GB) | en_GB-alan-medium | High |
-| Spanish | es_ES-mls_10246-medium | High |
-| French | fr_FR-siwis-medium | High |
-| German | de_DE-thorsten-medium | High |
+| Language | Model | Quality | Status |
+|----------|-------|---------|--------|
+| English (GB) | en_GB-jenny_dioco-medium | High | **Primary** |
+| English (US) | en_US-lessac-medium | High | Fallback |
+| Spanish | es_ES-mls_10246-medium | High | Active |
+| French | fr_FR-upmc-medium | High | Active |
+| German | de_DE-thorsten-medium | High | Active |
+| Italian | it_IT-riccardo-xw | High | Active |
 
 ### Audio Generation Process
 
@@ -125,8 +126,8 @@ The Wyoming protocol server provides a standardized interface:
 ```python
 # Connect to unified TTS service
 async with AsyncTcpClient("localhost", 10200) as client:
-    # Send synthesis request
-    synthesize_event = Synthesize(text="Hello world", voice="en_US-lessac-medium")
+    # Send synthesis request (now uses British voice by default)
+    synthesize_event = Synthesize(text="Hello world", voice="en_GB-jenny_dioco-medium")
     await client.write_event(synthesize_event.event())
 
     # Receive audio response
@@ -148,8 +149,8 @@ mqtt:
   switch:
     - name: "Voice Synthesis"
       command_topic: "alicia/voice/synthesize"
-      payload_on: '{"text": "System online", "voice": "en_US-lessac-medium"}'
-      payload_off: '{"text": "System offline", "voice": "en_US-lessac-medium"}'
+      payload_on: '{"text": "System online", "voice": "en_GB-jenny_dioco-medium"}'
+      payload_off: '{"text": "System offline", "voice": "en_GB-jenny_dioco-medium"}'
 ```
 
 ## Google TTS Fallback
