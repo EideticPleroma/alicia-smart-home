@@ -291,30 +291,25 @@ class AliciaAssistant:
             raise
 
     async def synthesize_with_piper(self, text: str, language: str = "en") -> bytes:
-        """Synthesize speech using Wyoming Piper"""
+        """Synthesize speech using unified TTS service via MQTT to Sonos"""
         try:
-            from wyoming.tts import SynthesizeVoice
-            async with AsyncTcpClient(self.piper_host, self.piper_port) as client:
-                # Create voice object
-                voice = SynthesizeVoice(name=f"{language}_medium")
-                # Send synthesis request
-                await client.write_event(
-                    Synthesize(text=text, voice=voice).event()
-                )
+            # Send TTS request to Sonos bridge via MQTT instead of Wyoming protocol
+            tts_payload = {
+                "speaker": "kitchen",  # Default speaker
+                "message": text,
+                "language": language,
+                "volume": 30,
+                "use_wyoming": True  # Flag for Wyoming protocol compatibility
+            }
+            self.publish_mqtt("alicia/tts/kitchen", json.dumps(tts_payload))
 
-                # Collect audio data
-                audio_chunks = []
-                while True:
-                    event = await client.read_event()
-                    if event.type == "audio-chunk":
-                        audio_chunks.append(event.data)
-                    elif event.type == "audio-stop":
-                        break
-
-                return b"".join(audio_chunks)
+            # Return empty bytes since audio is handled by Sonos bridge
+            # This maintains API compatibility while redirecting to MQTT
+            logger.info(f"TTS request sent to Sonos bridge: {text}")
+            return b""
 
         except Exception as e:
-            logger.error(f"Piper synthesis error: {e}")
+            logger.error(f"TTS synthesis error: {e}")
             raise
 
     async def process_voice_command(self, command: str) -> str:

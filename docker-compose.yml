@@ -24,15 +24,25 @@ services:
       retries: 3
       start_period: 60s
 
-  wyoming-piper:
-    container_name: alicia_wyoming_piper
-    image: rhasspy/wyoming-piper:latest
+  unified-tts-service:
+    container_name: alicia_unified_tts
+    build:
+      context: ./voice-processing
+      dockerfile: Dockerfile.assistant
     ports:
       - "10200:10200"
+    environment:
+      - MQTT_BROKER=alicia_mqtt
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=tts_service
+      - MQTT_PASSWORD=alicia_ha_mqtt_2024
     volumes:
-      - ./voice-processing/models/piper:/data
-    command: --voice en_US-lessac-medium --uri tcp://0.0.0.0:10200
+      - ./voice-processing/models/piper:/usr/local/bin/piper/models:ro
+      - ./tmp/audio:/tmp/audio
+    command: ["python", "unified-tts-service.py"]
     restart: unless-stopped
+    depends_on:
+      - mqtt
     networks:
       - alicia_network
     healthcheck:
@@ -52,7 +62,7 @@ services:
       - "8000:8000"
     environment:
       - WHISPER_URL=tcp://alicia_wyoming_whisper:10300
-      - PIPER_URL=tcp://alicia_wyoming_piper:10200
+      - PIPER_URL=tcp://alicia_unified_tts:10200
       - MQTT_BROKER=alicia_mqtt
       - MQTT_PORT=1883
       - MQTT_USERNAME=voice_assistant
@@ -62,7 +72,7 @@ services:
       - ./voice-processing/models:/app/models
     depends_on:
       - wyoming-whisper
-      - wyoming-piper
+      - unified-tts-service
       - mqtt
     restart: unless-stopped
     networks:
