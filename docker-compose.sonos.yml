@@ -4,18 +4,19 @@ services:
       context: .
       dockerfile: Dockerfile.sonos
     container_name: alicia_sonos_bridge
+    network_mode: host
     environment:
-      - MQTT_BROKER=alicia_mqtt
+      - MQTT_BROKER=localhost
       - MQTT_PORT=1883
-      - MQTT_USERNAME=test_user
-      - MQTT_PASSWORD=test_password
+      - MQTT_USERNAME=sonos_speaker
+      - MQTT_PASSWORD=alicia_ha_mqtt_2024
     volumes:
       - ./mqtt-testing/scripts:/app
+      # Mount shared audio directory for HTTP server access
+      - //c/temp/audio:/tmp/audio:rw
     working_dir: /app
     command: python sonos-mqtt-bridge.py
     restart: unless-stopped
-    networks:
-      - alicia_network
     depends_on:
       - mqtt
 

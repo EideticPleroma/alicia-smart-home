@@ -36,13 +36,13 @@ function Add-FirewallRule {
 
         # Create new rule
         New-NetFirewallRule -DisplayName $DisplayName `
-                           -Name $Name `
-                           -Direction Inbound `
-                           -Action Allow `
-                           -Protocol $Protocol `
-                           -LocalPort $Port `
-                           -Profile Any `
-                           -Description "Allow Sonos audio streaming"
+-Name $Name `
+-Direction Inbound `
+-Action Allow `
+-Protocol $Protocol `
+-LocalPort $Port `
+-Profile Any `
+-Description "Allow Sonos audio streaming"
 
         Write-Host "   ✅ Rule added successfully" -ForegroundColor Green
     }
@@ -107,13 +107,13 @@ foreach ($port in $testPorts) {
     try {
         $connection = Test-NetConnection -ComputerName "127.0.0.1" -Port $port -ErrorAction Stop
         if ($connection.TcpTestSucceeded) {
-            Write-Host "   ✅ Port $port: OPEN" -ForegroundColor Green
+            Write-Host "   ✅ Port ${port}: OPEN" -ForegroundColor Green
         } else {
-            Write-Host "   ❌ Port $port: BLOCKED" -ForegroundColor Red
+            Write-Host "   ❌ Port ${port}: BLOCKED" -ForegroundColor Red
         }
     }
     catch {
-        Write-Host "   ❌ Port $port: ERROR - $($_.Exception.Message)" -ForegroundColor Red
+        Write-Host "   ❌ Port ${port}: ERROR - $($_.Exception.Message)" -ForegroundColor Red
     }
 }
 

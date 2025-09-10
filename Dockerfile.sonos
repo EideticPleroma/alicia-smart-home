@@ -1,12 +1,31 @@
 FROM python:3.11-slim
 
-# Install system dependencies for Sonos library
+# Install system dependencies for Sonos library and Piper TTS
 RUN apt-get update && apt-get install -y \
     gcc \
     g++ \
     libxml2-dev \
     libxslt-dev \
+    wget \
+    curl \
+    alsa-utils \
+    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Piper TTS
+RUN wget -q -O /tmp/piper_amd64.tar.gz https://github.com/rhasspy/piper/releases/download/v1.2.0/piper_amd64.tar.gz && \
+    tar -xzf /tmp/piper_amd64.tar.gz -C /usr/local/bin && \
+    chmod +x /usr/local/bin/piper/piper && \
+    rm /tmp/piper_amd64.tar.gz
+
+# Download Piper voice models
+RUN mkdir -p /usr/local/bin/piper/models && \
+    cd /usr/local/bin/piper/models && \
+    wget -q https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/lessac/medium/en_US-lessac-medium.onnx && \
+    wget -q https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/lessac/medium/en_US-lessac-medium.onnx.json
+
+# Create audio directory for TTS files with proper permissions
+RUN mkdir -p /tmp/audio && chmod 777 /tmp/audio
 
 # Set working directory
 WORKDIR /app

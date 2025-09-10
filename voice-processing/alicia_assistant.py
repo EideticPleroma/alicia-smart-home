@@ -40,7 +40,7 @@ class AliciaAssistant:
         # Parse URLs for AsyncTcpClient (expects host, port separately)
         self.whisper_host, self.whisper_port = self._parse_wyoming_url(self.whisper_url)
         self.piper_host, self.piper_port = self._parse_wyoming_url(self.piper_url)
-        self.mqtt_broker = os.getenv("MQTT_BROKER", "localhost")
+        self.mqtt_broker = os.getenv("MQTT_BROKER", "alicia_mqtt")
         self.mqtt_port = int(os.getenv("MQTT_PORT", "1883"))
         self.mqtt_username = os.getenv("MQTT_USERNAME", "voice_assistant")
         self.mqtt_password = os.getenv("MQTT_PASSWORD", "alicia_ha_mqtt_2024")
@@ -138,6 +138,9 @@ class AliciaAssistant:
                     "response": response,
                     "session_id": self.session_id
                 }))
+
+                # Send TTS to Sonos speaker
+                self.send_tts_to_sonos(response, "kitchen")
 
                 # Synthesize response in background
                 background_tasks.add_task(self.synthesize_and_publish, response)
@@ -390,6 +393,17 @@ class AliciaAssistant:
             logger.info(f"Synthesized response: {text}")
         except Exception as e:
             logger.error(f"Error synthesizing response: {e}")
+
+    def send_tts_to_sonos(self, text: str, speaker: str = "kitchen"):
+        """Send TTS command to Sonos speaker"""
+        tts_payload = {
+            "speaker": speaker,
+            "message": text,
+            "language": "en",
+            "volume": 30
+        }
+        self.publish_mqtt(f"alicia/tts/{speaker}", json.dumps(tts_payload))
+        logger.info(f"Sent TTS to {speaker} speaker: {text}")
 
     def publish_mqtt(self, topic: str, payload: str):
         """Publish message to MQTT"""

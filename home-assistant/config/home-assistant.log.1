@@ -1,172 +1,788 @@
-2025-09-10 02:10:06.677 INFO (MainThread) [homeassistant.setup] Setup of domain http took 0.08 seconds
-2025-09-10 02:10:06.677 INFO (MainThread) [homeassistant.setup] Setup of domain system_log took 0.08 seconds
-2025-09-10 02:10:06.677 INFO (MainThread) [homeassistant.setup] Setting up websocket_api
-2025-09-10 02:10:06.678 INFO (MainThread) [homeassistant.setup] Setup of domain websocket_api took 0.00 seconds
-2025-09-10 02:10:06.678 INFO (MainThread) [homeassistant.setup] Setup of domain logger took 0.08 seconds
-2025-09-10 02:10:06.682 INFO (MainThread) [homeassistant.setup] Setting up network
-2025-09-10 02:10:06.684 INFO (MainThread) [homeassistant.setup] Setup of domain network took 0.00 seconds
-2025-09-10 02:10:06.684 INFO (MainThread) [homeassistant.bootstrap] Setting up stage frontend: {'frontend'}; already set up: {}
-Dependencies: {'device_automation', 'search', 'api', 'onboarding', 'repairs', 'config', 'file_upload', 'auth', 'diagnostics', 'lovelace'}; already set up: {'http', 'system_log', 'websocket_api'}
-2025-09-10 02:10:06.684 INFO (MainThread) [homeassistant.setup] Setting up device_automation
-2025-09-10 02:10:06.684 INFO (MainThread) [homeassistant.setup] Setup of domain device_automation took 0.00 seconds
-2025-09-10 02:10:06.685 INFO (MainThread) [homeassistant.setup] Setting up search
-2025-09-10 02:10:06.685 INFO (MainThread) [homeassistant.setup] Setup of domain search took 0.00 seconds
-2025-09-10 02:10:06.685 INFO (MainThread) [homeassistant.setup] Setting up api
-2025-09-10 02:10:06.686 INFO (MainThread) [homeassistant.setup] Setup of domain api took 0.00 seconds
-2025-09-10 02:10:06.686 INFO (MainThread) [homeassistant.setup] Setting up auth
-2025-09-10 02:10:06.687 INFO (MainThread) [homeassistant.setup] Setup of domain auth took 0.00 seconds
-2025-09-10 02:10:06.687 INFO (MainThread) [homeassistant.setup] Setting up onboarding
-2025-09-10 02:10:06.687 INFO (MainThread) [homeassistant.setup] Setup of domain onboarding took 0.00 seconds
-2025-09-10 02:10:06.687 INFO (MainThread) [homeassistant.setup] Setting up repairs
-2025-09-10 02:10:06.688 INFO (MainThread) [homeassistant.setup] Setup of domain repairs took 0.00 seconds
-2025-09-10 02:10:06.688 INFO (MainThread) [homeassistant.setup] Setting up config
-2025-09-10 02:10:06.691 INFO (MainThread) [homeassistant.setup] Setup of domain config took 0.00 seconds
-2025-09-10 02:10:06.691 INFO (MainThread) [homeassistant.setup] Setting up diagnostics
-2025-09-10 02:10:06.692 INFO (MainThread) [homeassistant.setup] Setup of domain diagnostics took 0.00 seconds
-2025-09-10 02:10:06.692 INFO (MainThread) [homeassistant.setup] Setting up file_upload
-2025-09-10 02:10:06.692 INFO (MainThread) [homeassistant.setup] Setup of domain file_upload took 0.00 seconds
-2025-09-10 02:10:06.692 INFO (MainThread) [homeassistant.setup] Setting up lovelace
-2025-09-10 02:10:06.694 INFO (MainThread) [homeassistant.setup] Setup of domain lovelace took 0.00 seconds
-2025-09-10 02:10:06.701 INFO (MainThread) [homeassistant.setup] Setting up frontend
-2025-09-10 02:10:06.709 INFO (MainThread) [homeassistant.setup] Setup of domain frontend took 0.01 seconds
-2025-09-10 02:10:06.709 INFO (MainThread) [homeassistant.bootstrap] Setting up stage recorder: {'recorder'}; already set up: {}
+2025-09-10 03:54:36.687 INFO (MainThread) [homeassistant.setup] Setting up system_log
+2025-09-10 03:54:36.687 INFO (MainThread) [homeassistant.setup] Setting up http
+2025-09-10 03:54:36.739 INFO (MainThread) [homeassistant.setup] Setup of domain logger took 0.05 seconds
+2025-09-10 03:54:36.739 INFO (MainThread) [homeassistant.setup] Setup of domain system_log took 0.05 seconds
+2025-09-10 03:54:36.739 INFO (MainThread) [homeassistant.setup] Setup of domain http took 0.05 seconds
+2025-09-10 03:54:36.739 INFO (MainThread) [homeassistant.setup] Setting up websocket_api
+2025-09-10 03:54:36.740 INFO (MainThread) [homeassistant.setup] Setup of domain websocket_api took 0.00 seconds
+2025-09-10 03:54:36.745 INFO (MainThread) [homeassistant.setup] Setting up network
+2025-09-10 03:54:36.746 INFO (MainThread) [homeassistant.setup] Setup of domain network took 0.00 seconds
+2025-09-10 03:54:36.747 INFO (MainThread) [homeassistant.bootstrap] Setting up stage frontend: {'frontend'}; already set up: {}
+Dependencies: {'config', 'onboarding', 'file_upload', 'device_automation', 'diagnostics', 'repairs', 'lovelace', 'search', 'api', 'auth'}; already set up: {'websocket_api', 'http', 'system_log'}
+2025-09-10 03:54:36.747 INFO (MainThread) [homeassistant.setup] Setting up config
+2025-09-10 03:54:36.749 INFO (MainThread) [homeassistant.setup] Setup of domain config took 0.00 seconds
+2025-09-10 03:54:36.749 INFO (MainThread) [homeassistant.setup] Setting up auth
+2025-09-10 03:54:36.750 INFO (MainThread) [homeassistant.setup] Setup of domain auth took 0.00 seconds
+2025-09-10 03:54:36.750 INFO (MainThread) [homeassistant.setup] Setting up onboarding
+2025-09-10 03:54:36.751 INFO (MainThread) [homeassistant.setup] Setup of domain onboarding took 0.00 seconds
+2025-09-10 03:54:36.751 INFO (MainThread) [homeassistant.setup] Setting up file_upload
+2025-09-10 03:54:36.751 INFO (MainThread) [homeassistant.setup] Setup of domain file_upload took 0.00 seconds
+2025-09-10 03:54:36.751 INFO (MainThread) [homeassistant.setup] Setting up device_automation
+2025-09-10 03:54:36.751 INFO (MainThread) [homeassistant.setup] Setup of domain device_automation took 0.00 seconds
+2025-09-10 03:54:36.751 INFO (MainThread) [homeassistant.setup] Setting up diagnostics
+2025-09-10 03:54:36.752 INFO (MainThread) [homeassistant.setup] Setup of domain diagnostics took 0.00 seconds
+2025-09-10 03:54:36.752 INFO (MainThread) [homeassistant.setup] Setting up api
+2025-09-10 03:54:36.753 INFO (MainThread) [homeassistant.setup] Setup of domain api took 0.00 seconds
+2025-09-10 03:54:36.753 INFO (MainThread) [homeassistant.setup] Setting up lovelace
+2025-09-10 03:54:36.754 INFO (MainThread) [homeassistant.setup] Setting up repairs
+2025-09-10 03:54:36.755 INFO (MainThread) [homeassistant.setup] Setup of domain repairs took 0.00 seconds
+2025-09-10 03:54:36.755 INFO (MainThread) [homeassistant.setup] Setting up search
+2025-09-10 03:54:36.755 INFO (MainThread) [homeassistant.setup] Setup of domain search took 0.00 seconds
+2025-09-10 03:54:36.756 INFO (MainThread) [homeassistant.setup] Setup of domain lovelace took 0.00 seconds
+2025-09-10 03:54:36.763 INFO (MainThread) [homeassistant.setup] Setting up frontend
+2025-09-10 03:54:36.769 INFO (MainThread) [homeassistant.setup] Setup of domain frontend took 0.01 seconds
+2025-09-10 03:54:36.770 INFO (MainThread) [homeassistant.bootstrap] Setting up stage recorder: {'recorder'}; already set up: {}
 Dependencies: {}; already set up: {}
-2025-09-10 02:10:06.711 INFO (MainThread) [homeassistant.setup] Setup of domain http took 0.00 seconds
-2025-09-10 02:10:06.726 INFO (MainThread) [homeassistant.setup] Setting up recorder
-2025-09-10 02:10:06.864 WARNING (Recorder) [homeassistant.components.recorder.util] Ended unfinished session (id=58 from 2025-09-10 01:03:59.827618+00:00)
-2025-09-10 02:10:06.887 INFO (MainThread) [homeassistant.setup] Setup of domain recorder took 0.16 seconds
-2025-09-10 02:10:06.888 INFO (MainThread) [homeassistant.bootstrap] Nothing to set up in stage debugger: {'debugpy'}
-2025-09-10 02:10:06.888 INFO (MainThread) [homeassistant.bootstrap] Setting up stage zeroconf: {'zeroconf'}; already set up: {}
-Dependencies: {}; already set up: {'http', 'websocket_api', 'network', 'api'}
-2025-09-10 02:10:06.888 INFO (MainThread) [homeassistant.setup] Setting up zeroconf
-2025-09-10 02:10:06.890 INFO (MainThread) [homeassistant.components.zeroconf] Starting Zeroconf broadcast
-2025-09-10 02:10:06.890 INFO (MainThread) [homeassistant.setup] Setup of domain zeroconf took 0.00 seconds
-2025-09-10 02:10:06.890 INFO (MainThread) [homeassistant.bootstrap] Setting up stage 1: {'ssdp'}; already set up: {}
-Dependencies: {}; already set up: {'http', 'websocket_api', 'network'}
-2025-09-10 02:10:06.919 INFO (MainThread) [homeassistant.setup] Setting up ssdp
-2025-09-10 02:10:06.922 INFO (MainThread) [homeassistant.setup] Setup of domain ssdp took 0.00 seconds
-2025-09-10 02:10:06.922 INFO (MainThread) [homeassistant.bootstrap] Setting up stage 2: {'binary_sensor', 'automation', 'hardware', 'system_health', 'input_select', 'mqtt', 'schedule', 'input_text', 'script', 'analytics', 'tts', 'sonos', 'tag', 'application_credentials', 'logbook', 'input_number', 'timer', 'group', 'scene', 'media_source', 'input_boolean', 'input_button', 'input_datetime', 'person', 'history', 'backup', 'zone', 'counter'}; already set up: {'network', 'api', 'recorder', 'zeroconf', 'logger', 'frontend', 'http', 'homeassistant', 'ssdp'}
-Dependencies: {'blueprint', 'ffmpeg', 'trace', 'image_upload'}; already set up: {'system_log', 'api', 'onboarding', 'repairs', 'config', 'file_upload', 'lovelace', 'device_automation', 'search', 'network', 'websocket_api', 'recorder', 'zeroconf', 'frontend', 'auth', 'http', 'diagnostics', 'ssdp'}
-2025-09-10 02:10:06.922 INFO (MainThread) [homeassistant.setup] Setting up binary_sensor
-2025-09-10 02:10:06.922 INFO (MainThread) [homeassistant.setup] Setup of domain binary_sensor took 0.00 seconds
-2025-09-10 02:10:06.923 INFO (MainThread) [homeassistant.setup] Setting up scene
-2025-09-10 02:10:06.923 INFO (MainThread) [homeassistant.components.scene] Setting up homeassistant.scene
-2025-09-10 02:10:06.924 INFO (MainThread) [homeassistant.setup] Setup of domain scene took 0.00 seconds
-2025-09-10 02:10:06.924 INFO (MainThread) [homeassistant.setup] Setting up blueprint
-2025-09-10 02:10:06.924 INFO (MainThread) [homeassistant.setup] Setup of domain blueprint took 0.00 seconds
-2025-09-10 02:10:06.925 INFO (MainThread) [homeassistant.setup] Setting up trace
-2025-09-10 02:10:06.925 INFO (MainThread) [homeassistant.setup] Setup of domain trace took 0.00 seconds
-2025-09-10 02:10:06.933 INFO (MainThread) [homeassistant.setup] Setting up logbook
-2025-09-10 02:10:06.933 INFO (MainThread) [homeassistant.setup] Setup of domain logbook took 0.00 seconds
-2025-09-10 02:10:06.934 INFO (MainThread) [homeassistant.setup] Setting up input_number
-2025-09-10 02:10:06.935 INFO (MainThread) [homeassistant.setup] Setup of domain input_number took 0.00 seconds
-2025-09-10 02:10:06.935 INFO (MainThread) [homeassistant.setup] Setting up image_upload
-2025-09-10 02:10:06.936 INFO (MainThread) [homeassistant.setup] Setup of domain image_upload took 0.00 seconds
-2025-09-10 02:10:06.936 INFO (MainThread) [homeassistant.setup] Setting up system_health
-2025-09-10 02:10:06.936 INFO (MainThread) [homeassistant.setup] Setup of domain system_health took 0.00 seconds
-2025-09-10 02:10:06.937 INFO (MainThread) [homeassistant.setup] Setting up group
-2025-09-10 02:10:06.938 INFO (MainThread) [homeassistant.setup] Setup of domain group took 0.00 seconds
-2025-09-10 02:10:06.938 INFO (MainThread) [homeassistant.setup] Setting up zone
-2025-09-10 02:10:06.940 INFO (MainThread) [homeassistant.setup] Setup of domain zone took 0.00 seconds
-2025-09-10 02:10:06.940 INFO (MainThread) [homeassistant.setup] Setting up person
-2025-09-10 02:10:06.940 WARNING (MainThread) [homeassistant.helpers.config_validation] The 'exclude' option near /config/configuration.yaml:31 is deprecated, please remove it from your configuration
-2025-09-10 02:10:06.941 INFO (MainThread) [homeassistant.setup] Setting up history
-2025-09-10 02:10:06.941 INFO (MainThread) [homeassistant.setup] Setup of domain history took 0.00 seconds
-2025-09-10 02:10:06.941 INFO (MainThread) [homeassistant.setup] Setting up script
-2025-09-10 02:10:06.942 INFO (MainThread) [homeassistant.setup] Setup of domain script took 0.00 seconds
-2025-09-10 02:10:06.943 INFO (MainThread) [homeassistant.setup] Setting up backup
-2025-09-10 02:10:06.946 INFO (MainThread) [homeassistant.setup] Setup of domain backup took 0.00 seconds
-2025-09-10 02:10:06.947 INFO (MainThread) [homeassistant.setup] Setup of domain person took 0.01 seconds
-2025-09-10 02:10:06.952 INFO (MainThread) [homeassistant.setup] Setting up ffmpeg
-2025-09-10 02:10:06.952 INFO (MainThread) [homeassistant.setup] Setup of domain ffmpeg took 0.00 seconds
-2025-09-10 02:10:06.958 INFO (MainThread) [homeassistant.setup] Setting up media_source
-2025-09-10 02:10:06.959 INFO (MainThread) [homeassistant.setup] Setup of domain media_source took 0.00 seconds
-2025-09-10 02:10:07.002 INFO (MainThread) [homeassistant.setup] Setting up tag
-2025-09-10 02:10:07.003 INFO (MainThread) [homeassistant.setup] Setup of domain tag took 0.00 seconds
-2025-09-10 02:10:07.005 INFO (MainThread) [homeassistant.setup] Setting up application_credentials
-2025-09-10 02:10:07.006 INFO (MainThread) [homeassistant.setup] Setup of domain application_credentials took 0.00 seconds
-2025-09-10 02:10:07.013 INFO (MainThread) [homeassistant.setup] Setting up hardware
-2025-09-10 02:10:07.027 INFO (MainThread) [homeassistant.setup] Setting up input_select
-2025-09-10 02:10:07.029 INFO (MainThread) [homeassistant.setup] Setup of domain input_select took 0.00 seconds
-2025-09-10 02:10:07.047 INFO (MainThread) [homeassistant.setup] Setup of domain hardware took 0.03 seconds
-2025-09-10 02:10:07.047 INFO (MainThread) [homeassistant.setup] Setting up mqtt
-2025-09-10 02:10:07.047 INFO (MainThread) [homeassistant.setup] Setup of domain mqtt took 0.00 seconds
-2025-09-10 02:10:07.050 INFO (MainThread) [homeassistant.setup] Setting up timer
-2025-09-10 02:10:07.051 INFO (MainThread) [homeassistant.setup] Setup of domain timer took 0.00 seconds
-2025-09-10 02:10:07.058 INFO (MainThread) [homeassistant.setup] Setting up schedule
-2025-09-10 02:10:07.059 INFO (MainThread) [homeassistant.setup] Setup of domain schedule took 0.00 seconds
-2025-09-10 02:10:07.064 INFO (MainThread) [homeassistant.setup] Setting up input_text
-2025-09-10 02:10:07.065 INFO (MainThread) [homeassistant.setup] Setup of domain input_text took 0.00 seconds
-2025-09-10 02:10:07.067 INFO (MainThread) [homeassistant.setup] Setting up input_boolean
-2025-09-10 02:10:07.068 INFO (MainThread) [homeassistant.setup] Setup of domain input_boolean took 0.00 seconds
-2025-09-10 02:10:07.071 INFO (MainThread) [homeassistant.setup] Setting up input_button
-2025-09-10 02:10:07.072 INFO (MainThread) [homeassistant.setup] Setup of domain input_button took 0.00 seconds
-2025-09-10 02:10:07.075 INFO (MainThread) [homeassistant.setup] Setting up input_datetime
-2025-09-10 02:10:07.077 INFO (MainThread) [homeassistant.setup] Setup of domain input_datetime took 0.00 seconds
-2025-09-10 02:10:07.097 INFO (MainThread) [homeassistant.setup] Setting up analytics
-2025-09-10 02:10:07.097 INFO (MainThread) [homeassistant.setup] Setup of domain analytics took 0.00 seconds
-2025-09-10 02:10:07.100 INFO (MainThread) [homeassistant.setup] Setting up counter
-2025-09-10 02:10:07.101 INFO (MainThread) [homeassistant.setup] Setup of domain counter took 0.00 seconds
-2025-09-10 02:10:07.178 INFO (MainThread) [homeassistant.setup] Setting up sonos
-2025-09-10 02:10:07.178 INFO (MainThread) [homeassistant.setup] Setup of domain sonos took 0.00 seconds
-2025-09-10 02:10:07.181 INFO (MainThread) [homeassistant.setup] Setting up automation
-2025-09-10 02:10:07.183 INFO (MainThread) [homeassistant.setup] Setup of domain automation took 0.00 seconds
-2025-09-10 02:10:07.464 INFO (MainThread) [homeassistant.setup] Setting up event
-2025-09-10 02:10:07.465 INFO (MainThread) [homeassistant.setup] Setup of domain event took 0.00 seconds
-2025-09-10 02:10:07.466 INFO (MainThread) [homeassistant.setup] Setting up sensor
-2025-09-10 02:10:07.466 INFO (MainThread) [homeassistant.setup] Setup of domain sensor took 0.00 seconds
-2025-09-10 02:10:07.468 INFO (MainThread) [homeassistant.components.event] Setting up backup.event
-2025-09-10 02:10:07.469 INFO (MainThread) [homeassistant.components.sensor] Setting up backup.sensor
-2025-09-10 02:10:07.481 INFO (MainThread) [homeassistant.setup] Setting up tts
-2025-09-10 02:10:07.486 INFO (MainThread) [homeassistant.setup] Setup of domain tts took 0.00 seconds
-2025-09-10 02:10:08.041 INFO (MainThread) [homeassistant.setup] Setting up media_player
-2025-09-10 02:10:08.044 INFO (MainThread) [homeassistant.setup] Setup of domain media_player took 0.00 seconds
-2025-09-10 02:10:08.044 INFO (MainThread) [homeassistant.setup] Setting up number
-2025-09-10 02:10:08.045 INFO (MainThread) [homeassistant.setup] Setup of domain number took 0.00 seconds
-2025-09-10 02:10:08.045 INFO (MainThread) [homeassistant.setup] Setting up select
-2025-09-10 02:10:08.046 INFO (MainThread) [homeassistant.setup] Setup of domain select took 0.00 seconds
-2025-09-10 02:10:08.046 INFO (MainThread) [homeassistant.setup] Setting up switch
-2025-09-10 02:10:08.046 INFO (MainThread) [homeassistant.setup] Setup of domain switch took 0.00 seconds
-2025-09-10 02:10:08.048 INFO (MainThread) [homeassistant.components.binary_sensor] Setting up sonos.binary_sensor
-2025-09-10 02:10:08.048 INFO (MainThread) [homeassistant.components.media_player] Setting up sonos.media_player
-2025-09-10 02:10:08.049 INFO (MainThread) [homeassistant.components.number] Setting up sonos.number
-2025-09-10 02:10:08.049 INFO (MainThread) [homeassistant.components.select] Setting up sonos.select
-2025-09-10 02:10:08.049 INFO (MainThread) [homeassistant.components.sensor] Setting up sonos.sensor
-2025-09-10 02:10:08.049 INFO (MainThread) [homeassistant.components.switch] Setting up sonos.switch
-2025-09-10 02:10:12.461 ERROR (MainThread) [homeassistant.components.mqtt.client] Failed to connect to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:10:17.471 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:10:18.094 WARNING (MainThread) [homeassistant.components.sonos] Could not get visible Sonos devices from 192.168.1.103: HTTPConnectionPool(host='192.168.1.103', port=1400): Max retries exceeded with url: /xml/DeviceProperties1.xml (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x71d2be744d60>, 'Connection to 192.168.1.103 timed out. (connect timeout=10)'))
-2025-09-10 02:10:20.142 WARNING (MainThread) [homeassistant.components.sonos] Subscription to 192.168.1.101 failed, attempting to poll directly
-2025-09-10 02:10:22.143 INFO (MainThread) [homeassistant.bootstrap] Home Assistant initialized in 16.62s
-2025-09-10 02:10:22.144 INFO (MainThread) [homeassistant.core] Starting Home Assistant 2025.9.1
-2025-09-10 02:10:22.169 DEBUG (MainThread) [homeassistant.components.mqtt.trigger] Attaching MQTT trigger for topic: 'alicia/tts/announce', payload: 'None'
-2025-09-10 02:10:22.169 INFO (MainThread) [homeassistant.components.automation.sonos_tts_announcement] Initialized trigger Sonos TTS Announcement
-2025-09-10 02:10:22.169 DEBUG (MainThread) [homeassistant.components.mqtt.trigger] Attaching MQTT trigger for topic: 'alicia/commands/sonos/group', payload: 'None'
-2025-09-10 02:10:22.169 INFO (MainThread) [homeassistant.components.automation.sonos_multi_room_group_control] Initialized trigger Sonos Multi-Room Group Control
-2025-09-10 02:10:22.169 DEBUG (MainThread) [homeassistant.components.mqtt.trigger] Attaching MQTT trigger for topic: 'alicia/commands/sonos/volume', payload: 'None'
-2025-09-10 02:10:22.169 INFO (MainThread) [homeassistant.components.automation.sonos_volume_control] Initialized trigger Sonos Volume Control
-2025-09-10 02:10:22.169 DEBUG (MainThread) [homeassistant.components.mqtt.trigger] Attaching MQTT trigger for topic: 'alicia/commands/sonos/playback', payload: 'None'
-2025-09-10 02:10:22.169 INFO (MainThread) [homeassistant.components.automation.sonos_playback_control] Initialized trigger Sonos Playback Control
-2025-09-10 02:10:22.170 INFO (MainThread) [homeassistant.components.automation.sonos_status_monitor] Initialized trigger Sonos Status Monitor
-2025-09-10 02:10:32.476 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:10:50.382 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:11:05.386 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:11:23.301 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:11:38.307 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:11:56.263 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:12:11.267 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:12:29.098 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:12:44.102 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:13:01.979 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:13:16.984 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:13:17.274 ERROR (MainThread) [homeassistant.components.sonos.household_coordinator] Could not refresh SonosFavorites: Error calling SonosFavorites.update_cache on Bedroom: HTTPConnectionPool(host='192.168.1.102', port=1400): Max retries exceeded with url: /MediaServer/ContentDirectory/Control (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x71d2a26e1150>, 'Connection to 192.168.1.102 timed out. (connect timeout=9.5)'))
-2025-09-10 02:13:34.950 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:13:49.955 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:14:07.860 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:14:22.865 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:14:40.736 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:14:55.740 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:15:13.646 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:15:28.650 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:15:46.614 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
-2025-09-10 02:16:01.617 DEBUG (MainThread) [homeassistant.components.mqtt.client] Error re-connecting to MQTT server due to exception: [Errno -3] Try again
+2025-09-10 03:54:36.771 INFO (MainThread) [homeassistant.setup] Setup of domain http took 0.00 seconds
+2025-09-10 03:54:36.781 INFO (MainThread) [homeassistant.setup] Setting up recorder
+2025-09-10 03:54:36.893 WARNING (Recorder) [homeassistant.components.recorder.util] Ended unfinished session (id=74 from 2025-09-10 02:48:35.129552+00:00)
+2025-09-10 03:54:36.914 INFO (MainThread) [homeassistant.setup] Setup of domain recorder took 0.13 seconds
+2025-09-10 03:54:36.914 INFO (MainThread) [homeassistant.bootstrap] Nothing to set up in stage debugger: {'debugpy'}
+2025-09-10 03:54:36.914 INFO (MainThread) [homeassistant.bootstrap] Setting up stage zeroconf: {'zeroconf'}; already set up: {}
+Dependencies: {}; already set up: {'websocket_api', 'network', 'api', 'http'}
+2025-09-10 03:54:36.914 INFO (MainThread) [homeassistant.setup] Setting up zeroconf
+2025-09-10 03:54:36.916 INFO (MainThread) [homeassistant.components.zeroconf] Starting Zeroconf broadcast
+2025-09-10 03:54:36.916 INFO (MainThread) [homeassistant.setup] Setup of domain zeroconf took 0.00 seconds
+2025-09-10 03:54:36.916 INFO (MainThread) [homeassistant.bootstrap] Setting up stage 1: {'ssdp'}; already set up: {}
+Dependencies: {}; already set up: {'websocket_api', 'network', 'http'}
+2025-09-10 03:54:36.940 INFO (MainThread) [homeassistant.setup] Setting up ssdp
+2025-09-10 03:54:36.943 INFO (MainThread) [homeassistant.setup] Setup of domain ssdp took 0.00 seconds
+2025-09-10 03:54:36.943 INFO (MainThread) [homeassistant.bootstrap] Setting up stage 2: {'sonos', 'input_select', 'timer', 'input_boolean', 'person', 'media_source', 'analytics', 'input_button', 'backup', 'schedule', 'group', 'history', 'system_health', 'counter', 'script', 'hardware', 'tag', 'zone', 'logbook', 'tts', 'application_credentials', 'input_number', 'scene', 'mqtt', 'binary_sensor', 'input_text', 'automation', 'input_datetime'}; already set up: {'http', 'zeroconf', 'ssdp', 'frontend', 'recorder', 'logger', 'homeassistant', 'network', 'api'}
+Dependencies: {'ffmpeg', 'trace', 'blueprint', 'image_upload'}; already set up: {'onboarding', 'file_upload', 'device_automation', 'http', 'ssdp', 'zeroconf', 'repairs', 'lovelace', 'search', 'frontend', 'network', 'api', 'system_log', 'config', 'diagnostics', 'websocket_api', 'recorder', 'auth'}
+2025-09-10 03:54:36.944 INFO (MainThread) [homeassistant.setup] Setting up scene
+2025-09-10 03:54:36.945 INFO (MainThread) [homeassistant.components.scene] Setting up homeassistant.scene
+2025-09-10 03:54:36.945 INFO (MainThread) [homeassistant.setup] Setup of domain scene took 0.00 seconds
+2025-09-10 03:54:36.946 INFO (MainThread) [homeassistant.setup] Setting up binary_sensor
+2025-09-10 03:54:36.946 INFO (MainThread) [homeassistant.setup] Setup of domain binary_sensor took 0.00 seconds
+2025-09-10 03:54:36.946 INFO (MainThread) [homeassistant.setup] Setting up blueprint
+2025-09-10 03:54:36.946 INFO (MainThread) [homeassistant.setup] Setup of domain blueprint took 0.00 seconds
+2025-09-10 03:54:36.946 INFO (MainThread) [homeassistant.setup] Setting up trace
+2025-09-10 03:54:36.946 INFO (MainThread) [homeassistant.setup] Setup of domain trace took 0.00 seconds
+2025-09-10 03:54:36.946 INFO (MainThread) [homeassistant.setup] Setting up script
+2025-09-10 03:54:36.946 INFO (MainThread) [homeassistant.setup] Setup of domain script took 0.00 seconds
+2025-09-10 03:54:36.947 INFO (MainThread) [homeassistant.setup] Setting up zone
+2025-09-10 03:54:36.949 INFO (MainThread) [homeassistant.setup] Setup of domain zone took 0.00 seconds
+2025-09-10 03:54:36.949 INFO (MainThread) [homeassistant.setup] Setting up logbook
+2025-09-10 03:54:36.950 INFO (MainThread) [homeassistant.setup] Setup of domain logbook took 0.00 seconds
+2025-09-10 03:54:36.950 INFO (MainThread) [homeassistant.setup] Setting up backup
+2025-09-10 03:54:36.950 INFO (MainThread) [homeassistant.setup] Setting up group
+2025-09-10 03:54:36.951 INFO (MainThread) [homeassistant.setup] Setup of domain group took 0.00 seconds
+2025-09-10 03:54:36.951 INFO (MainThread) [homeassistant.setup] Setting up input_number
+2025-09-10 03:54:36.952 INFO (MainThread) [homeassistant.setup] Setup of domain input_number took 0.00 seconds
+2025-09-10 03:54:36.952 WARNING (MainThread) [homeassistant.helpers.config_validation] The 'exclude' option near /config/configuration.yaml:31 is deprecated, please remove it from your configuration
+2025-09-10 03:54:36.952 INFO (MainThread) [homeassistant.setup] Setting up history
+2025-09-10 03:54:36.953 INFO (MainThread) [homeassistant.setup] Setup of domain history took 0.00 seconds
+2025-09-10 03:54:36.953 INFO (MainThread) [homeassistant.setup] Setting up image_upload
+2025-09-10 03:54:36.953 INFO (MainThread) [homeassistant.setup] Setup of domain image_upload took 0.00 seconds
+2025-09-10 03:54:36.953 INFO (MainThread) [homeassistant.setup] Setting up person
+2025-09-10 03:54:36.961 INFO (MainThread) [homeassistant.setup] Setting up system_health
+2025-09-10 03:54:36.961 INFO (MainThread) [homeassistant.setup] Setup of domain system_health took 0.00 seconds
+2025-09-10 03:54:36.962 INFO (MainThread) [homeassistant.setup] Setup of domain backup took 0.01 seconds
+2025-09-10 03:54:36.963 INFO (MainThread) [homeassistant.setup] Setup of domain person took 0.01 seconds
+2025-09-10 03:54:36.967 INFO (MainThread) [homeassistant.setup] Setting up ffmpeg
+2025-09-10 03:54:36.967 INFO (MainThread) [homeassistant.setup] Setup of domain ffmpeg took 0.00 seconds
+2025-09-10 03:54:36.969 INFO (MainThread) [homeassistant.setup] Setting up input_text
+2025-09-10 03:54:36.970 INFO (MainThread) [homeassistant.setup] Setup of domain input_text took 0.00 seconds
+2025-09-10 03:54:36.976 INFO (MainThread) [homeassistant.setup] Setting up media_source
+2025-09-10 03:54:36.976 INFO (MainThread) [homeassistant.setup] Setup of domain media_source took 0.00 seconds
+2025-09-10 03:54:36.981 INFO (MainThread) [homeassistant.setup] Setting up hardware
+2025-09-10 03:54:36.990 INFO (MainThread) [homeassistant.setup] Setting up input_select
+2025-09-10 03:54:36.991 INFO (MainThread) [homeassistant.setup] Setup of domain input_select took 0.00 seconds
+2025-09-10 03:54:37.002 INFO (MainThread) [homeassistant.setup] Setting up timer
+2025-09-10 03:54:37.003 INFO (MainThread) [homeassistant.setup] Setup of domain timer took 0.00 seconds
+2025-09-10 03:54:37.012 INFO (MainThread) [homeassistant.setup] Setting up tag
+2025-09-10 03:54:37.013 INFO (MainThread) [homeassistant.setup] Setup of domain tag took 0.00 seconds
+2025-09-10 03:54:37.013 INFO (MainThread) [homeassistant.setup] Setup of domain hardware took 0.03 seconds
+2025-09-10 03:54:37.015 INFO (MainThread) [homeassistant.setup] Setting up input_boolean
+2025-09-10 03:54:37.016 INFO (MainThread) [homeassistant.setup] Setup of domain input_boolean took 0.00 seconds
+2025-09-10 03:54:37.025 INFO (MainThread) [homeassistant.setup] Setting up analytics
+2025-09-10 03:54:37.026 INFO (MainThread) [homeassistant.setup] Setup of domain analytics took 0.00 seconds
+2025-09-10 03:54:37.027 INFO (MainThread) [homeassistant.setup] Setting up input_button
+2025-09-10 03:54:37.028 INFO (MainThread) [homeassistant.setup] Setup of domain input_button took 0.00 seconds
+2025-09-10 03:54:37.032 INFO (MainThread) [homeassistant.setup] Setting up schedule
+2025-09-10 03:54:37.032 INFO (MainThread) [homeassistant.setup] Setup of domain schedule took 0.00 seconds
+2025-09-10 03:54:37.035 INFO (MainThread) [homeassistant.setup] Setting up application_credentials
+2025-09-10 03:54:37.036 INFO (MainThread) [homeassistant.setup] Setup of domain application_credentials took 0.00 seconds
+2025-09-10 03:54:37.058 INFO (MainThread) [homeassistant.setup] Setting up mqtt
+2025-09-10 03:54:37.058 INFO (MainThread) [homeassistant.setup] Setup of domain mqtt took 0.00 seconds
+2025-09-10 03:54:37.072 INFO (MainThread) [homeassistant.setup] Setting up input_datetime
+2025-09-10 03:54:37.077 INFO (MainThread) [homeassistant.setup] Setup of domain input_datetime took 0.01 seconds
+2025-09-10 03:54:37.080 INFO (MainThread) [homeassistant.setup] Setting up counter
+2025-09-10 03:54:37.081 INFO (MainThread) [homeassistant.setup] Setup of domain counter took 0.00 seconds
+2025-09-10 03:54:37.137 INFO (MainThread) [homeassistant.setup] Setting up sonos
+2025-09-10 03:54:37.138 INFO (MainThread) [homeassistant.setup] Setup of domain sonos took 0.00 seconds
+2025-09-10 03:54:37.141 INFO (MainThread) [homeassistant.setup] Setting up automation
+2025-09-10 03:54:37.143 INFO (MainThread) [homeassistant.setup] Setup of domain automation took 0.00 seconds
+2025-09-10 03:54:37.148 INFO (MainThread) [homeassistant.setup] Setting up event
+2025-09-10 03:54:37.148 INFO (MainThread) [homeassistant.setup] Setup of domain event took 0.00 seconds
+2025-09-10 03:54:37.149 INFO (MainThread) [homeassistant.setup] Setting up sensor
+2025-09-10 03:54:37.149 INFO (MainThread) [homeassistant.setup] Setup of domain sensor took 0.00 seconds
+2025-09-10 03:54:37.150 INFO (MainThread) [homeassistant.components.event] Setting up backup.event
+2025-09-10 03:54:37.151 INFO (MainThread) [homeassistant.components.sensor] Setting up backup.sensor
+2025-09-10 03:54:37.160 INFO (MainThread) [homeassistant.setup] Setting up tts
+2025-09-10 03:54:37.165 INFO (MainThread) [homeassistant.setup] Setup of domain tts took 0.00 seconds
+2025-09-10 03:54:37.340 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: connection opened 25
+2025-09-10 03:54:37.341 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: Starting client misc loop
+2025-09-10 03:54:37.341 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:37.342 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:37.343 DEBUG (MainThread) [homeassistant.components.mqtt.client] Connected to MQTT server mqtt:1883 (Success)
+2025-09-10 03:54:40.706 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.706 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 1 to topics with qos: [('homeassistant/alarm_control_panel/+/config', 0)]
+2025-09-10 03:54:40.706 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.706 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.706 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 2 to topics with qos: [('homeassistant/binary_sensor/+/config', 0)]
+2025-09-10 03:54:40.707 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.707 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.707 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 3 to topics with qos: [('homeassistant/button/+/config', 0)]
+2025-09-10 03:54:40.707 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.707 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.708 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 4 to topics with qos: [('homeassistant/camera/+/config', 0)]
+2025-09-10 03:54:40.708 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.708 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.708 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 5 to topics with qos: [('homeassistant/climate/+/config', 0)]
+2025-09-10 03:54:40.710 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.711 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.711 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 6 to topics with qos: [('homeassistant/cover/+/config', 0)]
+2025-09-10 03:54:40.711 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.712 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.712 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 7 to topics with qos: [('homeassistant/device_automation/+/config', 0)]
+2025-09-10 03:54:40.712 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.713 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.713 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 8 to topics with qos: [('homeassistant/device_tracker/+/config', 0)]
+2025-09-10 03:54:40.714 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.714 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.714 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 9 to topics with qos: [('homeassistant/event/+/config', 0)]
+2025-09-10 03:54:40.714 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.715 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.715 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 10 to topics with qos: [('homeassistant/fan/+/config', 0)]
+2025-09-10 03:54:40.715 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.715 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.715 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 11 to topics with qos: [('homeassistant/humidifier/+/config', 0)]
+2025-09-10 03:54:40.716 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.716 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.717 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 12 to topics with qos: [('homeassistant/image/+/config', 0)]
+2025-09-10 03:54:40.717 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.717 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.717 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 13 to topics with qos: [('homeassistant/lawn_mower/+/config', 0)]
+2025-09-10 03:54:40.717 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.718 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.718 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 14 to topics with qos: [('homeassistant/light/+/config', 0)]
+2025-09-10 03:54:40.719 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.719 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.719 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 15 to topics with qos: [('homeassistant/lock/+/config', 0)]
+2025-09-10 03:54:40.720 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.722 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.722 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 16 to topics with qos: [('homeassistant/notify/+/config', 0)]
+2025-09-10 03:54:40.723 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.724 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.724 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 17 to topics with qos: [('homeassistant/number/+/config', 0)]
+2025-09-10 03:54:40.724 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.724 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.724 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 18 to topics with qos: [('homeassistant/scene/+/config', 0)]
+2025-09-10 03:54:40.725 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.725 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.726 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 19 to topics with qos: [('homeassistant/siren/+/config', 0)]
+2025-09-10 03:54:40.726 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.726 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.726 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 20 to topics with qos: [('homeassistant/select/+/config', 0)]
+2025-09-10 03:54:40.727 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.729 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.729 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 21 to topics with qos: [('homeassistant/sensor/+/config', 0)]
+2025-09-10 03:54:40.730 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.730 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.730 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 22 to topics with qos: [('homeassistant/switch/+/config', 0)]
+2025-09-10 03:54:40.731 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.731 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.731 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 23 to topics with qos: [('homeassistant/tag/+/config', 0)]
+2025-09-10 03:54:40.732 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.732 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.732 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 24 to topics with qos: [('homeassistant/text/+/config', 0)]
+2025-09-10 03:54:40.733 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.733 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.733 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 25 to topics with qos: [('homeassistant/update/+/config', 0)]
+2025-09-10 03:54:40.734 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.734 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.734 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 26 to topics with qos: [('homeassistant/vacuum/+/config', 0)]
+2025-09-10 03:54:40.734 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.735 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.735 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 27 to topics with qos: [('homeassistant/valve/+/config', 0)]
+2025-09-10 03:54:40.735 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.736 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.736 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 28 to topics with qos: [('homeassistant/water_heater/+/config', 0)]
+2025-09-10 03:54:40.736 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.737 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.737 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 29 to topics with qos: [('homeassistant/alarm_control_panel/+/+/config', 0)]
+2025-09-10 03:54:40.737 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.738 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.738 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 30 to topics with qos: [('homeassistant/binary_sensor/+/+/config', 0)]
+2025-09-10 03:54:40.738 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.738 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.739 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 31 to topics with qos: [('homeassistant/button/+/+/config', 0)]
+2025-09-10 03:54:40.739 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.740 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.740 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 32 to topics with qos: [('homeassistant/camera/+/+/config', 0)]
+2025-09-10 03:54:40.740 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.741 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.741 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 33 to topics with qos: [('homeassistant/climate/+/+/config', 0)]
+2025-09-10 03:54:40.742 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.742 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.743 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 34 to topics with qos: [('homeassistant/cover/+/+/config', 0)]
+2025-09-10 03:54:40.743 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.744 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.744 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 35 to topics with qos: [('homeassistant/device_automation/+/+/config', 0)]
+2025-09-10 03:54:40.745 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.745 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.745 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 36 to topics with qos: [('homeassistant/device_tracker/+/+/config', 0)]
+2025-09-10 03:54:40.748 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.749 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.749 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 37 to topics with qos: [('homeassistant/event/+/+/config', 0)]
+2025-09-10 03:54:40.749 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.750 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.750 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 38 to topics with qos: [('homeassistant/fan/+/+/config', 0)]
+2025-09-10 03:54:40.750 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.751 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.751 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 39 to topics with qos: [('homeassistant/humidifier/+/+/config', 0)]
+2025-09-10 03:54:40.751 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.752 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.752 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 40 to topics with qos: [('homeassistant/image/+/+/config', 0)]
+2025-09-10 03:54:40.752 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.753 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.753 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 41 to topics with qos: [('homeassistant/lawn_mower/+/+/config', 0)]
+2025-09-10 03:54:40.754 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.755 INFO (MainThread) [homeassistant.setup] Setting up media_player
+2025-09-10 03:54:40.757 INFO (MainThread) [homeassistant.setup] Setup of domain media_player took 0.00 seconds
+2025-09-10 03:54:40.758 INFO (MainThread) [homeassistant.setup] Setting up number
+2025-09-10 03:54:40.758 INFO (MainThread) [homeassistant.setup] Setup of domain number took 0.00 seconds
+2025-09-10 03:54:40.758 INFO (MainThread) [homeassistant.setup] Setting up select
+2025-09-10 03:54:40.759 INFO (MainThread) [homeassistant.setup] Setup of domain select took 0.00 seconds
+2025-09-10 03:54:40.759 INFO (MainThread) [homeassistant.setup] Setting up switch
+2025-09-10 03:54:40.759 INFO (MainThread) [homeassistant.setup] Setup of domain switch took 0.00 seconds
+2025-09-10 03:54:40.760 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.760 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 42 to topics with qos: [('homeassistant/light/+/+/config', 0)]
+2025-09-10 03:54:40.760 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.761 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.761 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 43 to topics with qos: [('homeassistant/lock/+/+/config', 0)]
+2025-09-10 03:54:40.761 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.762 INFO (MainThread) [homeassistant.components.binary_sensor] Setting up sonos.binary_sensor
+2025-09-10 03:54:40.762 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.762 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 44 to topics with qos: [('homeassistant/notify/+/+/config', 0)]
+2025-09-10 03:54:40.763 INFO (MainThread) [homeassistant.components.media_player] Setting up sonos.media_player
+2025-09-10 03:54:40.764 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.764 INFO (MainThread) [homeassistant.components.number] Setting up sonos.number
+2025-09-10 03:54:40.764 INFO (MainThread) [homeassistant.components.select] Setting up sonos.select
+2025-09-10 03:54:40.764 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.764 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 45 to topics with qos: [('homeassistant/number/+/+/config', 0)]
+2025-09-10 03:54:40.765 INFO (MainThread) [homeassistant.components.sensor] Setting up sonos.sensor
+2025-09-10 03:54:40.765 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.765 INFO (MainThread) [homeassistant.components.switch] Setting up sonos.switch
+2025-09-10 03:54:40.765 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.766 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 46 to topics with qos: [('homeassistant/scene/+/+/config', 0)]
+2025-09-10 03:54:40.766 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.766 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.766 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 47 to topics with qos: [('homeassistant/siren/+/+/config', 0)]
+2025-09-10 03:54:40.767 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.769 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.769 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 48 to topics with qos: [('homeassistant/select/+/+/config', 0)]
+2025-09-10 03:54:40.769 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.770 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.770 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 49 to topics with qos: [('homeassistant/sensor/+/+/config', 0)]
+2025-09-10 03:54:40.770 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.771 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.771 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 50 to topics with qos: [('homeassistant/switch/+/+/config', 0)]
+2025-09-10 03:54:40.771 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.772 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.772 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 51 to topics with qos: [('homeassistant/tag/+/+/config', 0)]
+2025-09-10 03:54:40.772 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.773 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.773 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 52 to topics with qos: [('homeassistant/text/+/+/config', 0)]
+2025-09-10 03:54:40.773 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.774 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.774 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 53 to topics with qos: [('homeassistant/update/+/+/config', 0)]
+2025-09-10 03:54:40.774 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.775 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.775 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 54 to topics with qos: [('homeassistant/vacuum/+/+/config', 0)]
+2025-09-10 03:54:40.775 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.776 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.776 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 55 to topics with qos: [('homeassistant/valve/+/+/config', 0)]
+2025-09-10 03:54:40.776 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.777 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.777 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 56 to topics with qos: [('homeassistant/water_heater/+/+/config', 0)]
+2025-09-10 03:54:40.777 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.778 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.778 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 57 to topics with qos: [('homeassistant/device/+/config', 0)]
+2025-09-10 03:54:40.778 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.779 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.779 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 58 to topics with qos: [('homeassistant/device/+/+/config', 0)]
+2025-09-10 03:54:40.779 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.780 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.780 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 59 to topics with qos: [('drop_connect/discovery/#', 0)]
+2025-09-10 03:54:40.780 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.781 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.781 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 60 to topics with qos: [('dsmr/#', 0)]
+2025-09-10 03:54:40.783 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.784 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.784 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 61 to topics with qos: [('esphome/discover/#', 0)]
+2025-09-10 03:54:40.784 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.785 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.785 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 62 to topics with qos: [('fully/deviceInfo/+', 0)]
+2025-09-10 03:54:40.785 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.786 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.786 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 63 to topics with qos: [('pglab/discovery/#', 0)]
+2025-09-10 03:54:40.787 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.788 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.788 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 64 to topics with qos: [('cloudapp/QBUSMQTTGW/+/state', 0)]
+2025-09-10 03:54:40.788 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.789 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.789 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 65 to topics with qos: [('tasmota/discovery/#', 0)]
+2025-09-10 03:54:40.789 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:40.789 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:40.790 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 66 to topics with qos: [('cloudapp/QBUSMQTTGW/config', 0), ('cloudapp/QBUSMQTTGW/state', 0)]
+2025-09-10 03:54:40.790 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:54:50.844 WARNING (MainThread) [homeassistant.components.sonos] Could not get visible Sonos devices from 192.168.1.103: HTTPConnectionPool(host='192.168.1.103', port=1400): Max retries exceeded with url: /xml/DeviceProperties1.xml (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x7bb79f1d56a0>, 'Connection to 192.168.1.103 timed out. (connect timeout=10)'))
+2025-09-10 03:54:52.856 WARNING (MainThread) [homeassistant.components.sonos] Subscription to 192.168.1.102 failed, attempting to poll directly
+2025-09-10 03:54:54.857 INFO (MainThread) [homeassistant.bootstrap] Home Assistant initialized in 16.02s
+2025-09-10 03:54:54.857 INFO (MainThread) [homeassistant.core] Starting Home Assistant 2025.9.1
+2025-09-10 03:54:54.866 DEBUG (MainThread) [homeassistant.components.mqtt.trigger] Attaching MQTT trigger for topic: 'alicia/tts/announce', payload: 'None'
+2025-09-10 03:54:54.866 INFO (MainThread) [homeassistant.components.automation.sonos_tts_announcement] Initialized trigger Sonos TTS Announcement
+2025-09-10 03:54:54.866 DEBUG (MainThread) [homeassistant.components.mqtt.trigger] Attaching MQTT trigger for topic: 'alicia/commands/sonos/group', payload: 'None'
+2025-09-10 03:54:54.867 INFO (MainThread) [homeassistant.components.automation.sonos_multi_room_group_control] Initialized trigger Sonos Multi-Room Group Control
+2025-09-10 03:54:54.867 DEBUG (MainThread) [homeassistant.components.mqtt.trigger] Attaching MQTT trigger for topic: 'alicia/commands/sonos/volume', payload: 'None'
+2025-09-10 03:54:54.867 INFO (MainThread) [homeassistant.components.automation.sonos_volume_control] Initialized trigger Sonos Volume Control
+2025-09-10 03:54:54.867 DEBUG (MainThread) [homeassistant.components.mqtt.trigger] Attaching MQTT trigger for topic: 'alicia/commands/sonos/playback', payload: 'None'
+2025-09-10 03:54:54.867 INFO (MainThread) [homeassistant.components.automation.sonos_playback_control] Initialized trigger Sonos Playback Control
+2025-09-10 03:54:54.867 INFO (MainThread) [homeassistant.components.automation.sonos_status_monitor] Initialized trigger Sonos Status Monitor
+2025-09-10 03:54:55.368 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:54:55.368 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 67 to topics with qos: [('alicia/tts/announce', 0), ('alicia/commands/sonos/group', 0), ('alicia/commands/sonos/volume', 0), ('alicia/commands/sonos/playback', 0)]
+2025-09-10 03:54:55.369 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:55:00.369 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:55:00.369 DEBUG (MainThread) [homeassistant.components.mqtt.client] Transmitting message on homeassistant/status: 'online', mid: 68, qos: 0
+2025-09-10 03:55:00.370 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:55:00.370 INFO (MainThread) [homeassistant.components.mqtt.client] MQTT client initialized, birth message sent
+2025-09-10 03:55:44.192 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 03:55:44.193 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 03:55:54.223 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: connection closed 25
+2025-09-10 03:55:54.224 DEBUG (MainThread) [homeassistant.components.mqtt.client] Disconnected from MQTT server mqtt:1883 (Unspecified error)
+2025-09-10 03:55:54.224 WARNING (MainThread) [homeassistant.components.mqtt.client] Error returned from MQTT server: The connection was lost.
+2025-09-10 03:56:04.226 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: connection opened 27
+2025-09-10 03:56:04.226 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: Starting client misc loop
+2025-09-10 03:56:04.226 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.227 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.230 DEBUG (MainThread) [homeassistant.components.mqtt.client] Connected to MQTT server mqtt:1883 (Success)
+2025-09-10 03:56:04.331 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.331 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 69 to topics with qos: [('homeassistant/alarm_control_panel/+/config', 0)]
+2025-09-10 03:56:04.331 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.331 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.331 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 70 to topics with qos: [('homeassistant/binary_sensor/+/config', 0)]
+2025-09-10 03:56:04.332 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.332 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.332 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 71 to topics with qos: [('homeassistant/button/+/config', 0)]
+2025-09-10 03:56:04.332 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.332 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.332 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 72 to topics with qos: [('homeassistant/camera/+/config', 0)]
+2025-09-10 03:56:04.333 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.333 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.333 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 73 to topics with qos: [('homeassistant/climate/+/config', 0)]
+2025-09-10 03:56:04.333 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.333 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.333 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 74 to topics with qos: [('homeassistant/cover/+/config', 0)]
+2025-09-10 03:56:04.333 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.334 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.334 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 75 to topics with qos: [('homeassistant/device_automation/+/config', 0)]
+2025-09-10 03:56:04.334 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.334 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.334 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 76 to topics with qos: [('homeassistant/device_tracker/+/config', 0)]
+2025-09-10 03:56:04.335 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.335 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.335 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 77 to topics with qos: [('homeassistant/event/+/config', 0)]
+2025-09-10 03:56:04.335 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.335 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.335 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 78 to topics with qos: [('homeassistant/fan/+/config', 0)]
+2025-09-10 03:56:04.336 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.336 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.336 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 79 to topics with qos: [('homeassistant/humidifier/+/config', 0)]
+2025-09-10 03:56:04.336 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.336 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.336 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 80 to topics with qos: [('homeassistant/image/+/config', 0)]
+2025-09-10 03:56:04.336 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.337 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.337 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 81 to topics with qos: [('homeassistant/lawn_mower/+/config', 0)]
+2025-09-10 03:56:04.337 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.337 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.337 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 82 to topics with qos: [('homeassistant/light/+/config', 0)]
+2025-09-10 03:56:04.338 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.338 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.338 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 83 to topics with qos: [('homeassistant/lock/+/config', 0)]
+2025-09-10 03:56:04.338 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.339 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.339 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 84 to topics with qos: [('homeassistant/notify/+/config', 0)]
+2025-09-10 03:56:04.339 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.339 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.339 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 85 to topics with qos: [('homeassistant/number/+/config', 0)]
+2025-09-10 03:56:04.339 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.340 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.340 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 86 to topics with qos: [('homeassistant/scene/+/config', 0)]
+2025-09-10 03:56:04.340 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.340 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.340 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 87 to topics with qos: [('homeassistant/siren/+/config', 0)]
+2025-09-10 03:56:04.340 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.341 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.341 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 88 to topics with qos: [('homeassistant/select/+/config', 0)]
+2025-09-10 03:56:04.341 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.341 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.341 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 89 to topics with qos: [('homeassistant/sensor/+/config', 0)]
+2025-09-10 03:56:04.342 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.342 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.342 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 90 to topics with qos: [('homeassistant/switch/+/config', 0)]
+2025-09-10 03:56:04.342 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.343 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.343 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 91 to topics with qos: [('homeassistant/tag/+/config', 0)]
+2025-09-10 03:56:04.343 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.343 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.343 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 92 to topics with qos: [('homeassistant/text/+/config', 0)]
+2025-09-10 03:56:04.343 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.343 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.344 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 93 to topics with qos: [('homeassistant/update/+/config', 0)]
+2025-09-10 03:56:04.344 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.344 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.344 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 94 to topics with qos: [('homeassistant/vacuum/+/config', 0)]
+2025-09-10 03:56:04.344 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.344 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.344 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 95 to topics with qos: [('homeassistant/valve/+/config', 0)]
+2025-09-10 03:56:04.345 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.345 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.345 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 96 to topics with qos: [('homeassistant/water_heater/+/config', 0)]
+2025-09-10 03:56:04.345 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.345 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.346 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 97 to topics with qos: [('homeassistant/alarm_control_panel/+/+/config', 0)]
+2025-09-10 03:56:04.346 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.346 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.346 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 98 to topics with qos: [('homeassistant/binary_sensor/+/+/config', 0)]
+2025-09-10 03:56:04.346 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.347 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.347 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 99 to topics with qos: [('homeassistant/button/+/+/config', 0)]
+2025-09-10 03:56:04.347 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.347 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.347 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 100 to topics with qos: [('homeassistant/camera/+/+/config', 0)]
+2025-09-10 03:56:04.347 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.348 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.348 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 101 to topics with qos: [('homeassistant/climate/+/+/config', 0)]
+2025-09-10 03:56:04.348 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.348 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.348 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 102 to topics with qos: [('homeassistant/cover/+/+/config', 0)]
+2025-09-10 03:56:04.348 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.348 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.349 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 103 to topics with qos: [('homeassistant/device_automation/+/+/config', 0)]
+2025-09-10 03:56:04.349 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.349 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.349 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 104 to topics with qos: [('homeassistant/device_tracker/+/+/config', 0)]
+2025-09-10 03:56:04.349 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.350 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.350 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 105 to topics with qos: [('homeassistant/event/+/+/config', 0)]
+2025-09-10 03:56:04.350 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.350 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.350 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 106 to topics with qos: [('homeassistant/fan/+/+/config', 0)]
+2025-09-10 03:56:04.350 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.351 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.351 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 107 to topics with qos: [('homeassistant/humidifier/+/+/config', 0)]
+2025-09-10 03:56:04.351 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.351 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.352 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 108 to topics with qos: [('homeassistant/image/+/+/config', 0)]
+2025-09-10 03:56:04.352 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.352 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.352 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 109 to topics with qos: [('homeassistant/lawn_mower/+/+/config', 0)]
+2025-09-10 03:56:04.352 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.353 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.353 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 110 to topics with qos: [('homeassistant/light/+/+/config', 0)]
+2025-09-10 03:56:04.353 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.353 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.353 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 111 to topics with qos: [('homeassistant/lock/+/+/config', 0)]
+2025-09-10 03:56:04.354 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.354 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.354 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 112 to topics with qos: [('homeassistant/notify/+/+/config', 0)]
+2025-09-10 03:56:04.354 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.354 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.354 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 113 to topics with qos: [('homeassistant/number/+/+/config', 0)]
+2025-09-10 03:56:04.355 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.355 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.355 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 114 to topics with qos: [('homeassistant/scene/+/+/config', 0)]
+2025-09-10 03:56:04.355 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.356 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.356 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 115 to topics with qos: [('homeassistant/siren/+/+/config', 0)]
+2025-09-10 03:56:04.356 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.356 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.357 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 116 to topics with qos: [('homeassistant/select/+/+/config', 0)]
+2025-09-10 03:56:04.357 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.357 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.357 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 117 to topics with qos: [('homeassistant/sensor/+/+/config', 0)]
+2025-09-10 03:56:04.357 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.358 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.358 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 118 to topics with qos: [('homeassistant/switch/+/+/config', 0)]
+2025-09-10 03:56:04.358 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.358 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.359 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 119 to topics with qos: [('homeassistant/tag/+/+/config', 0)]
+2025-09-10 03:56:04.359 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.359 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.359 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 120 to topics with qos: [('homeassistant/text/+/+/config', 0)]
+2025-09-10 03:56:04.359 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.360 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.360 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 121 to topics with qos: [('homeassistant/update/+/+/config', 0)]
+2025-09-10 03:56:04.360 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.361 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.361 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 122 to topics with qos: [('homeassistant/vacuum/+/+/config', 0)]
+2025-09-10 03:56:04.361 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.361 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.362 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 123 to topics with qos: [('homeassistant/valve/+/+/config', 0)]
+2025-09-10 03:56:04.362 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.362 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.362 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 124 to topics with qos: [('homeassistant/water_heater/+/+/config', 0)]
+2025-09-10 03:56:04.363 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.363 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.363 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 125 to topics with qos: [('homeassistant/device/+/config', 0)]
+2025-09-10 03:56:04.363 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.363 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.364 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 126 to topics with qos: [('homeassistant/device/+/+/config', 0)]
+2025-09-10 03:56:04.364 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.364 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.364 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 127 to topics with qos: [('drop_connect/discovery/#', 0)]
+2025-09-10 03:56:04.365 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.365 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.365 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 128 to topics with qos: [('dsmr/#', 0)]
+2025-09-10 03:56:04.366 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.366 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.366 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 129 to topics with qos: [('esphome/discover/#', 0)]
+2025-09-10 03:56:04.366 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.366 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.366 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 130 to topics with qos: [('fully/deviceInfo/+', 0)]
+2025-09-10 03:56:04.367 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.367 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.367 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 131 to topics with qos: [('pglab/discovery/#', 0)]
+2025-09-10 03:56:04.367 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.368 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.368 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 132 to topics with qos: [('cloudapp/QBUSMQTTGW/+/state', 0)]
+2025-09-10 03:56:04.368 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.369 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.369 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 133 to topics with qos: [('tasmota/discovery/#', 0)]
+2025-09-10 03:56:04.369 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:04.369 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:04.369 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 134 to topics with qos: [('alicia/commands/sonos/group', 0), ('alicia/commands/sonos/playback', 0), ('alicia/commands/sonos/volume', 0), ('alicia/tts/announce', 0), ('cloudapp/QBUSMQTTGW/config', 0), ('cloudapp/QBUSMQTTGW/state', 0)]
+2025-09-10 03:56:04.370 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:09.371 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:56:09.371 DEBUG (MainThread) [homeassistant.components.mqtt.client] Transmitting message on homeassistant/status: 'online', mid: 135, qos: 0
+2025-09-10 03:56:09.371 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:56:09.371 INFO (MainThread) [homeassistant.components.mqtt.client] MQTT client initialized, birth message sent
+2025-09-10 03:57:09.958 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:57:09.959 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:58:15.619 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:58:15.619 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:59:22.705 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 27
+2025-09-10 03:59:22.705 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 27
+2025-09-10 03:59:52.774 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: connection closed 27
+2025-09-10 03:59:52.775 DEBUG (MainThread) [homeassistant.components.mqtt.client] Disconnected from MQTT server mqtt:1883 (Unspecified error)
+2025-09-10 03:59:52.775 WARNING (MainThread) [homeassistant.components.mqtt.client] Error returned from MQTT server: The connection was lost.
+2025-09-10 04:00:05.277 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: connection opened 25
+2025-09-10 04:00:05.277 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: Starting client misc loop
+2025-09-10 04:00:05.278 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.278 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.279 DEBUG (MainThread) [homeassistant.components.mqtt.client] Connected to MQTT server mqtt:1883 (Success)
+2025-09-10 04:00:05.380 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.380 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 136 to topics with qos: [('homeassistant/alarm_control_panel/+/config', 0)]
+2025-09-10 04:00:05.380 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.381 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.381 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 137 to topics with qos: [('homeassistant/binary_sensor/+/config', 0)]
+2025-09-10 04:00:05.381 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.381 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.381 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 138 to topics with qos: [('homeassistant/button/+/config', 0)]
+2025-09-10 04:00:05.381 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.382 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.382 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 139 to topics with qos: [('homeassistant/camera/+/config', 0)]
+2025-09-10 04:00:05.382 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.382 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.382 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 140 to topics with qos: [('homeassistant/climate/+/config', 0)]
+2025-09-10 04:00:05.383 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.383 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.383 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 141 to topics with qos: [('homeassistant/cover/+/config', 0)]
+2025-09-10 04:00:05.383 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.384 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.384 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 142 to topics with qos: [('homeassistant/device_automation/+/config', 0)]
+2025-09-10 04:00:05.384 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.384 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.384 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 143 to topics with qos: [('homeassistant/device_tracker/+/config', 0)]
+2025-09-10 04:00:05.384 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.384 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.384 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 144 to topics with qos: [('homeassistant/event/+/config', 0)]
+2025-09-10 04:00:05.385 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.385 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.385 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 145 to topics with qos: [('homeassistant/fan/+/config', 0)]
+2025-09-10 04:00:05.385 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.385 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.385 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 146 to topics with qos: [('homeassistant/humidifier/+/config', 0)]
+2025-09-10 04:00:05.386 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.386 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.386 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 147 to topics with qos: [('homeassistant/image/+/config', 0)]
+2025-09-10 04:00:05.386 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.387 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.387 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 148 to topics with qos: [('homeassistant/lawn_mower/+/config', 0)]
+2025-09-10 04:00:05.387 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.387 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.387 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 149 to topics with qos: [('homeassistant/light/+/config', 0)]
+2025-09-10 04:00:05.388 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.388 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.388 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 150 to topics with qos: [('homeassistant/lock/+/config', 0)]
+2025-09-10 04:00:05.388 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.388 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.388 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 151 to topics with qos: [('homeassistant/notify/+/config', 0)]
+2025-09-10 04:00:05.389 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.389 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.389 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 152 to topics with qos: [('homeassistant/number/+/config', 0)]
+2025-09-10 04:00:05.389 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.389 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.390 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 153 to topics with qos: [('homeassistant/scene/+/config', 0)]
+2025-09-10 04:00:05.390 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.390 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.390 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 154 to topics with qos: [('homeassistant/siren/+/config', 0)]
+2025-09-10 04:00:05.391 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.391 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.391 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 155 to topics with qos: [('homeassistant/select/+/config', 0)]
+2025-09-10 04:00:05.391 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.391 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.391 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 156 to topics with qos: [('homeassistant/sensor/+/config', 0)]
+2025-09-10 04:00:05.392 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.392 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.392 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 157 to topics with qos: [('homeassistant/switch/+/config', 0)]
+2025-09-10 04:00:05.392 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.392 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.392 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 158 to topics with qos: [('homeassistant/tag/+/config', 0)]
+2025-09-10 04:00:05.393 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.393 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.393 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 159 to topics with qos: [('homeassistant/text/+/config', 0)]
+2025-09-10 04:00:05.393 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.394 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.394 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 160 to topics with qos: [('homeassistant/update/+/config', 0)]
+2025-09-10 04:00:05.394 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.394 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.394 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 161 to topics with qos: [('homeassistant/vacuum/+/config', 0)]
+2025-09-10 04:00:05.395 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.395 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.395 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 162 to topics with qos: [('homeassistant/valve/+/config', 0)]
+2025-09-10 04:00:05.395 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.395 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.395 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 163 to topics with qos: [('homeassistant/water_heater/+/config', 0)]
+2025-09-10 04:00:05.396 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.396 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.396 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 164 to topics with qos: [('homeassistant/alarm_control_panel/+/+/config', 0)]
+2025-09-10 04:00:05.396 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.396 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.396 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 165 to topics with qos: [('homeassistant/binary_sensor/+/+/config', 0)]
+2025-09-10 04:00:05.397 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.397 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.397 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 166 to topics with qos: [('homeassistant/button/+/+/config', 0)]
+2025-09-10 04:00:05.397 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.398 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.398 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 167 to topics with qos: [('homeassistant/camera/+/+/config', 0)]
+2025-09-10 04:00:05.398 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.398 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.398 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 168 to topics with qos: [('homeassistant/climate/+/+/config', 0)]
+2025-09-10 04:00:05.398 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.398 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.399 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 169 to topics with qos: [('homeassistant/cover/+/+/config', 0)]
+2025-09-10 04:00:05.399 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.399 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.399 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 170 to topics with qos: [('homeassistant/device_automation/+/+/config', 0)]
+2025-09-10 04:00:05.399 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.400 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.400 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 171 to topics with qos: [('homeassistant/device_tracker/+/+/config', 0)]
+2025-09-10 04:00:05.400 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.400 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.401 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 172 to topics with qos: [('homeassistant/event/+/+/config', 0)]
+2025-09-10 04:00:05.401 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.401 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.401 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 173 to topics with qos: [('homeassistant/fan/+/+/config', 0)]
+2025-09-10 04:00:05.402 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.402 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.402 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 174 to topics with qos: [('homeassistant/humidifier/+/+/config', 0)]
+2025-09-10 04:00:05.402 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.402 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.402 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 175 to topics with qos: [('homeassistant/image/+/+/config', 0)]
+2025-09-10 04:00:05.402 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.403 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.403 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 176 to topics with qos: [('homeassistant/lawn_mower/+/+/config', 0)]
+2025-09-10 04:00:05.403 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.403 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.403 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 177 to topics with qos: [('homeassistant/light/+/+/config', 0)]
+2025-09-10 04:00:05.403 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.404 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.404 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 178 to topics with qos: [('homeassistant/lock/+/+/config', 0)]
+2025-09-10 04:00:05.404 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.404 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.404 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 179 to topics with qos: [('homeassistant/notify/+/+/config', 0)]
+2025-09-10 04:00:05.405 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.405 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.405 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 180 to topics with qos: [('homeassistant/number/+/+/config', 0)]
+2025-09-10 04:00:05.405 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.406 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.406 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 181 to topics with qos: [('homeassistant/scene/+/+/config', 0)]
+2025-09-10 04:00:05.406 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.406 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.406 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 182 to topics with qos: [('homeassistant/siren/+/+/config', 0)]
+2025-09-10 04:00:05.406 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.406 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.406 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 183 to topics with qos: [('homeassistant/select/+/+/config', 0)]
+2025-09-10 04:00:05.407 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.407 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.407 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 184 to topics with qos: [('homeassistant/sensor/+/+/config', 0)]
+2025-09-10 04:00:05.407 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.407 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.407 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 185 to topics with qos: [('homeassistant/switch/+/+/config', 0)]
+2025-09-10 04:00:05.408 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.408 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.408 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 186 to topics with qos: [('homeassistant/tag/+/+/config', 0)]
+2025-09-10 04:00:05.408 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.409 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.409 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 187 to topics with qos: [('homeassistant/text/+/+/config', 0)]
+2025-09-10 04:00:05.409 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.409 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.409 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 188 to topics with qos: [('homeassistant/update/+/+/config', 0)]
+2025-09-10 04:00:05.410 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.410 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.410 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 189 to topics with qos: [('homeassistant/vacuum/+/+/config', 0)]
+2025-09-10 04:00:05.410 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.410 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.410 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 190 to topics with qos: [('homeassistant/valve/+/+/config', 0)]
+2025-09-10 04:00:05.411 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.411 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.411 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 191 to topics with qos: [('homeassistant/water_heater/+/+/config', 0)]
+2025-09-10 04:00:05.411 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.411 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.411 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 192 to topics with qos: [('homeassistant/device/+/config', 0)]
+2025-09-10 04:00:05.412 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.412 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.412 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 193 to topics with qos: [('homeassistant/device/+/+/config', 0)]
+2025-09-10 04:00:05.412 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.413 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.413 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 194 to topics with qos: [('drop_connect/discovery/#', 0)]
+2025-09-10 04:00:05.413 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.413 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.413 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 195 to topics with qos: [('dsmr/#', 0)]
+2025-09-10 04:00:05.414 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.414 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.414 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 196 to topics with qos: [('esphome/discover/#', 0)]
+2025-09-10 04:00:05.414 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.415 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.415 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 197 to topics with qos: [('fully/deviceInfo/+', 0)]
+2025-09-10 04:00:05.415 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.415 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.415 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 198 to topics with qos: [('pglab/discovery/#', 0)]
+2025-09-10 04:00:05.416 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.416 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.416 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 199 to topics with qos: [('cloudapp/QBUSMQTTGW/+/state', 0)]
+2025-09-10 04:00:05.416 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.417 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.417 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 200 to topics with qos: [('tasmota/discovery/#', 0)]
+2025-09-10 04:00:05.417 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:05.417 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:05.418 DEBUG (MainThread) [homeassistant.components.mqtt.client] Subscribing with mid: 201 to topics with qos: [('alicia/commands/sonos/group', 0), ('alicia/commands/sonos/playback', 0), ('alicia/commands/sonos/volume', 0), ('alicia/tts/announce', 0), ('cloudapp/QBUSMQTTGW/config', 0), ('cloudapp/QBUSMQTTGW/state', 0)]
+2025-09-10 04:00:05.418 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:13.166 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: register write 25
+2025-09-10 04:00:13.167 DEBUG (MainThread) [homeassistant.components.mqtt.client] Transmitting message on homeassistant/status: 'online', mid: 202, qos: 0
+2025-09-10 04:00:13.167 DEBUG (MainThread) [homeassistant.components.mqtt.client] mqtt: unregister write 25
+2025-09-10 04:00:13.167 INFO (MainThread) [homeassistant.components.mqtt.client] MQTT client initialized, birth message sent

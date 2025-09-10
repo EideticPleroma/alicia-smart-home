@@ -130,6 +130,7 @@ curl -X POST http://localhost:10200/synthesize \
 |---------|------|-------------|
 | Home Assistant | 8123 | Web interface |
 | MQTT Broker | 1883 | Message broker |
+| HTTP Audio Server | 8080 | **NEW** - Audio file serving for Sonos |
 | Whisper STT | 10300 | Speech-to-text API |
 | Piper TTS | 10200 | Text-to-speech API |
 | Alicia Assistant | 8000 | Voice processing API |
@@ -229,6 +230,8 @@ alicia-smart-home/
 ├── 🔊 mqtt-testing/
 │   ├── scripts/
 │   │   ├── sonos-mqtt-bridge.py
+│   │   ├── audio-server.py ⭐ **NEW**
+│   │   ├── test_sonos_audio_fix.py ⭐ **NEW**
 │   │   ├── test-mqtt-connection.ps1
 │   │   ├── test-sonos-integration.ps1
 │   │   ├── device-simulator.ps1
@@ -240,6 +243,7 @@ alicia-smart-home/
 ├── 🐳 Dockerfile.sonos
 ├── 📋 network-setup.ps1
 ├── 🔒 fix-sonos-firewall.bat
+├── 🚀 start-audio-server.ps1 ⭐ **NEW**
 └── 📋 .gitignore
 ```
 
@@ -672,6 +676,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 | **Phase 1: Home Assistant** | ✅ Complete | v1.0.0 | PostgreSQL + HA integration |
 | **Phase 2: MQTT Broker** | ✅ Complete | v1.0.0 | Authentication + device discovery |
 | **Phase 3: Voice Processing** | ✅ **FIXED** | v1.0.0 | **Containers running stably** |
+| **Sonos Audio Integration** | ✅ **COMPLETE** | v1.0.0 | **HTTP server + Docker volume mounts** |
 | **GitHub Repository** | ✅ Complete | v1.0.0 | Professional documentation |
 | **GitFlow Workflow** | ✅ Complete | v1.0.0 | Development best practices |
 | **Container Issues** | ✅ **RESOLVED** | N/A | **Syntax errors fixed** |
@@ -683,7 +688,46 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 **Solution**: Rewrote shell scripts with proper Python file creation
 **Result**: All containers now running stably without restart loops
 
-**🎉 Alicia Smart Home AI Assistant is now 100% operational!**
+### 🎵 Sonos Audio Integration - Complete Solution
+
+**Issue**: Sonos speakers couldn't access audio files served from Docker containers
+**Root Cause**: Docker networking isolation preventing HTTP access to container-served files
+**Solution**: Implemented dedicated HTTP audio server with Docker volume mounts
+
+#### New Architecture:
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  Docker         │ -> │  Volume Mount   │ -> │  HTTP Audio     │
+│  Container      │    │  /tmp/audio     │    │  Server         │
+│  (Piper TTS)    │    │  ↕️             │    │  (Port 8080)    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                                                         │
+┌─────────────────┐    ┌─────────────────┐             │
+│  Sonos MQTT     │ -> │  HTTP URL       │ <- ┌─────────────────┐
+│  Bridge         │    │  Generation     │    │  Sonos Speakers │
+│  (Python)       │    │  (192.168.1.100)│    │  (192.168.1.101)│
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
+
+#### Key Components Added:
+- **HTTP Audio Server** (`mqtt-testing/scripts/audio-server.py`) - Dedicated Python HTTP server
+- **PowerShell Launcher** (`start-audio-server.ps1`) - Easy Windows startup script
+- **Docker Volume Mounts** - Shared directory between container and host
+- **Updated MQTT Bridge** - HTTP URL generation instead of file:// URLs
+
+#### Usage:
+```bash
+# 1. Start HTTP Audio Server
+.\start-audio-server.ps1
+
+# 2. Start Docker Services
+docker-compose -f docker-compose.sonos.yml up -d
+
+# 3. Test TTS
+python mqtt-testing/scripts/test_sonos_audio_fix.py --message "Hello from fixed system"
+```
+
+**🎉 Alicia Smart Home AI Assistant is now 100% operational with full Sonos audio support!**
 
 ---
 

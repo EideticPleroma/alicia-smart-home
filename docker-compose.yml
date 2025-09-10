@@ -55,8 +55,8 @@ services:
       - PIPER_URL=tcp://alicia_wyoming_piper:10200
       - MQTT_BROKER=alicia_mqtt
       - MQTT_PORT=1883
-      - MQTT_USERNAME=test_user
-      - MQTT_PASSWORD=test_password
+      - MQTT_USERNAME=voice_assistant
+      - MQTT_PASSWORD=alicia_ha_mqtt_2024
     volumes:
       - ./voice-processing/config:/app/config
       - ./voice-processing/models:/app/models
