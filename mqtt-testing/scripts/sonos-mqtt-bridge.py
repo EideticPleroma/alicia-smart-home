@@ -160,11 +160,13 @@ class SonosMQTTBridge:
             logger.error(f"Exception type: {type(e).__name__}")
 
     def handle_tts_command(self, payload):
-        """Handle TTS announcement requests with Piper TTS integration"""
+        """Handle TTS announcement requests with Wyoming protocol support"""
         try:
             speaker_name = payload.get("speaker", "").replace("media_player.", "")
             message = payload.get("message", "")
             language = payload.get("language", "en")
+            use_wyoming = payload.get("use_wyoming", False)
+            audio_url = payload.get("audio_url", "")
 
             if not message:
                 logger.warning("TTS command received with empty message")
@@ -186,12 +188,20 @@ class SonosMQTTBridge:
 
             logger.info(f"Playing TTS on {speaker_name}: {message}")
 
-            # Try Google TTS first (more reliable), fallback to Piper TTS
-            tts_success = self._play_tts_with_google(speaker, message, language)
+            tts_success = False
 
-            if not tts_success:
-                logger.info("Google TTS failed, trying Piper TTS fallback")
-                tts_success = self._play_tts_with_piper(speaker, message, language)
+            # Check if this is a Wyoming protocol request with pre-generated audio
+            if use_wyoming and audio_url:
+                logger.info(f"Using Wyoming protocol with pre-generated audio: {audio_url}")
+                tts_success = self._play_tts_with_wyoming_audio(speaker, audio_url, message)
+            else:
+                # Use traditional TTS methods
+                # Try Google TTS first (more reliable), fallback to Piper TTS
+                tts_success = self._play_tts_with_google(speaker, message, language)
+
+                if not tts_success:
+                    logger.info("Google TTS failed, trying Piper TTS fallback")
+                    tts_success = self._play_tts_with_piper(speaker, message, language)
 
             if not tts_success:
                 logger.error("All TTS methods failed")
@@ -220,6 +230,7 @@ class SonosMQTTBridge:
                 "status": "completed",
                 "speaker": speaker_name,
                 "message": message,
+                "use_wyoming": use_wyoming,
                 "timestamp": datetime.now().isoformat()
             }
             self.client.publish(status_topic, json.dumps(status_payload))
@@ -483,6 +494,57 @@ class SonosMQTTBridge:
             if temp_file_path and os.path.exists(temp_file_path):
                 threading.Thread(target=self._cleanup_temp_file, args=(temp_file_path,), daemon=True).start()
 
+    def _play_tts_with_wyoming_audio(self, speaker, audio_url, message):
+        """Play TTS using pre-generated Wyoming protocol audio"""
+        try:
+            logger.info(f"Playing Wyoming TTS audio from: {audio_url}")
+
+            # Ensure speaker is not in a group before playing
+            try:
+                if speaker.group and speaker.group.coordinator != speaker:
+                    logger.info(f"Ungrouping {speaker.player_name} before Wyoming TTS playback")
+                    speaker.unjoin()
+                    time.sleep(1)  # Give time for ungrouping
+            except Exception as e:
+                logger.warning(f"Could not ungroup speaker: {e}")
+
+            # Test URL accessibility before playing
+            import requests
+            try:
+                response = requests.head(audio_url, timeout=5)
+                if response.status_code != 200:
+                    logger.warning(f"Wyoming audio URL not accessible: {response.status_code}")
+                    return False
+            except Exception as e:
+                logger.warning(f"Could not access Wyoming audio URL: {e}")
+                return False
+
+            # Play the pre-generated audio on Sonos
+            speaker.play_uri(audio_url)
+
+            # Wait for playback to start and verify
+            max_wait = 10
+            for i in range(max_wait):
+                time.sleep(1)
+                try:
+                    transport_info = speaker.get_current_transport_info()
+                    state = transport_info.get('current_transport_state')
+                    if state == 'PLAYING':
+                        logger.info("Wyoming TTS playback started successfully")
+                        return True
+                    elif state in ['STOPPED', 'PAUSED_PLAYBACK']:
+                        logger.warning("Wyoming TTS playback stopped immediately")
+                        return False
+                except Exception as e:
+                    logger.warning(f"Error checking Wyoming playback state: {e}")
+
+            logger.warning("Wyoming TTS playback did not start within timeout")
+            return False
+
+        except Exception as e:
+            logger.error(f"Wyoming TTS error: {e}")
+            return False
+
     def _play_tts_with_google(self, speaker, message, language="en"):
         """Play TTS using Google Translate (fallback) with HTTPS"""
         try:
@@ -528,7 +590,7 @@ class SonosMQTTBridge:
                         return False
                 except Exception as e:
                     logger.warning(f"Error checking playback state: {e}")
-                    
+
             logger.warning("Google TTS playback did not start within timeout")
             return False
 
