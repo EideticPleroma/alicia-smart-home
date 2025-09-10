@@ -3,7 +3,7 @@
 <div align="center">
 
 ![Alicia Logo](https://img.shields.io/badge/Alicia-Smart%20Home%20AI-blue?style=for-the-badge&logo=home-assistant)
-![Python](https://img.shields.io/badge/Python-3.8+-blue?style=flat-square&logo=python)
+![Python](https://img.shields.io/badge/Python-3.11+-blue?style=flat-square&logo=python)
 ![Docker](https://img.shields.io/badge/Docker-Ready-blue?style=flat-square&logo=docker)
 ![Home Assistant](https://img.shields.io/badge/Home%20Assistant-Integrated-blue?style=flat-square&logo=home-assistant)
 ![MQTT](https://img.shields.io/badge/MQTT-Enabled-blue?style=flat-square&logo=eclipse-mosquitto)
@@ -52,7 +52,7 @@ cd alicia-smart-home
 docker-compose up -d
 
 # Access Home Assistant
-open http://localhost:18123
+open http://localhost:8123
 ```
 
 ### Voice Services
@@ -128,11 +128,11 @@ curl -X POST http://localhost:10200/synthesize \
 
 | Service | Port | Description |
 |---------|------|-------------|
-| Home Assistant | 18123 | Web interface |
+| Home Assistant | 8123 | Web interface |
 | MQTT Broker | 1883 | Message broker |
-| Whisper STT | 9000 | Speech-to-text API |
+| Whisper STT | 10300 | Speech-to-text API |
 | Piper TTS | 10200 | Text-to-speech API |
-| Porcupine Wake | 10400 | Wake word detection |
+| Alicia Assistant | 8000 | Voice processing API |
 | PostgreSQL | 5432 | Database |
 
 ---
@@ -142,6 +142,7 @@ curl -X POST http://localhost:10200/synthesize \
 ```
 alicia-smart-home/
 ├── 📖 README.md
+├── 🐳 docker-compose.yml (Main deployment)
 ├── 📚 docs/ (Complete Documentation)
 │   ├── 00-Table-of-Contents.md
 │   ├── 01-Introduction.md
@@ -157,15 +158,31 @@ alicia-smart-home/
 │   ├── 11-Phase-3-Whisper-STT-Integration.md
 │   ├── 12-Phase-3-Piper-TTS-Integration.md
 │   ├── 13-Phase-3-Complete-Voice-Pipeline.md
-│   └── 14-Tools-Reference.md
+│   ├── 14-Tools-Reference.md
+│   ├── 15-Sonos-Integration-Guide.md
+│   ├── 16-Sonos-Audio-Fix-Solution.md
+│   ├── 17-Sonos-Security-Analysis.md
+│   ├── 18-Production-Deployment-Analysis.md
+│   ├── 19-Docker-Configuration-Fixes.md
+│   ├── 20-MQTT-Declarative-Deployment-Plan.md
+│   ├── 21-MQTT-Discovery-Testing.md
+│   └── 22-Home-Assistant-Fixes-Summary.md
 │
 ├── 🏠 home-assistant/
 │   ├── docker-compose.yml
 │   ├── config/
 │   │   ├── configuration.yaml
 │   │   ├── automations.yaml
-│   │   └── ...
-│   └── .env
+│   │   ├── binary_sensors.yaml
+│   │   ├── groups.yaml
+│   │   ├── scenes.yaml
+│   │   ├── scripts.yaml
+│   │   ├── sensors.yaml
+│   │   ├── switches.yaml
+│   │   └── blueprints/
+│   ├── .env
+│   ├── setup-mqtt.sh
+│   └── logs/
 │
 ├── 📡 mqtt/
 │   ├── config/
@@ -176,19 +193,54 @@ alicia-smart-home/
 │   └── log/
 │
 ├── 🎤 voice-processing/
-│   ├── docker-compose.yml
-│   ├── voice-assistant.py
-│   ├── start-whisper.sh
-│   ├── start-piper.sh
-│   └── start-porcupine.sh
+│   ├── docker-compose.yml (DEPRECATED)
+│   ├── docker-compose.wyoming.yml (DEPRECATED)
+│   ├── Dockerfile.assistant
+│   ├── alicia_assistant.py
+│   ├── config/
+│   │   └── assistant_config.yaml
+│   ├── models/
+│   ├── requirements.txt
+│   ├── README.md
+│   ├── debug_wyoming_connection.py
+│   ├── test_wyoming_services.py
+│   └── start-piper.sh
 │
 ├── 🗄️ postgres/
 │   ├── docker-compose.yml
+│   ├── pg-data/
 │   └── init-scripts/
+│       ├── 01-install-pgvector.sh
+│       ├── 02-setup-extensions.sql
+│       └── 03-create-schema.sql
 │
-└── 🧪 mqtt-testing/
-    ├── scripts/
-    └── results/
+├── 🧪 test-pack/
+│   ├── features/
+│   │   ├── error_handling.feature
+│   │   ├── edge_cases.feature
+│   │   └── integration_testing.feature
+│   ├── steps/
+│   │   └── sonos_steps.py
+│   ├── tests/
+│   │   └── test_sonos_bdd.py
+│   ├── conftest.py
+│   └── README.md
+│
+├── 🔊 mqtt-testing/
+│   ├── scripts/
+│   │   ├── sonos-mqtt-bridge.py
+│   │   ├── test-mqtt-connection.ps1
+│   │   ├── test-sonos-integration.ps1
+│   │   ├── device-simulator.ps1
+│   │   └── ...
+│   └── results/
+│
+├── 🐳 docker-compose.sonos.yml
+├── 🐳 docker-compose.host.yml
+├── 🐳 Dockerfile.sonos
+├── 📋 network-setup.ps1
+├── 🔒 fix-sonos-firewall.bat
+└── 📋 .gitignore
 ```
 
 ---
@@ -229,15 +281,15 @@ docker-compose logs -f
 
 ```bash
 # Home Assistant Web UI
-open http://localhost:18123
+open http://localhost:8123
 
 # MQTT Broker (WebSocket)
 open http://localhost:9001
 
 # Voice Services
-curl http://localhost:9000/docs  # Whisper
-curl http://localhost:10200/docs # Piper
-curl http://localhost:10400/health # Porcupine
+curl http://localhost:10300/docs  # Wyoming Whisper
+curl http://localhost:10200/docs  # Wyoming Piper
+curl http://localhost:8000/health # Alicia Assistant
 ```
 
 ---

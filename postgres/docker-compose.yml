@@ -25,3 +25,4 @@ services:
 networks:
   alicia_network:
     driver: bridge
+    external: true

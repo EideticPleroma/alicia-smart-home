@@ -17,6 +17,8 @@ http:
   server_port: 8123
   use_x_forwarded_for: true
   trusted_proxies: []
+  ip_ban_enabled: false
+  login_attempts_threshold: 0
 
 # Database Configuration (PostgreSQL)
 recorder:
@@ -47,25 +49,19 @@ frontend:
 # API Configuration
 api:
 
+# Media Source (required for TTS)
+media_source:
+
 # System Health
 system_health:
-
-# MQTT Integration
-mqtt:
-  host: !env_var MQTT_HOST
-  port: !env_var MQTT_PORT
-  username: !env_var MQTT_USERNAME
-  password: !env_var MQTT_PASSWORD
 
 # Sonos Integration
 sonos:
   media_player:
-    - host: !env_var SONOS_HOST_LIVING_ROOM
-      name: "Living Room Sonos"
-    - host: !env_var SONOS_HOST_KITCHEN
-      name: "Kitchen Sonos"
-    - host: !env_var SONOS_HOST_BEDROOM
-      name: "Bedroom Sonos"
+    hosts:
+      - 192.168.1.101
+      - 192.168.1.102
+      - 192.168.1.103
 
 # Text-to-Speech Integration
 tts:
@@ -75,10 +71,11 @@ tts:
     cache_dir: /tmp/tts
     time_memory: 300
 
-# Discovery
-discovery:
-  ignore:
-    - sonos
+# Zeroconf and SSDP for device discovery
+zeroconf:
+ssdp:
+
+
 
 # Logger Configuration
 logger:
@@ -87,7 +84,7 @@ logger:
     homeassistant.components.recorder: warning
     homeassistant.components.http: warning
     sqlalchemy: warning
-    homeassistant.components.sonos: debug
+    homeassistant.components.sonos: warning
     homeassistant.components.mqtt: debug
 
 # Automation and Script Storage
@@ -95,8 +92,12 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
+# MQTT Entities will be auto-discovered via MQTT discovery
+# No manual entity definitions needed - devices will register themselves
+# Example discovery topics that devices can publish to:
+# - homeassistant/sensor/livingroom_temperature/config
+# - homeassistant/switch/bedroom_light/config
+
 # Include additional configuration files
 group: !include groups.yaml
-sensor: !include sensors.yaml
-switch: !include switches.yaml
 binary_sensor: !include binary_sensors.yaml

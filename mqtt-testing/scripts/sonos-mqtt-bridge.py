@@ -14,10 +14,11 @@ from soco import SoCo
 from soco.discovery import discover
 
 # Configuration
-MQTT_BROKER = "localhost"
-MQTT_PORT = 1883
-MQTT_USERNAME = "sonos_speaker"
-MQTT_PASSWORD = "alicia_ha_mqtt_2024"
+import os
+MQTT_BROKER = os.getenv("MQTT_BROKER", "localhost")
+MQTT_PORT = int(os.getenv("MQTT_PORT", 1883))
+MQTT_USERNAME = os.getenv("MQTT_USERNAME", "sonos_speaker")
+MQTT_PASSWORD = os.getenv("MQTT_PASSWORD", "alicia_ha_mqtt_2024")
 CLIENT_ID = "sonos_bridge"
 
 # MQTT Topics
@@ -100,41 +101,85 @@ class SonosMQTTBridge:
             logger.error(f"Error processing message: {e}")
 
     def handle_tts_command(self, payload):
-        """Handle TTS announcement requests"""
+        """Handle TTS announcement requests with Piper TTS integration"""
         try:
             speaker_name = payload.get("speaker", "").replace("media_player.", "")
             message = payload.get("message", "")
             language = payload.get("language", "en")
 
-            if speaker_name in self.sonos_speakers:
-                speaker = self.sonos_speakers[speaker_name]
-                # Save current state
-                was_playing = speaker.get_current_transport_info()['current_transport_state'] == 'PLAYING'
-                current_volume = speaker.volume
+            if not message:
+                logger.warning("TTS command received with empty message")
+                return
 
-                # Set volume for TTS
-                speaker.volume = payload.get("volume", 30)
+            if speaker_name not in self.sonos_speakers:
+                logger.error(f"Speaker {speaker_name} not found")
+                return
 
-                # Play TTS (this is a simplified implementation)
-                # In production, you'd integrate with a TTS service
-                logger.info(f"Playing TTS on {speaker_name}: {message}")
+            speaker = self.sonos_speakers[speaker_name]
 
-                # Restore previous state
-                if was_playing:
-                    speaker.play()
-                speaker.volume = current_volume
+            # Save current state
+            was_playing = speaker.get_current_transport_info()['current_transport_state'] == 'PLAYING'
+            current_volume = speaker.volume
 
-                # Publish completion status
+            # Set volume for TTS
+            tts_volume = payload.get("volume", 30)
+            speaker.volume = tts_volume
+
+            logger.info(f"Playing TTS on {speaker_name}: {message}")
+
+            # Try Piper TTS first (local), fallback to Google TTS
+            tts_success = self._play_tts_with_piper(speaker, message, language)
+
+            if not tts_success:
+                logger.info("Piper TTS failed, trying Google TTS fallback")
+                tts_success = self._play_tts_with_google(speaker, message, language)
+
+            if not tts_success:
+                logger.error("All TTS methods failed")
+                # Publish failure status
                 status_topic = "alicia/tts/status"
                 status_payload = {
-                    "status": "completed",
+                    "status": "failed",
                     "speaker": speaker_name,
+                    "error": "TTS playback failed",
                     "timestamp": datetime.now().isoformat()
                 }
                 self.client.publish(status_topic, json.dumps(status_payload))
+                return
+
+            # Wait for TTS to complete (approximate)
+            time.sleep(len(message) * 0.1)  # Rough estimate: 100ms per character
+
+            # Restore previous state
+            speaker.volume = current_volume
+            if was_playing:
+                speaker.play()
+
+            # Publish completion status
+            status_topic = "alicia/tts/status"
+            status_payload = {
+                "status": "completed",
+                "speaker": speaker_name,
+                "message": message,
+                "timestamp": datetime.now().isoformat()
+            }
+            self.client.publish(status_topic, json.dumps(status_payload))
+            logger.info(f"TTS completed on {speaker_name}")
 
         except Exception as e:
             logger.error(f"Error handling TTS command: {e}")
+            # Publish error status
+            try:
+                status_topic = "alicia/tts/status"
+                status_payload = {
+                    "status": "error",
+                    "speaker": speaker_name if 'speaker_name' in locals() else "unknown",
+                    "error": str(e),
+                    "timestamp": datetime.now().isoformat()
+                }
+                self.client.publish(status_topic, json.dumps(status_payload))
+            except:
+                pass
 
     def handle_group_command(self, payload):
         """Handle speaker grouping commands"""
@@ -260,6 +305,124 @@ class SonosMQTTBridge:
 
         except Exception as e:
             logger.error(f"Error publishing speaker status: {e}")
+
+    def _play_tts_with_piper(self, speaker, message, language="en"):
+        """Play TTS using Piper (local TTS engine)"""
+        try:
+            import subprocess
+            import tempfile
+            import os
+
+            # Piper TTS command (adjust path as needed)
+            piper_cmd = [
+                "piper",  # or full path to piper executable
+                "--model", f"en_US-lessac-medium",  # Default English model
+                "--output_file", "/tmp/tts_output.wav"
+            ]
+
+            # Create temporary file for TTS output
+            with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as temp_file:
+                temp_path = temp_file.name
+
+            # Update command with temp file
+            piper_cmd[-1] = temp_path
+
+            # Run Piper TTS
+            process = subprocess.Popen(
+                piper_cmd,
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True
+            )
+
+            # Send message to Piper
+            stdout, stderr = process.communicate(input=message)
+
+            if process.returncode != 0:
+                logger.error(f"Piper TTS failed: {stderr}")
+                return False
+
+            # Start local HTTP server for audio file
+            import http.server
+            import socketserver
+            import threading
+
+            # Get local IP
+            local_ip = self._get_local_ip()
+
+            # Serve the audio file
+            audio_url = f"http://{local_ip}:8081{temp_path}"
+
+            # Simple HTTP server in thread
+            def serve_audio():
+                try:
+                    os.chdir('/')  # Change to root to serve absolute path
+                    with socketserver.TCPServer(("", 8081), http.server.SimpleHTTPRequestHandler) as httpd:
+                        httpd.timeout = 10  # Auto-shutdown after 10 seconds
+                        httpd.serve_forever()
+                except:
+                    pass
+
+            server_thread = threading.Thread(target=serve_audio, daemon=True)
+            server_thread.start()
+
+            # Give server time to start
+            time.sleep(1)
+
+            # Play the audio on Sonos
+            speaker.play_uri(audio_url)
+
+            # Wait for playback to start
+            time.sleep(2)
+
+            transport_info = speaker.get_current_transport_info()
+            if transport_info.get('current_transport_state') == 'PLAYING':
+                logger.info("Piper TTS playback started successfully")
+                return True
+            else:
+                logger.warning("Piper TTS playback did not start")
+                return False
+
+        except Exception as e:
+            logger.error(f"Piper TTS error: {e}")
+            return False
+
+    def _play_tts_with_google(self, speaker, message, language="en"):
+        """Play TTS using Google Translate (fallback)"""
+        try:
+            # Use Google Translate TTS
+            from urllib.parse import quote
+            tts_url = f"http://translate.google.com/translate_tts?ie=UTF-8&tl={language}&client=tw-ob&q={quote(message)}"
+
+            speaker.play_uri(tts_url)
+
+            # Wait for playback to start
+            time.sleep(2)
+
+            transport_info = speaker.get_current_transport_info()
+            if transport_info.get('current_transport_state') == 'PLAYING':
+                logger.info("Google TTS playback started successfully")
+                return True
+            else:
+                logger.warning("Google TTS playback did not start")
+                return False
+
+        except Exception as e:
+            logger.error(f"Google TTS error: {e}")
+            return False
+
+    def _get_local_ip(self):
+        """Get local IP address"""
+        try:
+            import socket
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(("8.8.8.8", 80))
+            local_ip = s.getsockname()[0]
+            s.close()
+            return local_ip
+        except:
+            return "127.0.0.1"
 
     def publish_all_status(self):
         """Publish status for all discovered speakers"""

@@ -3,20 +3,17 @@
 
 - id: sonos_tts_announcement
   alias: "Sonos TTS Announcement"
-  description: "Play TTS announcements through Sonos speakers"
+  description: "Play TTS announcements through Sonos speakers using Google Translate TTS"
   trigger:
     - platform: mqtt
       topic: "alicia/tts/announce"
   action:
-    - service: tts.google_translate_say
-      entity_id: "{{ trigger.payload_json.speaker }}"
+    - service: tts.speak
+      target:
+        entity_id: "{{ trigger.payload_json.speaker }}"
       data:
         message: "{{ trigger.payload_json.message }}"
         language: "{{ trigger.payload_json.language | default('en') }}"
-    - service: mqtt.publish
-      data:
-        topic: "alicia/tts/status"
-        payload_template: '{"status": "completed", "speaker": "{{ trigger.payload_json.speaker }}", "timestamp": "{{ now().isoformat() }}"}'
 
 - id: sonos_group_control
   alias: "Sonos Multi-Room Group Control"
@@ -42,12 +39,12 @@
       topic: "alicia/commands/sonos/volume"
   action:
     - service: media_player.volume_set
-      entity_id: "{{ trigger.payload_json.speaker }}"
       data:
-        volume_level: "{{ trigger.payload_json.volume }}"
+        entity_id: "{{ trigger.payload_json.speaker }}"
+        volume_level: "{{ trigger.payload_json.volume | float / 100 }}"
     - service: mqtt.publish
       data:
-        topic: "alicia/devices/sonos/{{ trigger.payload_json.speaker.split('.')[-1] }}/status"
+        topic: "alicia/devices/sonos/{{ (trigger.payload_json.speaker | string).split('.')[-1] }}/status"
         payload_template: '{"volume": {{ trigger.payload_json.volume }}, "timestamp": "{{ now().isoformat() }}"}'
 
 - id: sonos_playback_control
@@ -58,10 +55,11 @@
       topic: "alicia/commands/sonos/playback"
   action:
     - service: "media_player.{{ trigger.payload_json.action }}"
-      entity_id: "{{ trigger.payload_json.speaker }}"
+      data:
+        entity_id: "{{ trigger.payload_json.speaker }}"
     - service: mqtt.publish
       data:
-        topic: "alicia/devices/sonos/{{ trigger.payload_json.speaker.split('.')[-1] }}/status"
+        topic: "alicia/devices/sonos/{{ (trigger.payload_json.speaker | string).split('.')[-1] }}/status"
         payload_template: '{"playback_action": "{{ trigger.payload_json.action }}", "timestamp": "{{ now().isoformat() }}"}'
 
 - id: sonos_status_monitor
@@ -71,29 +69,29 @@
     - platform: time_pattern
       minutes: "/5"
   condition:
-    - condition: state
-      entity_id: "media_player.living_room_sonos, media_player.kitchen_sonos, media_player.bedroom_sonos"
-      state: "playing"
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: "media_player.kitchen"
+          state: "playing"
+        - condition: state
+          entity_id: "media_player.bedroom"
+          state: "playing"
   action:
     - service: mqtt.publish
       data:
         topic: "alicia/devices/sonos/status"
         payload_template: |
           {
-            "living_room": {
-              "state": "{{ states('media_player.living_room_sonos') }}",
-              "volume": "{{ state_attr('media_player.living_room_sonos', 'volume_level') }}",
-              "source": "{{ state_attr('media_player.living_room_sonos', 'source') }}"
-            },
             "kitchen": {
-              "state": "{{ states('media_player.kitchen_sonos') }}",
-              "volume": "{{ state_attr('media_player.kitchen_sonos', 'volume_level') }}",
-              "source": "{{ state_attr('media_player.kitchen_sonos', 'source') }}"
+              "state": "{{ states('media_player.kitchen') }}",
+              "volume": "{{ state_attr('media_player.kitchen', 'volume_level') }}",
+              "source": "{{ state_attr('media_player.kitchen', 'source') }}"
             },
             "bedroom": {
-              "state": "{{ states('media_player.bedroom_sonos') }}",
-              "volume": "{{ state_attr('media_player.bedroom_sonos', 'volume_level') }}",
-              "source": "{{ state_attr('media_player.bedroom_sonos', 'source') }}"
+              "state": "{{ states('media_player.bedroom') }}",
+              "volume": "{{ state_attr('media_player.bedroom', 'volume_level') }}",
+              "source": "{{ state_attr('media_player.bedroom', 'source') }}"
             },
             "timestamp": "{{ now().isoformat() }}"
           }

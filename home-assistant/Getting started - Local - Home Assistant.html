@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<!-- saved from url=(0073)https://www.home-assistant.io/voice_control/voice_remote_local_assistant/ -->
+<html lang="en"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Getting started - Local - Home Assistant</title>
+    <meta name="author" content="Home Assistant">
+    <meta name="description" content="Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts. Perfect to run on a...">
+    
+    <meta name="viewport" content="width=device-width">
+    <link rel="canonical" href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/">
+
+    <meta property="fb:app_id" content="338291289691179">
+    <meta property="og:title" content="Getting started - Local">
+    <meta property="og:site_name" content="Home Assistant">
+    <meta property="og:url" content="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts. Perfect to run on a Raspberry Pi or a local server.">
+    <meta property="og:image" content="https://www.home-assistant.io/images/default-social.png">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@home_assistant">
+    
+    <meta name="twitter:title" content="Getting started - Local">
+    <meta name="twitter:description" content="Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts. Perfect to run on a Raspberry Pi or a local server.">
+    <meta name="twitter:image" content="https://www.home-assistant.io/images/default-social.png">
+    <link rel="me" href="https://fosstodon.org/@homeassistant">
+
+    <link href="./Getting started - Local - Home Assistant_files/style.min.css" rel="stylesheet">
+    <link href="./Getting started - Local - Home Assistant_files/prism.css" rel="stylesheet">
+    <link href="./Getting started - Local - Home Assistant_files/screen.css" media="screen, projection, print" rel="stylesheet">
+    <link href="https://www.home-assistant.io/atom.xml" rel="alternate" title="Home Assistant" type="application/atom+xml">
+    <link rel="shortcut icon" href="https://www.home-assistant.io/images/favicon.ico">
+    <link rel="icon" type="image/png" href="https://www.home-assistant.io/images/favicon-192x192.png" sizes="192x192">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link href="./Getting started - Local - Home Assistant_files/css2" rel="stylesheet">
+    <script src="./Getting started - Local - Home Assistant_files/iconify-icon.min.js.download"></script>
+  <link rel="preconnect" href="https://i.ytimg.com/" crossorigin="true"><link rel="preconnect" href="https://i.ytimg.com/" crossorigin="true"><script src="./Getting started - Local - Home Assistant_files/clipboard.min.js.download"></script></head>
+
+  <body class="documentation-page   ">
+    <header class="site-header ">
+      
+
+
+
+<div class="grid-wrapper">
+  <div class="grid">
+    <div class="grid__item three-tenths lap-two-sixths palm-one-whole ha-title">
+      <a href="https://www.home-assistant.io/" class="site-title">
+        <div class="logo"></div>
+      </a>
+      <a class="release-date" href="https://www.home-assistant.io/blog/2025/09/03/release-20259/" title="Latest version 2025.9.1 released September  5, 2025">
+        2025.9.1
+      </a>
+    </div>
+
+    <div class="grid__item seven-tenths lap-four-sixths palm-one-whole">
+      <nav>
+        <input type="checkbox" id="toggle">
+        <label for="toggle" class="toggle" data-open="Main Menu" data-close="⨉"></label>
+        <ul class="menu pull-right">
+          <li><a href="https://www.home-assistant.io/installation/">Getting started</a></li>
+          <li>
+            <a class="active" href="https://www.home-assistant.io/docs/">Documentation <iconify-icon inline="" icon="mdi:chevron-down" title="Chevron down"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6l-6-6z"></path></svg></template></iconify-icon></a>
+            <ul>
+              <li><a href="https://www.home-assistant.io/installation/"><iconify-icon inline="" icon="simple-icons:homeassistant" title="Homeassistant"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> Installation</a></li>
+              <li><a href="https://www.home-assistant.io/docs/automation/"><iconify-icon inline="" icon="mdi:robot-happy" title="Robot happy"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> Automations</a></li>
+              <li><a href="https://www.home-assistant.io/dashboards/"><iconify-icon inline="" icon="mdi:gauge" title="Gauge"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> Dashboards</a></li>
+              <li><a href="https://www.home-assistant.io/voice_control/"><iconify-icon inline="" icon="mdi:comment-processing-outline" title="Comment processing outline"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> Voice assistants</a></li>
+              <li><a href="https://www.home-assistant.io/docs/organizing/"><iconify-icon inline="" icon="mdi:view-grid" title="View grid"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> Device organization</a></li>
+              <li><a href="https://www.home-assistant.io/docs/energy/"><iconify-icon inline="" icon="mdi:solar-power-variant" title="Solar power variant"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> Energy management</a></li>
+              <li><a href="https://www.home-assistant.io/docs/configuration/"><iconify-icon inline="" icon="mdi:cog" title="Cog"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> Advanced configuration</a></li>
+            </ul>
+          </li>
+          <li><a href="https://www.home-assistant.io/integrations/">Integrations</a></li>
+          <li><a href="https://www.home-assistant.io/blog/">Blog</a></li>
+          <li><a href="https://www.home-assistant.io/help/">Need help?</a></li>
+          <li>
+            <div class="docsearch" id="docsearch"><button type="button" aria-label="Search (Ctrl+K)" class="DocSearch DocSearch-Button"><span class="DocSearch-Button-Container"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" class="DocSearch-Search-Icon"><path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"><kbd class="DocSearch-Button-Key"><svg width="15" height="15" class="DocSearch-Control-Key-Icon"><path d="M4.505 4.496h2M5.505 5.496v5M8.216 4.496l.055 5.993M10 7.5c.333.333.5.667.5 1v2M12.326 4.5v5.996M8.384 4.496c1.674 0 2.116 0 2.116 1.5s-.442 1.5-2.116 1.5M3.205 9.303c-.09.448-.277 1.21-1.241 1.203C1 10.5.5 9.513.5 8V7c0-1.57.5-2.5 1.464-2.494.964.006 1.134.598 1.24 1.342M12.553 10.5h1.953" stroke-width="1.2" stroke="currentColor" fill="none" stroke-linecap="square"></path></svg></kbd><kbd class="DocSearch-Button-Key">K</kbd></span></button></div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    </header>
+
+    <div class="page-content">
+
+      
+
+      <div class="grid-wrapper">
+        <div class="grid grid-center">
+
+          <aside id="toc-bar" class="grid__item desk-wide-one-sixth">
+                <section class="aside-module grid__item one-whole">
+                  <div class="section">
+                    <h1 class="title epsilon"><iconify-icon inline="" icon="mdi:toc" title="Toc"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M3 9h14V7H3zm0 4h14v-2H3zm0 4h14v-2H3zm16 0h2v-2h-2zm0-10v2h2V7zm0 6h2v-2h-2z"></path></svg></template></iconify-icon> On this page</h1>
+                    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#prerequisites">Prerequisites</a></li>
+<li class="toc-entry toc-h2"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#some-options-for-speech-to-text-and-text-to-speech">Some options for speech-to-text and text-to-speech</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#speech-to-text-engines">Speech-to-text engines</a></li>
+<li class="toc-entry toc-h3"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#text-to-speech-engine">Text-to-speech engine</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#installing-a-local-assist-pipeline">Installing a local Assist pipeline</a></li>
+<li class="toc-entry toc-h2"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#fine-tuning-whisper-and-piper-for-your-setup">Fine-tuning Whisper and Piper for your setup</a></li>
+<li class="toc-entry toc-h2"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#learning-more-about-speech-to-phrase">Learning more about Speech-to-Phrase</a></li>
+<li class="toc-entry toc-h2"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#next-steps">Next steps</a></li>
+<li class="toc-entry toc-h2"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#related-topics">Related topics</a></li>
+<li class="toc-entry toc-h2"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#related-links">Related links</a></li>
+</ul>
+                  </div>
+                </section>
+              </aside> 
+
+          
+          <div class="grid__item two-thirds desk-wide-seven-twelfths lap-one-whole palm-one-whole">
+          
+
+            
+              <article class="page">
+  
+  <header>
+    
+    
+      <div class="breadcrumbs">
+        <a href="https://www.home-assistant.io/">Home</a>
+        
+          
+            
+            ▸ <a href="https://www.home-assistant.io/voice_control/">Voice control</a>
+          
+        
+          
+            ▸ 
+          
+        
+      </div>
+    
+    <h1 class="title indent">
+      
+        Getting started - Local
+      
+    </h1>
+  </header>
+  
+  
+  <p>The simplest and most effective way to use Assist is to leverage the voice providers (for speech-to-text and text-to-speech) included in <a href="https://www.home-assistant.io/voice_control/voice_remote_cloud_assistant/">Home Assistant Cloud</a></p>
+<p>If you are interested in setting up a fully local voice assistant, follow this setup:</p>
+<h2>Prerequisites <a class="title-link" name="prerequisites" href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#prerequisites"></a>
+</h2>
+<p>For Assist to be able to talk to your Home Assistant setup your setup needs to be able to listen, understand and then talk back.</p>
+<p>In Home Assistant, the Assist pipelines are made up of various components that together form a voice assistant. For each component, you can choose from different options.</p>
+<ul>
+<li>For listening and talking back, it needs your phone with the Home Assistant app, or a voice activated device.</li>
+<li>For understanding, it needs to have a text-to-speech and speech-to-text software integrated.&nbsp;</li>
+<li>For running all together, it needs to have the Home Assistant Operating System running.</li>
+</ul>
+<h2>Some options for speech-to-text and text-to-speech <a class="title-link" name="some-options-for-speech-to-text-and-text-to-speech" href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#some-options-for-speech-to-text-and-text-to-speech"></a>
+</h2>
+<p>There are speech-to-text and text-to-speech options that run entirely local. No data is sent to external servers for processing.</p>
+<h3>Speech-to-text engines <a class="title-link" name="speech-to-text-engines" href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#speech-to-text-engines"></a>
+</h3>
+<p>There are currently two options to run speech-to-text locally: <strong>Speech-to-Phrase</strong> and <strong>Whisper</strong>.</p>
+<h4>Speech-to-Phrase <a class="title-link" name="speech-to-phrase" href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#speech-to-phrase"></a>
+</h4>
+<p><a href="https://github.com/OHF-voice/speech-to-phrase" rel="external nofollow">Speech-to-Phrase<iconify-icon inline="true" icon="tabler:external-link" class="external-link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a> is a close-ended speech model.</p>
+<ul>
+<li>It transcribes what it knows.</li>
+<li>Extremely fast transcription even on a Home Assistant Green or Raspberry Pi 4 (under one second).</li>
+<li>Only supports a subset of Assist’s voice commands.
+<ul>
+<li>More open-ended items such as shopping lists, naming a timer, and broadcasts are <em>not</em> usable out of the box.</li>
+</ul>
+</li>
+<li>Speech-to-Phrase supports <a href="https://github.com/OHF-voice/speech-to-phrase?tab=readme-ov-file#supported-languages" rel="external nofollow">various languages<iconify-icon inline="true" icon="tabler:external-link" class="external-link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a>.</li>
+<li>These qualities make it a great option for Home control!</li>
+</ul>
+<h4>Whisper <a class="title-link" name="whisper" href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#whisper"></a>
+</h4>
+<p><a href="https://github.com/openai/whisper" rel="external nofollow">Whisper<iconify-icon inline="true" icon="tabler:external-link" class="external-link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a> is an open-ended speech model.</p>
+<ul>
+<li>It will try to transcribe everything.</li>
+<li>The cost is slower processing speed:
+<ul>
+<li>On a Raspberry Pi 4, it takes around 8 seconds to process incoming voice commands.</li>
+<li>On an Intel NUC, it is done in under a second.</li>
+</ul>
+</li>
+<li>Supports <a href="https://github.com/openai/whisper#available-models-and-languages" rel="external nofollow">various languages<iconify-icon inline="true" icon="tabler:external-link" class="external-link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a>.</li>
+<li>Whisper is only a great option in the following case:
+<ol>
+<li>You have powerful hardware at home.</li>
+<li>You plan to extend your voice set-up beyond simple home control. For example, by pairing your assistant with an LLM-based agent.</li>
+</ol>
+</li>
+</ul>
+<h3>Text-to-speech engine <a class="title-link" name="text-to-speech-engine" href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#text-to-speech-engine"></a>
+</h3>
+<p>For text-to-speech, we have developed&nbsp;<a href="https://github.com/rhasspy/piper" rel="external nofollow">Piper<iconify-icon inline="true" icon="tabler:external-link" class="external-link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a>. Piper is a fast, local neural text-to-speech system that sounds great and is optimized for the Raspberry Pi 4. It supports&nbsp;<a href="https://rhasspy.github.io/piper-samples/" rel="external nofollow">many languages<iconify-icon inline="true" icon="tabler:external-link" class="external-link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5"></path></svg></template></iconify-icon></a>. On a Raspberry Pi, using medium quality models, it can generate 1.6s of voice in a second.</p>
+<p>Please be sure to check how either option will work in your language, since quality can change quite a bit.</p>
+<h2>Installing a local Assist pipeline <a class="title-link" name="installing-a-local-assist-pipeline" href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#installing-a-local-assist-pipeline"></a>
+</h2>
+<p>For the quickest way to get your local Assist pipeline started, follow these steps:</p>
+<ol>
+<li>
+<p>Install the add-ons to convert text into speech and vice versa.</p>
+<ul>
+<li>Install the speech-to-text add-on of your choice, either <a href="https://my.home-assistant.io/redirect/supervisor_addon?addon=core_speech-to-phrase" class="my" target="_blank"><strong>Speech-to-Phrase</strong></a> or <a href="https://my.home-assistant.io/redirect/supervisor_addon?addon=core_whisper" class="my" target="_blank"><strong>Whisper</strong></a>.</li>
+<li>Install <a href="https://my.home-assistant.io/redirect/supervisor_addon?addon=core_piper" class="my" target="_blank"><strong>Piper</strong></a> for text-to-speech.</li>
+<li>Start the add-ons.</li>
+<li>Once the add-ons are started, head over to the integrations under <a href="https://my.home-assistant.io/redirect/integrations" class="my" target="_blank"><strong>Settings</strong> &gt; <strong>Devices &amp; Services</strong></a>.
+<ul>
+<li>You should now see both services being discovered by the <a href="https://www.home-assistant.io/integrations/wyoming/">Wyoming integration</a>.
+<img src="./Getting started - Local - Home Assistant_files/piper-whisper-install-new-02.png" alt="Whisper and Piper integrations">
+</li>
+</ul>
+</li>
+<li>For each integration, select <strong>Add</strong>.</li>
+<li>You now have integrated a local speech-to-text engine of your choice (either <a href="https://my.home-assistant.io/redirect/supervisor_addon?addon=core_speech-to-phrase" class="my" target="_blank"><strong>Speech-to-Phrase</strong></a> or <a href="https://my.home-assistant.io/redirect/supervisor_addon?addon=core_whisper" class="my" target="_blank"><strong>Whisper</strong></a>) and a text-to-speech engine (<a href="https://my.home-assistant.io/redirect/supervisor_addon?addon=core_piper" class="my" target="_blank"><strong>Piper</strong></a>).</li>
+</ul>
+</li>
+<li>
+<p>Setup your assistant.</p>
+<ul>
+<li>
+<p>Go to <a href="https://my.home-assistant.io/redirect/voice_assistants" class="my" target="_blank"><strong>Settings</strong> &gt; <strong>Voice assistants</strong></a> and select <strong>Add assistant</strong>.
+<img src="./Getting started - Local - Home Assistant_files/piper-whisper-install-05.png" alt="Enter a name for your voice assistant"></p>
+<ul>
+<li>
+<p><strong>Troubleshooting</strong>: If you do not see any assistants here, you are not using the default configuration. In this case, you need to add the following to your <span class="terminology">configuration.yaml<span class="terminology-tooltip">The configuration.yaml file is the main configuration file for Home Assistant. It lists the integrations to be loaded and their specific configurations. In some cases, the configuration needs to be edited manually directly in the configuration.yaml file. Most integrations can be configured in the UI.<a class="terminology-link" href="https://www.home-assistant.io/docs/configuration/"> [Learn more]</a></span></span> file:</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><div class="code-toolbar"><pre class="highlight language-yaml"><code data-lang="yaml" class=" language-yaml"><span class="token comment"># Example configuration.yaml entry</span>
+assist_pipeline<span class="token punctuation">:</span></code></pre><div class="toolbar"><div class="toolbar-item"><span>YAML</span></div><div class="toolbar-item"><button>Copy</button></div></div></div></div></div>
+</li>
+</ul>
+</li>
+<li>
+<p>Enter a name. You can pick any name that is meaningful to you.</p>
+</li>
+<li>
+<p>Select the language that you want to speak.</p>
+</li>
+<li>
+<p>Under <strong>Conversation agent</strong>, select <strong>Home Assistant</strong>.</p>
+</li>
+<li>
+<p>Under <strong>Speech-to-text</strong>, select the speech-to-text engine you choose in the previous step (either <strong>Whisper</strong> or <strong>Speech-to-Phrase</strong>). Select the language.</p>
+</li>
+<li>
+<p>Under <strong>Text-to-speech</strong>, select <strong>Piper</strong>. Select the language.</p>
+<ul>
+<li>Depending on your language, you may be able to select different language variants.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>That’s it. You ensured your voice commands can be processed locally on your device.</p>
+</li>
+<li>
+<p>If you haven’t done so yet, <a href="https://www.home-assistant.io/voice_control/voice_remote_expose_devices/#exposing-your-devices">expose your devices to Assist</a>.</p>
+<ul>
+<li>Otherwise you won’t be able to control them by voice.</li>
+</ul>
+</li>
+</ol>
+<h2>Fine-tuning Whisper and Piper for your setup <a class="title-link" name="fine-tuning-whisper-and-piper-for-your-setup" href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#fine-tuning-whisper-and-piper-for-your-setup"></a>
+</h2>
+<p>You would like to tweak the configuration for better performance or accuracy?
+View some of the options in the video below. Explained by Mike Hansen, creator of Rhasspy, Piper, and Wyoming.</p>
+<p><lite-youtube videoid="Tk-pnm7FY7c" videostartat="1589" videotitle="Configure your local Assist pipeline for your setup" title="Play: Configure your local Assist pipeline for your setup"><template shadowrootmode="open">
+      <style>
+        :host {
+          contain: content;
+          display: block;
+          position: relative;
+          width: 100%;
+          padding-bottom: calc(100% / (16 / 9));
+          --lyt-animation: all 0.2s cubic-bezier(0, 0, 0.2, 1);
+          --lyt-play-btn-default: #212121;
+          --lyt-play-btn-hover: #f00;
+        }
+
+        #frame, #fallbackPlaceholder, iframe {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: 0;
+        }
+
+        #frame {
+          cursor: pointer;
+        }
+
+        #fallbackPlaceholder {
+          object-fit: cover;
+        }
+
+        #frame::before {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 0;
+          background-image: linear-gradient(180deg, #111 -20%, transparent 90%);
+          height: 60px;
+          width: 100%;
+          transition: var(--lyt-animation);
+          z-index: 1;
+        }
+
+        #playButton {
+          width: 70px;
+          height: 46px;
+          background-color: var(--lyt-play-btn-hover);
+          z-index: 1;
+          opacity: 0.8;
+          border-radius: 14%;
+          transition: var(--lyt-animation);
+          border: 0;
+        }
+
+        #frame:hover > #playButton {
+          background-color: var(--lyt-play-btn-hover);
+          opacity: 1;
+        }
+
+        #playButton:before {
+          content: '';
+          border-style: solid;
+          border-width: 11px 0 11px 19px;
+          border-color: transparent transparent transparent #fff;
+        }
+
+        #playButton,
+        #playButton:before {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate3d(-50%, -50%, 0);
+        }
+
+        /* Post-click styles */
+        .activated {
+          cursor: unset;
+        }
+
+        #frame.activated::before,
+        #frame.activated > #playButton {
+          display: none;
+        }
+      </style>
+      <div id="frame">
+        <picture>
+          <source id="webpPlaceholder" type="image/webp" srcset="https://i.ytimg.com/vi_webp/Tk-pnm7FY7c/hqdefault.webp">
+          <source id="jpegPlaceholder" type="image/jpeg" srcset="https://i.ytimg.com/vi/Tk-pnm7FY7c/hqdefault.jpg">
+          <img id="fallbackPlaceholder" referrerpolicy="origin" loading="lazy" src="https://i.ytimg.com/vi/Tk-pnm7FY7c/hqdefault.jpg" aria-label="Play: Configure your local Assist pipeline for your setup" alt="Play: Configure your local Assist pipeline for your setup">
+        </picture>
+        <button id="playButton" aria-label="Play: Configure your local Assist pipeline for your setup"></button>
+      </div>
+    </template></lite-youtube></p>
+<p>The options are also documented in the add-on itself. Go to the <a href="https://my.home-assistant.io/redirect/supervisor_addon?addon=core_whisper" class="my" target="_blank"><strong>Whisper</strong></a> or the <a href="https://my.home-assistant.io/redirect/supervisor_addon?addon=core_piper" class="my" target="_blank"><strong>Piper</strong></a> add-on and open the <strong>Documentation</strong> page.</p>
+<p>Also be sure to check the specific tutorial for <a href="https://www.home-assistant.io/voice_control/using_tts_in_automation/">using Piper in Automations</a></p>
+<h2>Learning more about Speech-to-Phrase <a class="title-link" name="learning-more-about-speech-to-phrase" href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#learning-more-about-speech-to-phrase"></a>
+</h2>
+<p>You can check out <a href="https://www.home-assistant.io/blog/2025/02/13/voice-chapter-9-speech-to-phrase/">Voice Chapter 9</a> to learn more about why we introduced Speech-to-Phrase, and why it’s a great option for home control.</p>
+<p><lite-youtube videoid="k6VvzDSI8RU" videotitle="Voice Chapter 9" title="Play: Voice Chapter 9"><template shadowrootmode="open">
+      <style>
+        :host {
+          contain: content;
+          display: block;
+          position: relative;
+          width: 100%;
+          padding-bottom: calc(100% / (16 / 9));
+          --lyt-animation: all 0.2s cubic-bezier(0, 0, 0.2, 1);
+          --lyt-play-btn-default: #212121;
+          --lyt-play-btn-hover: #f00;
+        }
+
+        #frame, #fallbackPlaceholder, iframe {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: 0;
+        }
+
+        #frame {
+          cursor: pointer;
+        }
+
+        #fallbackPlaceholder {
+          object-fit: cover;
+        }
+
+        #frame::before {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 0;
+          background-image: linear-gradient(180deg, #111 -20%, transparent 90%);
+          height: 60px;
+          width: 100%;
+          transition: var(--lyt-animation);
+          z-index: 1;
+        }
+
+        #playButton {
+          width: 70px;
+          height: 46px;
+          background-color: var(--lyt-play-btn-hover);
+          z-index: 1;
+          opacity: 0.8;
+          border-radius: 14%;
+          transition: var(--lyt-animation);
+          border: 0;
+        }
+
+        #frame:hover > #playButton {
+          background-color: var(--lyt-play-btn-hover);
+          opacity: 1;
+        }
+
+        #playButton:before {
+          content: '';
+          border-style: solid;
+          border-width: 11px 0 11px 19px;
+          border-color: transparent transparent transparent #fff;
+        }
+
+        #playButton,
+        #playButton:before {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate3d(-50%, -50%, 0);
+        }
+
+        /* Post-click styles */
+        .activated {
+          cursor: unset;
+        }
+
+        #frame.activated::before,
+        #frame.activated > #playButton {
+          display: none;
+        }
+      </style>
+      <div id="frame">
+        <picture>
+          <source id="webpPlaceholder" type="image/webp" srcset="https://i.ytimg.com/vi_webp/k6VvzDSI8RU/hqdefault.webp">
+          <source id="jpegPlaceholder" type="image/jpeg" srcset="https://i.ytimg.com/vi/k6VvzDSI8RU/hqdefault.jpg">
+          <img id="fallbackPlaceholder" referrerpolicy="origin" loading="lazy" src="https://i.ytimg.com/vi/k6VvzDSI8RU/hqdefault.jpg" aria-label="Play: Voice Chapter 9" alt="Play: Voice Chapter 9">
+        </picture>
+        <button id="playButton" aria-label="Play: Voice Chapter 9"></button>
+      </div>
+    </template></lite-youtube></p>
+<h2>Next steps <a class="title-link" name="next-steps" href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#next-steps"></a>
+</h2>
+<ul>
+<li>To get the best out of the voice interaction, check the <a href="https://www.home-assistant.io/voice_control/best_practices/">best practices</a>.</li>
+<li>Once Assist is configured, you can start using it.
+<ul>
+<li>Talk to Assist via a connected device, such as <a href="https://www.home-assistant.io/voice_control/android/">Android</a>, <a href="https://www.home-assistant.io/voice_control/apple/">iOS</a>, or <a href="https://support.nabucasa.com/hc/en-us/categories/24451727188125-Home-Assistant-Voice-Preview-Edition">Voice Preview edition<iconify-icon inline="true" icon="tabler:external-link" class="external-link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a>).</li>
+</ul>
+</li>
+</ul>
+
+
+  
+
+<div class="text related-topics">
+  <h2>Related topics<a class="title-link" href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#related-topics" name="related-topics"></a>
+</h2>
+  <ul>
+    
+    
+    
+    
+    
+    <li>
+      <a href="https://www.home-assistant.io/voice_control/best_practices/" class="topic">
+        Best practices with assist
+      </a>
+    </li>
+    
+    
+    
+    
+    
+    
+    <li>
+      <a href="https://www.home-assistant.io/voice_control/expanding_assist/" class="topic">
+        Expanding assist
+      </a>
+    </li>
+    
+    
+    
+    
+    
+    
+    <li>
+      <a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/" class="topic">
+        Creating a local assistant
+      </a>
+    </li>
+    
+    
+    
+    
+    
+    
+    <li>
+      <a href="https://www.home-assistant.io/voice_control/voice_remote_expose_devices/" class="topic">
+        Exposing devices to assist
+      </a>
+    </li>
+    </ul>
+</div>
+
+
+<div class="text related-links">
+  <h2>Related links<a class="title-link" href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#related-links" name="related-links"></a>
+</h2>
+  <ul>
+    
+    <li><a href="https://support.nabucasa.com/hc/en-us/categories/24451727188125-Home-Assistant-Voice-Preview-Edition" class="link" target="_blank">Voice Preview Edition - Documentation<iconify-icon inline="true" icon="tabler:external-link" class="external-link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a></li>
+    
+  </ul>
+</div>
+
+  
+<div class="material-card text feedback">
+  <h4>
+<iconify-icon inline="" icon="mdi:feedback" title="Feedback"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> <b> Help us improve our documentation</b><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#feedback_section" class="title-link" name="feedback_section"></a>
+</h4>
+  Suggest an edit to this page, or provide/view feedback for this page.
+  <div class="links">
+    <ul aria-label="Page feedback options">
+    <li><a href="https://github.com/home-assistant/home-assistant.io/tree/current/source/voice_control/voice_remote_local_assistant.markdown" target="_blank" title="Edit this page"><iconify-icon inline="" icon="mdi:edit"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> Edit</a></li>
+    
+    <li><a href="https://github.com/home-assistant/home-assistant.io/issues/new?template=feedback.yml&amp;url=https%3A%2F%2Fwww.home-assistant.io%2Fvoice_control%2Fvoice_remote_local_assistant%2F&amp;version=2025.9.1&amp;labels=current" target="_blank" title="Provide feedback on this page"><iconify-icon inline="" icon="mdi:comment-edit-outline"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> Provide feedback</a></li>
+    <li><a href="https://github.com/home-assistant/home-assistant.io/issues?utf8=%E2%9C%93&amp;q=%22%2Fvoice_control%2Fvoice_remote_local_assistant%2F%22&amp;in=body" target="_blank" title="View given feedback for this page"><iconify-icon inline="" icon="mdi:comment-text-multiple-outline"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> View given feedback</a></li>
+    
+  </ul>
+  </div>
+</div>
+
+
+</article>
+
+            
+          </div>
+
+
+          
+            
+              <aside id="sidebar" class="grid__item one-third desk-wide-one-quarter lap-one-whole palm-one-whole">
+            
+            <div class="grid">
+  
+
+
+
+
+  <section class="vertical-nav aside-module grid__item one-whole lap-one-half">
+  <div class="section">
+    <h1 class="title epsilon"><iconify-icon inline="" icon="mdi:bookshelf" title="Bookshelf"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M9 3v15h3V3zm3 2l4 13l3-1l-4-13zM5 5v13h3V5zM3 19v2h18v-2z"></path></svg></template></iconify-icon> Documentation</h1>
+    <ul class="divided sidebar-menu">
+      <li>
+        <a href="https://www.home-assistant.io/docs/">Overview </a>
+        |
+        <a href="https://www.home-assistant.io/faq/">FAQ </a>
+        |
+        <a href="https://www.home-assistant.io/docs/glossary/">Glossary </a>
+      </li>
+
+      <li>
+  <iconify-icon icon="mdi:robot-happy"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:0}span,svg{display:block}</style><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M22 14h-1c0-3.87-3.13-7-7-7h-1V5.73A2 2 0 1 0 10 4c0 .74.4 1.39 1 1.73V7h-1c-3.87 0-7 3.13-7 7H2c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h1v1a2 2 0 0 0 2 2h14c1.11 0 2-.89 2-2v-1h1c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1M9.79 16.5C9.4 15.62 8.53 15 7.5 15s-1.9.62-2.29 1.5c-.13-.31-.21-.64-.21-1a2.5 2.5 0 0 1 5 0c0 .36-.08.69-.21 1m9 0c-.39-.88-1.29-1.5-2.29-1.5s-1.9.62-2.29 1.5c-.13-.31-.21-.64-.21-1a2.5 2.5 0 0 1 5 0c0 .36-.08.69-.21 1"></path></svg></template></iconify-icon> <a href="https://www.home-assistant.io/docs/automation/">Automations </a>
+  
+</li>
+
+<li>
+  <iconify-icon inline="" icon="mdi:gauge" title="Gauge"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2m0 2a8 8 0 0 1 8 8c0 2.4-1 4.5-2.7 6c-1.4-1.3-3.3-2-5.3-2s-3.8.7-5.3 2C5 16.5 4 14.4 4 12a8 8 0 0 1 8-8m2 1.89c-.38.01-.74.26-.9.65l-1.29 3.23l-.1.23c-.71.13-1.3.6-1.57 1.26c-.41 1.03.09 2.19 1.12 2.6s2.19-.09 2.6-1.12c.26-.66.14-1.42-.29-1.98l.1-.26l1.29-3.21l.01-.03c.2-.51-.05-1.09-.56-1.3c-.13-.05-.26-.07-.41-.07M10 6a1 1 0 0 0-1 1a1 1 0 0 0 1 1a1 1 0 0 0 1-1a1 1 0 0 0-1-1M7 9a1 1 0 0 0-1 1a1 1 0 0 0 1 1a1 1 0 0 0 1-1a1 1 0 0 0-1-1m10 0a1 1 0 0 0-1 1a1 1 0 0 0 1 1a1 1 0 0 0 1-1a1 1 0 0 0-1-1"></path></svg></template></iconify-icon> <a href="https://www.home-assistant.io/dashboards">Dashboards </a>
+  
+</li>
+
+<li>
+  <iconify-icon inline="" icon="mdi:microphone" title="Microphone"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3m7 9c0 3.53-2.61 6.44-6 6.93V21h-2v-3.07c-3.39-.49-6-3.4-6-6.93h2a5 5 0 0 0 5 5a5 5 0 0 0 5-5z"></path></svg></template></iconify-icon> <a href="https://www.home-assistant.io/voice_control/">Voice assistants </a>
+  
+  <ul>
+    <li><iconify-icon inline="" icon="mdi:comment-processing-outline" title="Comment processing outline"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M9 22a1 1 0 0 1-1-1v-3H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6.1l-3.7 3.71c-.2.19-.45.29-.7.29zm1-6v3.08L13.08 16H20V4H4v12zm7-5h-2V9h2zm-4 0h-2V9h2zm-4 0H7V9h2z"></path></svg></template></iconify-icon> <a href="https://www.home-assistant.io/voice_control/">Assist up and running </a>
+      <ul>
+        <li><a class="active" href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/">Getting started - Local </a></li>
+        <li><a href="https://www.home-assistant.io/voice_control/voice_remote_cloud_assistant/">Getting started - Home Assistant Cloud </a></li>
+      </ul>
+    </li>
+    <li><iconify-icon inline="" icon="mdi:comment-processing-outline" title="Comment processing outline"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M9 22a1 1 0 0 1-1-1v-3H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6.1l-3.7 3.71c-.2.19-.45.29-.7.29zm1-6v3.08L13.08 16H20V4H4v12zm7-5h-2V9h2zm-4 0h-2V9h2zm-4 0H7V9h2z"></path></svg></template></iconify-icon> <a href="https://www.home-assistant.io/voice_control/best_practices">Best practices </a>
+      <ul>
+        <li><a href="https://www.home-assistant.io/voice_control/voice_remote_expose_devices/">Exposing entities to Assist </a></li>
+        <li><a href="https://www.home-assistant.io/voice_control/assign_areas_floors/">Assigning devices to areas and areas to floors </a></li>
+        <li><a href="https://www.home-assistant.io/voice_control/aliases/">Aliases for entities, areas and floors </a></li> 
+        <li><a href="https://www.home-assistant.io/voice_control/builtin_sentences/">Talking to Assist - Sentences starter pack </a></li>
+      </ul>
+    </li>
+    <li><iconify-icon inline="" icon="mdi:comment-processing-outline" title="Comment processing outline"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M9 22a1 1 0 0 1-1-1v-3H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6.1l-3.7 3.71c-.2.19-.45.29-.7.29zm1-6v3.08L13.08 16H20V4H4v12zm7-5h-2V9h2zm-4 0h-2V9h2zm-4 0H7V9h2z"></path></svg></template></iconify-icon> <a href="https://www.home-assistant.io/voice_control/expanding_assist">Expanding Assist </a>
+      <ul>
+        <li><a href="https://www.home-assistant.io/voice_control/assist_create_open_ai_personality/">Creating a personality with AI </a></li>
+        <li><a href="https://www.home-assistant.io/voice_control/custom_sentences/">Custom sentences </a></li>
+        <li><a href="https://www.home-assistant.io/voice_control/android/">Assist for Android </a></li>
+        <li><a href="https://www.home-assistant.io/voice_control/apple/">Assist for Apple </a></li>
+      </ul>
+    </li>
+    <li><iconify-icon inline="" icon="mdi:checkbox-marked" title="Checkbox marked"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="m10 17l-5-5l1.41-1.42L10 14.17l7.59-7.59L19 8m0-5H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2"></path></svg></template></iconify-icon> Experiment with Assist setups
+      <ul>
+        <li><a href="https://www.home-assistant.io/voice_control/about_wake_word/">The Home Assistant Approach to Wake Words </a></li>
+        <li><a href="https://www.home-assistant.io/voice_control/create_wake_word/">Wake words for Assist </a></li>
+        <li><a href="https://www.home-assistant.io/voice_control/s3_box_voice_assistant/">Tutorial: ESP32-S3-BOX voice assistant </a></li>
+        <li><a href="https://www.home-assistant.io/voice_control/s3-box-customize/">Tutorial: Customize the S3-BOX </a></li>
+        <li><a href="https://www.home-assistant.io/voice_control/thirteen-usd-voice-remote/">Tutorial: $13 voice assistant </a></li>
+        <li><a href="https://www.home-assistant.io/voice_control/worlds-most-private-voice-assistant/">Tutorial: World's most private voice assistant </a></li>
+        <li><a href="https://www.home-assistant.io/voice_control/assist_daily_summary/">Tutorial: Your daily summary by Assist </a></li>
+        <li><a href="https://www.home-assistant.io/voice_control/start_assist_from_dashboard/">Starting Assist from your dashboard </a></li>
+        <li><a href="https://www.home-assistant.io/voice_control/contribute-voice/">Contribute to the Voice initiative </a></li>
+      </ul>
+    </li>
+    <li><iconify-icon inline="" icon="mdi:account-help" title="Account help"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M13 8a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4a4 4 0 0 1 4 4m4 10v2H1v-2c0-2.21 3.58-4 8-4s8 1.79 8 4m3.5-3.5V16H19v-1.5zm-2-5H17V9a3 3 0 0 1 3-3a3 3 0 0 1 3 3c0 .97-.5 1.88-1.29 2.41l-.3.19c-.57.4-.91 1.01-.91 1.7v.2H19v-.2c0-1.19.6-2.3 1.59-2.95l.29-.19c.39-.26.62-.69.62-1.16A1.5 1.5 0 0 0 20 7.5A1.5 1.5 0 0 0 18.5 9z"></path></svg></template></iconify-icon> Troubleshooting
+      <ul>
+        <li><a href="https://www.home-assistant.io/voice_control/troubleshooting/">Troubleshooting Assist </a></li>
+        <li><a href="https://www.home-assistant.io/voice_control/troubleshooting_the_s3_box/">Troubleshooting the ESP32-S3-BOX </a></li>
+        <li><a href="https://www.home-assistant.io/voice_control/using_tts_in_automation/">Using Piper TTS in automations </a></li>
+      </ul>
+    </li>
+  </ul>
+  
+</li>
+
+<li>
+  <iconify-icon inline="" icon="mdi:category" title="Category"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> <a href="https://www.home-assistant.io/docs/organizing/">Organization </a>
+  
+</li>
+
+<li>
+  <iconify-icon inline="" icon="mdi:solar-power-variant" title="Solar power variant"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> <a href="https://www.home-assistant.io/docs/energy/">Home energy management </a>
+  
+</li>
+
+<li>
+  <iconify-icon inline="" icon="mdi:update" title="Update"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> <a href="https://www.home-assistant.io/common-tasks/general/">Common tasks </a>
+  
+</li>
+
+<li>
+  <iconify-icon inline="" icon="mdi:cogs" title="Cogs"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> <a href="https://www.home-assistant.io/docs/configuration/">Advanced configuration </a>
+  
+</li>
+
+<li>
+  <iconify-icon inline="" icon="mdi:account-security" title="Account security"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> <a href="https://www.home-assistant.io/docs/authentication/">Authentication </a>
+  
+</li>
+
+<li>
+  <iconify-icon inline="" icon="mdi:database" title="Database"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> <a href="https://www.home-assistant.io/docs/backend/">Backend </a>
+  
+</li>
+
+<li>
+  <iconify-icon inline="" icon="mdi:palette" title="Palette"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> <a href="https://www.home-assistant.io/docs/tools/">Tools and helpers </a>
+  
+</li>
+
+<li>
+  <iconify-icon inline="" icon="mdi:cellphone" title="Cellphone"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> <a href="https://companion.home-assistant.io/docs">iOS and Android apps <iconify-icon inline="" icon="tabler:external-link" title="External link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a>
+</li>
+
+<li>
+  <iconify-icon inline="" icon="simple-icons:mqtt" title="Mqtt"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> <a href="https://www.home-assistant.io/integrations/mqtt">MQTT </a>
+  
+</li>
+
+<li>
+  <iconify-icon inline="" icon="bitcoin-icons:node-hardware-filled" title="Node hardware filled"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> Official hardware
+  <ul>
+    <li><a href="https://support.nabucasa.com/hc/en-us/categories/24638797677853-Home-Assistant-Green">Home Assistant Green <iconify-icon inline="" icon="tabler:external-link" title="External link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a></li>
+    <li><a href="https://support.nabucasa.com/hc/en-us/categories/24734620813469">Home Assistant Connect ZBT-1 <iconify-icon inline="" icon="tabler:external-link" title="External link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a></li>
+    <li><a href="https://support.nabucasa.com/hc/en-us/categories/28669861145885">Home Assistant Connect ZWA-2 <iconify-icon inline="" icon="tabler:external-link" title="External link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a></li>
+    <li><a href="https://support.nabucasa.com/hc/en-us/categories/24734575925149-Home-Assistant-Yellow">Home Assistant Yellow <iconify-icon inline="" icon="tabler:external-link" title="External link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a></li>
+    <li><a href="https://support.nabucasa.com/hc/en-us/categories/24451727188125-Home-Assistant-Voice-Preview-Edition">Home Assistant Voice Preview Edition <iconify-icon inline="" icon="tabler:external-link" title="External link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a></li>
+  </ul>
+</li>
+
+    </ul>
+  </div>
+</section>
+
+
+
+  <section id="toc-module" class="aside-module grid__item one-whole lap-one-half">
+        <div class="section">
+          <h1 class="title epsilon"><iconify-icon inline="" icon="mdi:toc" title="Toc"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon> On this page</h1>
+          <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#prerequisites">Prerequisites</a></li>
+<li class="toc-entry toc-h2"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#some-options-for-speech-to-text-and-text-to-speech">Some options for speech-to-text and text-to-speech</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#speech-to-text-engines">Speech-to-text engines</a></li>
+<li class="toc-entry toc-h3"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#text-to-speech-engine">Text-to-speech engine</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#installing-a-local-assist-pipeline">Installing a local Assist pipeline</a></li>
+<li class="toc-entry toc-h2"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#fine-tuning-whisper-and-piper-for-your-setup">Fine-tuning Whisper and Piper for your setup</a></li>
+<li class="toc-entry toc-h2"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#learning-more-about-speech-to-phrase">Learning more about Speech-to-Phrase</a></li>
+<li class="toc-entry toc-h2"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#next-steps">Next steps</a></li>
+<li class="toc-entry toc-h2"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#related-topics">Related topics</a></li>
+<li class="toc-entry toc-h2"><a href="https://www.home-assistant.io/voice_control/voice_remote_local_assistant/#related-links">Related links</a></li>
+</ul>
+        </div>
+      </section></div>
+
+          </aside>
+          
+        </div>
+      </div>
+
+      <footer>
+        <div class="grid-wrapper">
+  <div class="grid">
+    <div class="grid__item">
+      <div class="skyline grid">
+        <div class="skyline grid__item one-whole">
+          <div class="footer-skyline">
+          </div>
+        </div>
+      </div>
+      <div class="footer-nav grid">
+        <div class="company grid__item one-quarter lap-one-half palm-one-whole">
+          <div class="title">
+            <img src="./Getting started - Local - Home Assistant_files/footer-logo-text.svg" height="72" alt="Home Assistant">
+          </div>
+          <p>
+            Home Assistant is a project from the <a href="https://www.openhomefoundation.org/">Open Home Foundation</a>, sponsored by <a href="https://www.nabucasa.com/">Nabu Casa</a>.
+          </p>
+        </div>
+
+        <div class="grid__item one-quarter lap-one-half palm-one-whole">
+          <h3>Join us and contribute!</h3>
+          <ul>
+            <li><a class="external-link" href="https://github.com/home-assistant/">GitHub repo <iconify-icon inline="" icon="tabler:external-link" title="External link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a></li>
+            <li><a class="external-link" href="https://developers.home-assistant.io/">Developers Portal <iconify-icon inline="" icon="tabler:external-link" title="External link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a></li>
+            <li><a class="external-link" href="https://design.home-assistant.io/">Design Portal <iconify-icon inline="" icon="tabler:external-link" title="External link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a></li>
+            <li><a class="external-link" href="https://data.home-assistant.io/">Data Science Portal <iconify-icon inline="" icon="tabler:external-link" title="External link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a></li>
+            <li><a class="external-link" href="https://community.home-assistant.io/">Community Forum <iconify-icon inline="" icon="tabler:external-link" title="External link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a></li>
+            <li><a class="external-link" href="https://creators.home-assistant.io/">Creator Network <iconify-icon inline="" icon="tabler:external-link" title="External link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a></li>
+            <li><a class="external-link" href="https://works-with.home-assistant.io/">Works With Home Assistant <iconify-icon inline="" icon="tabler:external-link" title="External link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a></li>
+            <li><a href="https://www.home-assistant.io/help/reporting_issues/">Reporting issues</a></li>
+          </ul>
+          <h3>System status</h3>
+          <ul>
+            <li>
+              <a class="external-link" href="https://alerts.home-assistant.io/">Integration Alerts <iconify-icon inline="" icon="tabler:external-link" title="External link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a>
+            </li>
+            <li><a href="https://www.home-assistant.io/security/">Security Alerts</a></li>
+            <li>
+              <a class="external-link" href="https://status.home-assistant.io/">System Status <iconify-icon inline="" icon="tabler:external-link" title="External link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="grid__item one-quarter lap-one-half palm-one-whole">
+          <h3>Companion apps</h3>
+          <ul>
+            <li><a class="external-link" href="https://apps.apple.com/us/app/home-assistant/id1099568401">iOS and Apple devices</a></li>
+            <li><a class="external-link" href="https://play.google.com/store/apps/details?id=io.homeassistant.companion.android">Android and Wear OS</a></li>
+            <li><a class="external-link" href="https://companion.home-assistant.io/">...and more!</a></li>
+          </ul>
+          <h3>Governance</h3>
+          <ul>
+            <li><a href="https://www.home-assistant.io/privacy/">Privacy Notices</a></li>
+            <li><a href="https://www.home-assistant.io/developers/cla/">Contributor License Agreement</a></li>
+            <li><a href="https://www.home-assistant.io/tos/">Terms of Service</a></li>
+            <li><a href="https://www.home-assistant.io/code_of_conduct/">Code of Conduct</a></li>
+            <li><a href="https://www.home-assistant.io/developers/credits/">Credits</a></li>
+            <li><a href="https://www.home-assistant.io/developers/license/">License</a></li>
+          </ul>
+        </div>
+
+        <div class="socials grid__item one-quarter lap-one-half palm-one-whole">
+
+          <h3>Follow us</h3>
+          <p><a class="external-link" href="https://newsletter.openhomefoundation.org/#/portal">Sign up for our newsletter <iconify-icon inline="" icon="tabler:external-link" title="External link"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:-0.125em}span,svg{display:block}</style></template></iconify-icon></a></p>
+          <div class="icons">
+            <a rel="me" href="https://youtube.com/@home_assistant" title="YouTube" target="_blank"><iconify-icon icon="simple-icons:youtube"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:0}span,svg{display:block}</style></template></iconify-icon></a>
+            <a rel="me" href="https://reddit.com/r/homeassistant" title="Reddit" target="_blank"><iconify-icon icon="simple-icons:reddit"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:0}span,svg{display:block}</style></template></iconify-icon></a>
+            <a rel="me" href="https://github.com/home-assistant/home-assistant" title="GitHub" target="_blank"><iconify-icon icon="simple-icons:github"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:0}span,svg{display:block}</style></template></iconify-icon></a>
+            <br>
+            <a rel="me" href="https://fosstodon.org/@homeassistant" title="Mastodon" target="_blank"><iconify-icon icon="simple-icons:mastodon"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:0}span,svg{display:block}</style></template></iconify-icon></a>
+            <a rel="me" href="https://bsky.app/profile/home-assistant.io" title="Bluesky" target="_blank"><iconify-icon icon="simple-icons:bluesky"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:0}span,svg{display:block}</style></template></iconify-icon></a>
+            <a rel="me" href="https://x.com/home_assistant" title="X" target="_blank"><iconify-icon icon="simple-icons:x"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:0}span,svg{display:block}</style></template></iconify-icon></a>
+            <br>
+            <a rel="me" href="https://www.facebook.com/homeassistantio" title="Facebook" target="_blank"><iconify-icon icon="simple-icons:facebook"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:0}span,svg{display:block}</style></template></iconify-icon></a>
+            <a rel="me" href="https://www.instagram.com/homeassistant/" title="Instagram" target="_blank"><iconify-icon icon="simple-icons:instagram"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:0}span,svg{display:block}</style></template></iconify-icon></a>
+            <a rel="me" href="https://www.linkedin.com/company/home-assistant" title="LinkedIn" target="_blank"><iconify-icon icon="simple-icons:linkedin"><template shadowrootmode="open"><style data-style="data-style">:host{display:inline-block;vertical-align:0}span,svg{display:block}</style></template></iconify-icon></a>
+          </div>
+
+          <div class="web-notice">
+            <p>
+              For partnership inquiries please check out <a href="https://works-with.home-assistant.io/">Works With Home Assistant</a>. For media, get in touch <a href="mailto:media@openhomefoundation.org">here</a>. For other questions, you can contact us <a href="mailto:hello@home-assistant.io">here</a> (No technical support!)
+            </p>
+            <p>
+              Website powered by <a href="https://jekyllrb.com/">Jekyll</a><br>
+              Originally based on the <a href="https://github.com/coogie/oscailte">Oscailte theme</a>
+            </p>
+            <a href="https://www.netlify.com/">
+              <img src="./Getting started - Local - Home Assistant_files/netlify.svg" alt="Deploys by Netlify Badge">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      </footer>
+
+    </div>
+    <script type="module" src="./Getting started - Local - Home Assistant_files/lite-youtube.js.download"></script>
+
+<script src="./Getting started - Local - Home Assistant_files/terminology_tooltip.js.download" type="text/javascript" defer=""></script>
+
+<script src="./Getting started - Local - Home Assistant_files/prism.js.download" type="text/javascript" defer=""></script>
+<script type="text/javascript" src="./Getting started - Local - Home Assistant_files/index.min.js.download"></script>
+<script type="text/javascript">
+  docsearch({
+    container: '#docsearch',
+    appId: 'FBHBYS3J0U',
+    indexName: 'home-assistant',
+    apiKey: "ba6f7e6d97b3d3d2f778978c742a47c6",
+  });
+  document.querySelector('.site-title').addEventListener('contextmenu', function (ev) {
+    ev.preventDefault();
+    document.location.assign("https://design.home-assistant.io/#brand/logo")
+  });
+</script>
+
+
+
+
+<script type="text/javascript">
+  {
+    const article = document.querySelector("article.post");
+    if (article) {
+      const iframes = article.querySelectorAll("iframe[data-src]");
+      let loaded = false;
+      if (iframes) {
+        document.addEventListener('mousemove', loadLazyFrames, { passive: true, once: true });
+        document.addEventListener('touchmove', loadLazyFrames, { passive: true, once: true });
+        document.addEventListener('scroll', loadLazyFrames, { passive: true, once: true });
+  
+        function loadLazyFrames() {
+          if (loaded) return;
+          loaded = true;
+  
+          iframes.forEach((iframe) => {
+            const src = iframe.getAttribute("data-src");
+            if (src) {
+              iframe.setAttribute("src", src);
+              iframe.removeAttribute("data-src");
+            }
+          });
+        }
+      }
+    }
+  }
+</script>
+
+  <script defer="" src="./Getting started - Local - Home Assistant_files/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;5cecb750997f42328a45cbfc192e0673&quot;,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+
+
+<protonpass-root-c3c6 data-protonpass-role="root" data-protonpass-theme="dark"><template shadowrootmode="closed"></template></protonpass-root-c3c6></body></html>

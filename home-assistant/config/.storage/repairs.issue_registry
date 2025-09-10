@@ -5,11 +5,32 @@
   "data": {
     "issues": [
       {
-        "created": "2025-09-07T23:47:05.068648+00:00",
+        "created": "2025-09-09T20:05:12.749023+00:00",
         "dismissed_version": null,
-        "domain": "homeassistant",
+        "domain": "automation",
         "is_persistent": false,
-        "issue_id": "country_not_configured"
+        "issue_id": "automation.sonos_tts_announcement_validation_failed_schema"
+      },
+      {
+        "created": "2025-09-09T20:05:12.749509+00:00",
+        "dismissed_version": null,
+        "domain": "automation",
+        "is_persistent": false,
+        "issue_id": "automation.sonos_volume_control_validation_failed_schema"
+      },
+      {
+        "created": "2025-09-09T20:05:12.749700+00:00",
+        "dismissed_version": null,
+        "domain": "automation",
+        "is_persistent": false,
+        "issue_id": "automation.sonos_playback_control_validation_failed_schema"
+      },
+      {
+        "created": "2025-09-09T21:49:51.830114+00:00",
+        "dismissed_version": "2025.9.1",
+        "domain": "sonos",
+        "is_persistent": false,
+        "issue_id": "subscriptions_failed"
       }
     ]
   }

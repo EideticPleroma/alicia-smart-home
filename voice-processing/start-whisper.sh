@@ -1,9 +1,13 @@
 #!/bin/bash
 
+# Fix dpkg if it's interrupted
+dpkg --configure -a
+
 # Install system dependencies
 apt-get update && apt-get install -y python3 python3-pip ffmpeg
 
 # Install Python packages
+pip3 install --upgrade pip
 pip3 install openai-whisper fastapi uvicorn python-multipart
 
 # Create the Python application file

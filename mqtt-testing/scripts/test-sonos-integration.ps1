@@ -4,8 +4,7 @@
 param(
     [string]$Broker = "localhost",
     [int]$Port = 1883,
-    [string]$Username = "mobile_app",
-    [string]$Password = "alicia_ha_mqtt_2024",
+    [PSCredential]$Credential,
     [string]$SpeakerName = "living_room_sonos"
 )
 

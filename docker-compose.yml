@@ -1,0 +1,155 @@
+# Alicia Smart Home AI Assistant - Main Docker Compose
+# This is the primary deployment configuration for the entire system
+# Uses Wyoming Protocol for voice processing (modern approach)
+
+version: '3.8'
+
+services:
+  # ===== VOICE PROCESSING SERVICES (Wyoming Protocol) =====
+  wyoming-whisper:
+    container_name: alicia_wyoming_whisper
+    image: rhasspy/wyoming-whisper:latest
+    ports:
+      - "10300:10300"
+    volumes:
+      - ./voice-processing/models/whisper:/data
+    command: --model medium --language en --uri tcp://0.0.0.0:10300
+    restart: unless-stopped
+    networks:
+      - alicia_network
+    healthcheck:
+      test: ["CMD", "timeout", "5", "bash", "-c", "echo > /dev/tcp/localhost/10300"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  wyoming-piper:
+    container_name: alicia_wyoming_piper
+    image: rhasspy/wyoming-piper:latest
+    ports:
+      - "10200:10200"
+    volumes:
+      - ./voice-processing/models/piper:/data
+    command: --voice en_US-lessac-medium --uri tcp://0.0.0.0:10200
+    restart: unless-stopped
+    networks:
+      - alicia_network
+    healthcheck:
+      test: ["CMD", "timeout", "5", "bash", "-c", "echo > /dev/tcp/localhost/10200"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== LOCAL ASSISTANT SERVICE =====
+  alicia-assistant:
+    container_name: alicia_assistant
+    build:
+      context: ./voice-processing
+      dockerfile: Dockerfile.assistant
+    ports:
+      - "8000:8000"
+    environment:
+      - WHISPER_URL=tcp://alicia_wyoming_whisper:10300
+      - PIPER_URL=tcp://alicia_wyoming_piper:10200
+      - MQTT_BROKER=alicia_mqtt
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=test_user
+      - MQTT_PASSWORD=test_password
+    volumes:
+      - ./voice-processing/config:/app/config
+      - ./voice-processing/models:/app/models
+    depends_on:
+      - wyoming-whisper
+      - wyoming-piper
+      - mqtt
+    restart: unless-stopped
+    networks:
+      - alicia_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== MQTT BROKER =====
+  mqtt:
+    container_name: alicia_mqtt
+    image: eclipse-mosquitto:2.0
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mqtt/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./mqtt/config/acl:/mosquitto/config/acl
+      - ./mqtt/config/passwords:/mosquitto/config/passwords
+      - ./mqtt/data:/mosquitto/data
+      - ./mqtt/log:/mosquitto/log
+    restart: unless-stopped
+    networks:
+      - alicia_network
+    healthcheck:
+      test: ["CMD-SHELL", "mosquitto_sub -t '$$SYS/#' -C 1 -h localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== POSTGRES DATABASE =====
+  postgres:
+    container_name: alicia_postgres
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=alicia
+      - POSTGRES_USER=alicia
+      - POSTGRES_PASSWORD=alicia_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres/pg-data:/var/lib/postgresql/data
+      - ./postgres/init-scripts:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+    networks:
+      - alicia_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U alicia -d alicia"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== HOME ASSISTANT =====
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    env_file:
+      - ./home-assistant/.env
+    environment:
+      - TZ=Europe/London
+    volumes:
+      - ./home-assistant/config:/config
+      - ./home-assistant/logs:/config/logs
+      - /etc/localtime:/etc/localtime:ro
+      - ./home-assistant/setup-mqtt.sh:/setup-mqtt.sh
+    ports:
+      - "8123:8123"
+    restart: unless-stopped
+    depends_on:
+      - mqtt
+    networks:
+      - alicia_network
+    command: ["/bin/bash", "-c", "python -m homeassistant --config /config & sleep 30 && /setup-mqtt.sh && wait"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-H", "Authorization: Bearer ${HA_API_PASSWORD}", "http://localhost:8123/api/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+networks:
+  alicia_network:
+    driver: bridge
+    name: alicia_network
+    external: true

@@ -4,7 +4,7 @@
 
 param(
     [string]$Username = "esp32_device",
-    [string]$Password = "alicia_ha_mqtt_2024",
+    [SecureString]$Password,
     [string]$Broker = "localhost",
     [int]$Port = 1883,
     [string]$Topic = "alicia/test"

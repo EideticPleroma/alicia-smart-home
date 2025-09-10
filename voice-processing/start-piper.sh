@@ -48,7 +48,7 @@ app = FastAPI()
 async def synthesize_text(request: SynthesizeRequest):
     text = request.text
     language = request.language
-    
+
     # Map language codes to model files
     model_map = {
         "en": "en_US-lessac-medium.onnx",
@@ -57,12 +57,12 @@ async def synthesize_text(request: SynthesizeRequest):
         "de": "de_DE-thorsten-medium.onnx",
         "it": "it_IT-riccardo-xw.onnx"
     }
-    
+
     model = model_map.get(language, "en_US-lessac-medium.onnx")
-    
+
     with open("/tmp/text.txt", "w") as f:
         f.write(text)
-    subprocess.run(["./piper/piper", "--model", model, "--output_file", "/tmp/output.wav"], input=text.encode(), text=True)
+    subprocess.run(["./piper/piper", "--model", model, "--output_file", "/tmp/output.wav"], input=text, text=True)
     with open("/tmp/output.wav", "rb") as f:
         return f.read()
 

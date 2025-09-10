@@ -9,12 +9,12 @@
     "server_port": 8123,
     "use_x_forwarded_for": true,
     "trusted_proxies": [],
-    "ip_ban_enabled": true,
+    "ip_ban_enabled": false,
+    "login_attempts_threshold": 0,
     "ssl_profile": "modern",
     "cors_allowed_origins": [
       "https://cast.home-assistant.io"
     ],
-    "login_attempts_threshold": -1,
     "use_x_frame_options": true
   }
 }

@@ -9,6 +9,7 @@ These provide overarching standards, often referenced in workflows.
 - **securityRules.md** (v1.0): Security and privacy guidelines for data and credentials.
 - **errorHandling.md** (v2.0): Systematic error diagnosis and prevention.
 - **codeStyleRules.md** (v2.0): Code formatting and quality standards.
+- **windowsEnvironmentRules.md** (v1.0): Windows PowerShell environment and command guidelines.
 
 ## Workflows (Action-Oriented Processes)
 These guide specific tasks with structured steps.
@@ -28,4 +29,4 @@ These guide specific tasks with structured steps.
 - Suggestions: Add more for AI/ML training or cloud integrations if project evolves.
 - Cross-Referencing: All rules encourage integration (e.g., security in deployments).
 
-Last Updated: 2025-01-09 (Consolidated duplicate rules v2.0)
+Last Updated: 2025-01-09 (Added Windows environment rules v1.0)

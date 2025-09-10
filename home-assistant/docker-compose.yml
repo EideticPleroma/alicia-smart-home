@@ -10,6 +10,7 @@ services:
       - ./config:/config
       - ./logs:/config/logs
       - /etc/localtime:/etc/localtime:ro
+      - ./setup-mqtt.sh:/setup-mqtt.sh
     ports:
       - "18123:8123"
     restart: unless-stopped
@@ -17,8 +18,9 @@ services:
       - mqtt
     networks:
       - alicia_network
+    command: ["/bin/bash", "-c", "python -m homeassistant --config /config & sleep 30 && /setup-mqtt.sh && wait"]
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8123"]
+      test: ["CMD", "curl", "-f", "-H", "Authorization: Bearer ${HA_API_PASSWORD}", "http://localhost:8123/api/"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -46,5 +48,6 @@ services:
 
 networks:
   alicia_network:
+    driver: bridge
+    name: alicia_network
     external: true
-    name: postgres_alicia_network

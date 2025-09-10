@@ -69,17 +69,27 @@ Sonos Speakers (Network) ↔ Sonos MQTT Bridge (Python) ↔ MQTT Broker ↔ Home
 
 The following files have been configured:
 
+#### **Step 1: MQTT Integration Setup (UI Required)**
+**⚠️ IMPORTANT:** MQTT connection settings must be configured through the Home Assistant UI:
+
+1. Go to **Settings > Devices & Services**
+2. Click **Add Integration**
+3. Search for and select **MQTT**
+4. Configure:
+   - **Broker**: `127.0.0.1`
+   - **Port**: `1883`
+   - **Username**: `homeassistant`
+   - **Password**: `your_password_here`
+
 #### `configuration.yaml` - Sonos Integration
 ```yaml
 # Sonos Integration
 sonos:
   media_player:
-    - host: !env_var SONOS_HOST_LIVING_ROOM
-      name: "Living Room Sonos"
-    - host: !env_var SONOS_HOST_KITCHEN
-      name: "Kitchen Sonos"
-    - host: !env_var SONOS_HOST_BEDROOM
-      name: "Bedroom Sonos"
+    hosts:
+      - 192.168.1.101
+      - 192.168.1.102
+      - 192.168.1.103
 
 # Text-to-Speech Integration
 tts:
@@ -88,6 +98,27 @@ tts:
     cache: true
     cache_dir: /tmp/tts
     time_memory: 300
+```
+
+#### `configuration.yaml` - MQTT Entities (Optional)
+You can still define MQTT-based entities in YAML after setting up the MQTT integration via UI:
+```yaml
+# Example MQTT Sensor
+sensor:
+  - platform: mqtt
+    name: "Living Room Temperature"
+    state_topic: "home/livingroom/temperature"
+    unit_of_measurement: "°C"
+    value_template: "{{ value_json.temp }}"
+
+# Example MQTT Switch
+switch:
+  - platform: mqtt
+    name: "Bedroom Light"
+    state_topic: "home/bedroom/light/status"
+    command_topic: "home/bedroom/light/set"
+    payload_on: "ON"
+    payload_off: "OFF"
 ```
 
 #### `automations.yaml` - Sonos Automations
@@ -123,14 +154,19 @@ topic read alicia/audio/+/command
 
 2. **Start Home Assistant**
    ```bash
-   docker-compose up -d home-assistant
+   docker-compose up -d homeassistant
    ```
 
 3. **Start Sonos MQTT Bridge**
    ```bash
-   cd mqtt-testing/scripts
-   python sonos-mqtt-bridge.py
+   # Option 1: Host Networking (Recommended for development)
+   docker-compose -f docker-compose.host.yml up --build sonos-bridge
+
+   # Option 2: Macvlan Networking (More secure, but complex)
+   # docker-compose -f docker-compose.sonos.yml --profile macvlan up --build sonos-bridge-macvlan
    ```
+
+   > **🔒 Security Note**: The host networking option is used for development simplicity. For production deployment, consider using macvlan networking or bridge networking with proper firewall rules to isolate the container from the host network.
 
 ---
 

@@ -5,7 +5,7 @@ param(
     [string]$DeviceType = "sensor",
     [string]$DeviceId = "test_device_001",
     [string]$Username = "esp32_device",
-    [string]$Password = "alicia_ha_mqtt_2024",
+    [SecureString]$Password,
     [string]$Broker = "localhost",
     [int]$Port = 1883
 )
