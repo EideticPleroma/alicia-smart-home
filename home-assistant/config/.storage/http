@@ -12,9 +12,9 @@
     "ip_ban_enabled": false,
     "login_attempts_threshold": 0,
     "ssl_profile": "modern",
+    "use_x_frame_options": true,
     "cors_allowed_origins": [
       "https://cast.home-assistant.io"
-    ],
-    "use_x_frame_options": true
+    ]
   }
 }

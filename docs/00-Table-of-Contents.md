@@ -39,10 +39,12 @@ This comprehensive guide documents the complete implementation of Alicia, a voic
 ### **Part 2: Infrastructure & Setup**
 #### **Chapter 4: Infrastructure Setup**
 📄 **[04-Infrastructure-Setup.md](04-Infrastructure-Setup.md)**
-- Docker configuration
-- PostgreSQL with pgvector setup
-- Environment management
-- Database schema design
+- Complete Docker containerization setup
+- PostgreSQL with pgvector database configuration
+- Voice processing services (Whisper, Piper, Wyoming)
+- Troubleshooting common deployment issues
+- Performance optimization and monitoring
+- Backup and recovery procedures
 
 #### **Chapter 5: Phase 1 - Home Assistant Setup**
 📄 **[05-Phase-1-Home-Assistant-Setup.md](05-Phase-1-Home-Assistant-Setup.md)**
@@ -52,12 +54,14 @@ This comprehensive guide documents the complete implementation of Alicia, a voic
 - Production hardening
 
 ### **Part 3: Communication & Integration**
-#### **Chapter 6: Phase 2 - MQTT Broker Integration**
+#### **Chapter 6: Complete MQTT Integration**
 📄 **[06-Phase-2-MQTT-Broker-Integration.md](06-Phase-2-MQTT-Broker-Integration.md)**
-- Eclipse Mosquitto setup
-- Authentication and security
-- Topic structure design
-- Network integration
+- Eclipse Mosquitto broker setup and configuration
+- Authentication, ACL permissions, and security
+- Device discovery and MQTT topic structure
+- Home Assistant MQTT integration and automation
+- Performance monitoring and troubleshooting
+- Declarative deployment and testing procedures
 
 #### **Chapter 7: Phase 2 - System Integration**
 📄 **[07-Phase-2-System-Integration.md](07-Phase-2-System-Integration.md)**
@@ -89,12 +93,14 @@ This comprehensive guide documents the complete implementation of Alicia, a voic
 - MQTT integration
 - Performance optimization
 
-#### **Chapter 12: Phase 3 - Piper TTS Integration**
+#### **Chapter 12: Complete TTS Integration**
 📄 **[12-Phase-3-Piper-TTS-Integration.md](12-Phase-3-Piper-TTS-Integration.md)**
-- Piper neural text-to-speech setup
-- Voice synthesis configuration
-- Audio quality testing
-- Home Assistant integration
+- Piper neural TTS and Wyoming protocol setup
+- Google TTS fallback mechanisms
+- Voice synthesis configuration and testing
+- HTTP audio server for Sonos integration
+- Error handling and performance optimization
+- Multi-language voice support
 
 #### **Chapter 13: Phase 3 - Complete Voice Pipeline**
 📄 **[13-Phase-3-Complete-Voice-Pipeline.md](13-Phase-3-Complete-Voice-Pipeline.md)**
@@ -112,12 +118,14 @@ This comprehensive guide documents the complete implementation of Alicia, a voic
 - Integration verification
 
 ### **Part 7: Advanced AI Features (Phase 4)**
-#### **Chapter 15: Phase 4 - Multi-Language Support**
-📄 **[15-Phase-4-Multi-Language-Support.md](15-Phase-4-Multi-Language-Support.md)**
-- Multi-language Whisper STT integration
-- Multi-language Piper TTS voices
-- Language detection and switching
-- International user support
+#### **Chapter 15: Complete Sonos Integration**
+📄 **[15-Sonos-Integration-Guide.md](15-Sonos-Integration-Guide.md)**
+- Complete Sonos speaker integration via MQTT
+- HTTP audio server for TTS playback
+- Docker volume mounts and networking
+- Troubleshooting firewall and connectivity issues
+- Production deployment options and security
+- Performance monitoring and testing procedures
 
 ### **Part 8: Tools & Reference**
 #### **Chapter 14: Tools & Reference Guide**
@@ -126,6 +134,20 @@ This comprehensive guide documents the complete implementation of Alicia, a voic
 - Plugin recommendations
 - Knowledge management workflows
 - Project organization tips
+
+### **Part 9: Troubleshooting & Support**
+#### **Chapter 99: Comprehensive Troubleshooting Guide**
+📄 **[99-Troubleshooting-Guide.md](99-Troubleshooting-Guide.md)**
+- Docker and container issues resolution
+- Database connectivity and performance problems
+- MQTT broker authentication and configuration issues
+- Home Assistant integration and configuration errors
+- Voice processing service troubleshooting
+- Sonos integration problems and firewall issues
+- Network connectivity and performance optimization
+- Security and authentication troubleshooting
+- Diagnostic tools and preventive maintenance
+- Emergency recovery procedures
 
 ### **Appendices**
 #### **Appendix A: Rules Analysis Summary**

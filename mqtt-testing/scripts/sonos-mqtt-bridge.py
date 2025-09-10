@@ -12,14 +12,21 @@ import paho.mqtt.client as mqtt
 import soco
 from soco import SoCo
 from soco.discovery import discover
+import threading
+import http.server
+import socketserver
+import os
+import uuid
+import random
 
 # Configuration
 import os
-MQTT_BROKER = os.getenv("MQTT_BROKER", "localhost")
+MQTT_BROKER = os.getenv("MQTT_BROKER", "alicia_mqtt")  # Use container name instead of localhost
 MQTT_PORT = int(os.getenv("MQTT_PORT", 1883))
 MQTT_USERNAME = os.getenv("MQTT_USERNAME", "sonos_speaker")
 MQTT_PASSWORD = os.getenv("MQTT_PASSWORD", "alicia_ha_mqtt_2024")
-CLIENT_ID = "sonos_bridge"
+# Generate unique client ID to prevent conflicts
+CLIENT_ID = f"sonos_bridge_{uuid.uuid4().hex[:8]}"
 
 # MQTT Topics
 TOPIC_STATUS = "alicia/devices/sonos/{}/status"
@@ -33,21 +40,115 @@ TOPIC_PLAYBACK = "alicia/commands/sonos/playback"
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
+# HTTP Server for audio files
+class AudioHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, directory="/tmp/audio", **kwargs)
+
+    def end_headers(self):
+        # Add CORS headers for Sonos compatibility
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        super().end_headers()
+
+def start_audio_server(port=8080):
+    """Start the internal HTTP audio server"""
+    try:
+        os.makedirs("/tmp/audio", exist_ok=True)
+
+        with socketserver.TCPServer(("", port), AudioHTTPRequestHandler) as httpd:
+            logger.info(f"Audio server started on port {port}")
+            httpd.serve_forever()
+    except Exception as e:
+        logger.error(f"Failed to start audio server: {e}")
+
 class SonosMQTTBridge:
     def __init__(self):
-        self.client = mqtt.Client(client_id=CLIENT_ID)
-        self.client.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
-        self.client.on_connect = self.on_connect
-        self.client.on_message = self.on_message
-        self.client.on_disconnect = self.on_disconnect
-        
-        # Configure MQTT client for better stability
-        self.client.keepalive = 60
-        self.client.clean_session = True
-        self.client.reconnect_delay_set(min_delay=1, max_delay=120)
-
+        self.client = None
         self.sonos_speakers = {}
+        self.connection_retry_count = 0
+        self.max_retry_attempts = 5
+        self.retry_delay = 1
+        self.max_retry_delay = 60
+        self.is_connected = False
+        self.last_heartbeat = time.time()
+        
         self.discover_speakers()
+
+        # Start internal HTTP server in background thread
+        self._start_internal_http_server()
+
+        # Setup MQTT client with improved stability
+        self.setup_mqtt()
+
+    def setup_mqtt(self):
+        """Setup MQTT client with improved stability and connection handling"""
+        try:
+            logger.info("Setting up MQTT client with improved stability...")
+
+            # Create MQTT client with proper configuration
+            self.client = mqtt.Client(client_id=CLIENT_ID, callback_api_version=mqtt.CallbackAPIVersion.VERSION1)
+            self.client.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
+
+            # Set callbacks
+            self.client.on_connect = self.on_connect
+            self.client.on_message = self.on_message
+            self.client.on_disconnect = self.on_disconnect
+            self.client.on_connect_fail = self.on_connect_fail
+            self.client.on_socket_open = self.on_socket_open
+            self.client.on_socket_close = self.on_socket_close
+            self.client.on_socket_register_write = self.on_socket_register_write
+            self.client.on_socket_unregister_write = self.on_socket_unregister_write
+
+            # Configure MQTT client for better stability
+            self.client.keepalive = 120  # Increased keepalive
+            self.client.clean_session = False  # Use persistent sessions
+            self.client.max_inflight_messages_set(20)  # Limit concurrent messages
+            self.client.max_queued_messages_set(100)  # Limit queued messages
+            self.client.reconnect_delay_set(min_delay=1, max_delay=120)
+
+            # Connect with retry logic
+            self._connect_with_retry()
+
+        except Exception as e:
+            logger.error(f"Failed to setup MQTT client: {e}")
+            raise
+
+    def _connect_with_retry(self):
+        """Connect to MQTT broker with exponential backoff retry logic"""
+        for attempt in range(self.max_retry_attempts):
+            try:
+                logger.info(f"Attempting to connect to MQTT broker at {MQTT_BROKER}:{MQTT_PORT} (attempt {attempt + 1}/{self.max_retry_attempts})")
+                self.client.connect(MQTT_BROKER, MQTT_PORT, 120)
+                self.client.loop_start()
+                logger.info("MQTT client setup complete and connected")
+                self.is_connected = True
+                self.connection_retry_count = 0
+                return
+            except Exception as e:
+                logger.error(f"Failed to connect to MQTT broker (attempt {attempt + 1}): {e}")
+                if attempt < self.max_retry_attempts - 1:
+                    # Exponential backoff with jitter
+                    delay = min(self.retry_delay * (2 ** attempt) + random.uniform(0, 1), self.max_retry_delay)
+                    logger.info(f"Retrying in {delay:.1f} seconds...")
+                    time.sleep(delay)
+                else:
+                    logger.error("Failed to connect to MQTT broker after all attempts")
+                    raise
+
+    def _start_internal_http_server(self):
+        """Start internal HTTP server in background thread"""
+        def start_server():
+            try:
+                start_audio_server(8080)
+            except Exception as e:
+                logger.error(f"Failed to start internal HTTP server: {e}")
+
+        # Start HTTP server thread
+        http_thread = threading.Thread(target=start_server, daemon=True)
+        http_thread.start()
+        logger.info("Internal HTTP audio server started on port 8080")
 
     def discover_speakers(self):
         """Discover Sonos speakers on the network"""
@@ -88,17 +189,24 @@ class SonosMQTTBridge:
         """MQTT connection callback"""
         if rc == 0:
             logger.info("Connected to MQTT broker successfully")
-            # Subscribe to command topics
+            self.is_connected = True
+            self.last_heartbeat = time.time()
+            
+            # Subscribe to command topics with QoS 1 for reliability
             for speaker_name in self.sonos_speakers.keys():
-                client.subscribe(TOPIC_COMMAND.format(speaker_name))
+                client.subscribe(TOPIC_COMMAND.format(speaker_name), qos=1)
                 logger.info(f"Subscribed to command topic: {TOPIC_COMMAND.format(speaker_name)}")
-            client.subscribe(TOPIC_TTS)
-            client.subscribe(TOPIC_GROUP)
-            client.subscribe(TOPIC_VOLUME)
-            client.subscribe(TOPIC_PLAYBACK)
+            # Subscribe to specific TTS command topics, not status topics
+            client.subscribe("alicia/tts/kitchen", qos=1)
+            client.subscribe("alicia/tts/bedroom", qos=1)
+            logger.info(f"🎤 Subscribed to TTS command topics: alicia/tts/kitchen, alicia/tts/bedroom")
+            client.subscribe(TOPIC_GROUP, qos=1)
+            client.subscribe(TOPIC_VOLUME, qos=1)
+            client.subscribe(TOPIC_PLAYBACK, qos=1)
             logger.info("All MQTT topics subscribed successfully")
         else:
             logger.error(f"Failed to connect to MQTT broker: {rc}")
+            self.is_connected = False
             # Log specific error messages
             if rc == 1:
                 logger.error("MQTT Connection refused - incorrect protocol version")
@@ -114,50 +222,113 @@ class SonosMQTTBridge:
                 logger.error(f"MQTT Connection refused - unknown error code: {rc}")
 
     def on_disconnect(self, client, userdata, rc):
-        """MQTT disconnection callback"""
+        """MQTT disconnection callback with improved error handling"""
+        self.is_connected = False
+        
         if rc != 0:
             logger.warning(f"Unexpected disconnection from MQTT broker: {rc}")
-            # Attempt to reconnect
-            try:
-                client.reconnect()
-            except Exception as e:
-                logger.error(f"Failed to reconnect: {e}")
+            
+            # Handle specific error codes
+            if rc == 7:  # Connection lost
+                logger.warning("Connection lost (code 7), implementing reconnection strategy...")
+                self._handle_connection_lost()
+            else:
+                logger.error(f"Disconnection with error code: {rc}")
+                # Attempt immediate reconnection for other errors
+                try:
+                    client.reconnect()
+                except Exception as e:
+                    logger.error(f"Failed to reconnect: {e}")
         else:
             logger.info("Disconnected from MQTT broker normally")
 
+    def _handle_connection_lost(self):
+        """Handle connection lost (code 7) with exponential backoff"""
+        self.connection_retry_count += 1
+        
+        if self.connection_retry_count <= self.max_retry_attempts:
+            # Calculate delay with exponential backoff
+            delay = min(self.retry_delay * (2 ** (self.connection_retry_count - 1)) + random.uniform(0, 1), self.max_retry_delay)
+            logger.info(f"Attempting reconnection {self.connection_retry_count}/{self.max_retry_attempts} in {delay:.1f} seconds...")
+            
+            # Schedule reconnection in a separate thread
+            def delayed_reconnect():
+                time.sleep(delay)
+                try:
+                    if not self.is_connected:
+                        self.client.reconnect()
+                except Exception as e:
+                    logger.error(f"Reconnection attempt {self.connection_retry_count} failed: {e}")
+                    if self.connection_retry_count < self.max_retry_attempts:
+                        self._handle_connection_lost()
+            
+            threading.Thread(target=delayed_reconnect, daemon=True).start()
+        else:
+            logger.error("Max reconnection attempts reached. Manual intervention required.")
+
+    def on_connect_fail(self, client, userdata):
+        """MQTT connection failure callback"""
+        logger.error("MQTT connection failed, will retry...")
+
+    def on_socket_open(self, client, userdata, sock):
+        """MQTT socket opened callback"""
+        logger.debug("MQTT socket opened")
+
+    def on_socket_close(self, client, userdata, sock):
+        """MQTT socket closed callback"""
+        logger.debug("MQTT socket closed")
+
+    def on_socket_register_write(self, client, userdata, sock):
+        """MQTT socket registered for write callback"""
+        logger.debug("MQTT socket registered for write")
+
+    def on_socket_unregister_write(self, client, userdata, sock):
+        """MQTT socket unregistered for write callback"""
+        logger.debug("MQTT socket unregistered for write")
+
     def on_message(self, client, userdata, msg):
-        """Handle incoming MQTT messages"""
+        """Handle incoming MQTT messages with improved error handling"""
         try:
-            logger.info(f"Received MQTT message on topic: {msg.topic}")
-            logger.info(f"Message payload: {msg.payload.decode()}")
+            # Update heartbeat on message receipt
+            self.last_heartbeat = time.time()
+            
+            logger.info(f"🔔 RECEIVED MQTT MESSAGE: {msg.topic}")
+            logger.info(f"📦 Message payload: {msg.payload.decode()}")
+            logger.info(f"📊 Payload length: {len(msg.payload)} bytes")
 
             payload = json.loads(msg.payload.decode())
-            logger.info(f"Parsed payload: {payload}")
+            logger.info(f"📋 Parsed payload: {payload}")
 
-            if msg.topic.startswith("alicia/tts/"):
-                logger.info(f"TTS message detected for topic: {msg.topic}")
+            # Only process TTS command topics, not status topics
+            if msg.topic in ["alicia/tts/kitchen", "alicia/tts/bedroom"]:
+                logger.info(f"🎤 TTS command detected for topic: {msg.topic}")
                 self.handle_tts_command(payload)
+            elif msg.topic == "alicia/tts/status":
+                logger.debug(f"📊 TTS status message received: {msg.topic}")
+                # Ignore status messages to prevent feedback loop
             elif msg.topic == TOPIC_GROUP:
-                logger.info(f"Group command detected: {msg.topic}")
+                logger.info(f"👥 Group command detected: {msg.topic}")
                 self.handle_group_command(payload)
             elif msg.topic == TOPIC_VOLUME:
-                logger.info(f"Volume command detected: {msg.topic}")
+                logger.info(f"🔊 Volume command detected: {msg.topic}")
                 self.handle_volume_command(payload)
             elif msg.topic == TOPIC_PLAYBACK:
-                logger.info(f"Playback command detected: {msg.topic}")
+                logger.info(f"▶️ Playback command detected: {msg.topic}")
                 self.handle_playback_command(payload)
-            elif "commands/sonos/" in msg.topic:
+            elif msg.topic.startswith(TOPIC_COMMAND.format("")):
                 speaker_name = msg.topic.split("/")[-1]
-                logger.info(f"Speaker command detected for {speaker_name}: {msg.topic}")
+                logger.info(f"🎵 Speaker command detected for: {speaker_name}")
                 self.handle_speaker_command(speaker_name, payload)
             else:
-                logger.warning(f"Unrecognized topic: {msg.topic}")
+                logger.warning(f"❓ Unrecognized topic: {msg.topic}")
 
         except json.JSONDecodeError as e:
-            logger.error(f"Invalid JSON payload: {msg.payload} - Error: {e}")
+            logger.error(f"❌ Invalid JSON payload: {msg.payload} - Error: {e}")
         except Exception as e:
-            logger.error(f"Error processing message on topic {msg.topic}: {e}")
-            logger.error(f"Exception type: {type(e).__name__}")
+            logger.error(f"❌ Error processing message on topic {msg.topic}: {e}")
+            logger.error(f"🔍 Exception type: {type(e).__name__}")
+            import traceback
+            logger.error(f"🔍 Full traceback: {traceback.format_exc()}")
 
     def handle_tts_command(self, payload):
         """Handle TTS announcement requests with Wyoming protocol support"""
@@ -195,13 +366,13 @@ class SonosMQTTBridge:
                 logger.info(f"Using Wyoming protocol with pre-generated audio: {audio_url}")
                 tts_success = self._play_tts_with_wyoming_audio(speaker, audio_url, message)
             else:
-                # Use traditional TTS methods
-                # Try Google TTS first (more reliable), fallback to Piper TTS
-                tts_success = self._play_tts_with_google(speaker, message, language)
+                # Use Piper TTS first (local, private), fallback to Google TTS
+                logger.info("Attempting Piper TTS (primary method)")
+                tts_success = self._play_tts_with_piper(speaker, message, language)
 
                 if not tts_success:
-                    logger.info("Google TTS failed, trying Piper TTS fallback")
-                    tts_success = self._play_tts_with_piper(speaker, message, language)
+                    logger.info("Piper TTS failed, trying Google TTS fallback")
+                    tts_success = self._play_tts_with_google(speaker, message, language)
 
             if not tts_success:
                 logger.error("All TTS methods failed")
@@ -213,7 +384,7 @@ class SonosMQTTBridge:
                     "error": "TTS playback failed",
                     "timestamp": datetime.now().isoformat()
                 }
-                self.client.publish(status_topic, json.dumps(status_payload))
+                self._publish_with_qos(status_topic, json.dumps(status_payload), qos=1)
                 return
 
             # Wait for TTS to complete properly
@@ -233,7 +404,7 @@ class SonosMQTTBridge:
                 "use_wyoming": use_wyoming,
                 "timestamp": datetime.now().isoformat()
             }
-            self.client.publish(status_topic, json.dumps(status_payload))
+            self._publish_with_qos(status_topic, json.dumps(status_payload), qos=1)
             logger.info(f"TTS completed on {speaker_name}")
 
         except Exception as e:
@@ -247,7 +418,7 @@ class SonosMQTTBridge:
                     "error": str(e),
                     "timestamp": datetime.now().isoformat()
                 }
-                self.client.publish(status_topic, json.dumps(status_payload))
+                self._publish_with_qos(status_topic, json.dumps(status_payload), qos=1)
             except:
                 pass
 
@@ -274,7 +445,7 @@ class SonosMQTTBridge:
                     "members": member_names,
                     "timestamp": datetime.now().isoformat()
                 }
-                self.client.publish("alicia/devices/sonos/group/status", json.dumps(status_payload))
+                self._publish_with_qos("alicia/devices/sonos/group/status", json.dumps(status_payload), qos=1)
 
         except Exception as e:
             logger.error(f"Error handling group command: {e}")
@@ -297,7 +468,7 @@ class SonosMQTTBridge:
                     "timestamp": datetime.now().isoformat()
                 }
                 status_topic = TOPIC_STATUS.format(speaker_name)
-                self.client.publish(status_topic, json.dumps(status_payload))
+                self._publish_with_qos(status_topic, json.dumps(status_payload), qos=1)
 
         except Exception as e:
             logger.error(f"Error handling volume command: {e}")
@@ -330,7 +501,7 @@ class SonosMQTTBridge:
                     "timestamp": datetime.now().isoformat()
                 }
                 status_topic = TOPIC_STATUS.format(speaker_name)
-                self.client.publish(status_topic, json.dumps(status_payload))
+                self._publish_with_qos(status_topic, json.dumps(status_payload), qos=1)
 
         except Exception as e:
             logger.error(f"Error handling playback command: {e}")
@@ -352,7 +523,7 @@ class SonosMQTTBridge:
             logger.error(f"Error handling speaker command: {e}")
 
     def publish_speaker_status(self, speaker_name):
-        """Publish current status of a speaker"""
+        """Publish current status of a speaker with QoS 1"""
         try:
             if speaker_name in self.sonos_speakers:
                 speaker = self.sonos_speakers[speaker_name]
@@ -369,15 +540,35 @@ class SonosMQTTBridge:
                 }
 
                 status_topic = TOPIC_STATUS.format(speaker_name)
-                self.client.publish(status_topic, json.dumps(status))
+                self._publish_with_qos(status_topic, json.dumps(status), qos=1)
 
                 logger.info(f"Published status for {speaker_name}")
 
         except Exception as e:
             logger.error(f"Error publishing speaker status: {e}")
 
+    def _publish_with_qos(self, topic, payload, qos=1, retain=False):
+        """Publish message with QoS and error handling"""
+        try:
+            if not self.is_connected:
+                logger.warning(f"Cannot publish to {topic}: not connected to MQTT broker")
+                return False
+            
+            result = self.client.publish(topic, payload, qos=qos, retain=retain)
+            
+            if result.rc == mqtt.MQTT_ERR_SUCCESS:
+                logger.debug(f"Published to {topic} with QoS {qos}")
+                return True
+            else:
+                logger.error(f"Failed to publish to {topic}: {result.rc}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Error publishing to {topic}: {e}")
+            return False
+
     def _play_tts_with_piper(self, speaker, message, language="en"):
-        """Play TTS using Piper (local TTS engine) with HTTP audio server"""
+        """Play TTS using Piper (local TTS engine) with HTTP audio server and enhanced error handling"""
         import subprocess
         import tempfile
         import os
@@ -385,8 +576,11 @@ class SonosMQTTBridge:
         import shutil
 
         temp_file_path = None
+        cleanup_files = []
 
         try:
+            logger.info(f"🎵 Starting Piper TTS for message: '{message[:50]}...'")
+
             # Check if Piper is installed (try multiple possible locations)
             piper_paths = [
                 "/usr/local/bin/piper/piper",  # Docker installation path
@@ -401,98 +595,162 @@ class SonosMQTTBridge:
                     break
 
             if not piper_executable:
-                logger.error("Piper TTS executable not found in any expected location")
+                logger.error("❌ Piper TTS executable not found in any expected location")
+                logger.error("Expected locations checked:")
+                for path in piper_paths:
+                    logger.error(f"  - {path}: {'EXISTS' if path and os.path.exists(path) else 'NOT FOUND'}")
                 return False
 
-            logger.info(f"Using Piper executable: {piper_executable}")
+            logger.info(f"✅ Using Piper executable: {piper_executable}")
+
+            # Verify Piper models directory exists
+            models_dir = "/usr/local/bin/piper/models"
+            if not os.path.exists(models_dir):
+                logger.error(f"❌ Piper models directory not found: {models_dir}")
+                return False
 
             # Use shared audio directory that HTTP server can access
-            # The HTTP server runs on Windows host, so we need to use the Windows path
-            shared_audio_dir = "/tmp/audio"  # This gets mounted to C:\temp\audio on host
-
+            shared_audio_dir = "/tmp/audio"
             os.makedirs(shared_audio_dir, exist_ok=True)
 
             # Create unique filename for this TTS request
             import uuid
-            audio_filename = f"tts_{uuid.uuid4().hex}.wav"
+            audio_filename = f"piper_tts_{uuid.uuid4().hex}.wav"
             temp_file_path = os.path.join(shared_audio_dir, audio_filename)
+            cleanup_files.append(temp_file_path)
 
-            logger.info(f"Generating TTS audio file: {temp_file_path}")
+            logger.info(f"📁 Generating TTS audio file: {temp_file_path}")
 
             # Piper TTS command with proper model selection
             model_name = self._get_piper_model_for_language(language)
+            model_path = f"{models_dir}/{model_name}.onnx"
+
+            if not os.path.exists(model_path):
+                logger.error(f"❌ Piper model not found: {model_path}")
+                logger.error(f"Available models in {models_dir}:")
+                try:
+                    for file in os.listdir(models_dir):
+                        if file.endswith('.onnx'):
+                            logger.error(f"  - {file}")
+                except Exception as e:
+                    logger.error(f"Could not list models directory: {e}")
+                return False
+
             piper_cmd = [
                 piper_executable,
-                "--model", f"/usr/local/bin/piper/models/{model_name}.onnx",
+                "--model", model_path,
                 "--output_file", temp_file_path
             ]
 
-            # Run Piper TTS
-            process = subprocess.Popen(
-                piper_cmd,
-                stdin=subprocess.PIPE,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True
-            )
+            logger.info(f"🚀 Running Piper command: {' '.join(piper_cmd)}")
 
-            # Send message to Piper
-            stdout, stderr = process.communicate(input=message)
+            # Run Piper TTS with timeout
+            try:
+                process = subprocess.Popen(
+                    piper_cmd,
+                    stdin=subprocess.PIPE,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    text=True
+                )
 
-            if process.returncode != 0:
-                logger.error(f"Piper TTS failed: {stderr}")
+                # Send message to Piper with timeout
+                stdout, stderr = process.communicate(input=message, timeout=30)
+
+                if process.returncode != 0:
+                    logger.error(f"❌ Piper TTS process failed with return code: {process.returncode}")
+                    logger.error(f"STDERR: {stderr}")
+                    logger.error(f"STDOUT: {stdout}")
+                    return False
+
+            except subprocess.TimeoutExpired:
+                logger.error("❌ Piper TTS timed out after 30 seconds")
+                process.kill()
+                return False
+            except Exception as e:
+                logger.error(f"❌ Error running Piper TTS process: {e}")
                 return False
 
             # Validate audio file
             if not self._validate_audio_file(temp_file_path):
-                logger.error("Generated audio file is invalid")
+                logger.error("❌ Generated Piper audio file is invalid")
                 return False
+
+            logger.info("✅ Piper TTS audio generation successful")
 
             # Convert to MP3 if needed for better Sonos compatibility
             mp3_path = temp_file_path.replace('.wav', '.mp3')
+            cleanup_files.append(mp3_path)
+
             if self._convert_to_mp3(temp_file_path, mp3_path):
                 # Use MP3 file instead
                 os.remove(temp_file_path)
+                cleanup_files.remove(temp_file_path)
                 temp_file_path = mp3_path
                 audio_filename = audio_filename.replace('.wav', '.mp3')
+                logger.info("✅ Converted WAV to MP3 for better Sonos compatibility")
 
             # Generate HTTP URL for the audio file
             host_ip = self._get_local_ip()
-            audio_url = f"http://{host_ip}:8080/{audio_filename}"
+            audio_url = f"http://{host_ip}:8081/{audio_filename}"
 
-            logger.info(f"Serving audio at: {audio_url}")
+            logger.info(f"🌐 Serving Piper audio at: {audio_url}")
+
+            # Test URL accessibility before playing
+            if not self._test_audio_url(audio_url):
+                logger.error("❌ Generated audio URL is not accessible")
+                return False
 
             # Ensure speaker is not in a group before playing
             try:
                 if speaker.group and speaker.group.coordinator != speaker:
-                    logger.info(f"Ungrouping {speaker.player_name} before TTS playback")
+                    logger.info(f"🔄 Ungrouping {speaker.player_name} before Piper TTS playback")
                     speaker.unjoin()
                     time.sleep(1)  # Give time for ungrouping
             except Exception as e:
-                logger.warning(f"Could not ungroup speaker: {e}")
+                logger.warning(f"⚠️ Could not ungroup speaker: {e}")
 
             # Play the audio on Sonos
+            logger.info("▶️ Starting Piper TTS playback on Sonos")
             speaker.play_uri(audio_url)
 
             # Wait for playback to start and monitor
-            max_wait = 10
+            max_wait = 15  # Increased timeout for Piper
+            playback_started = False
+
             for i in range(max_wait):
                 time.sleep(1)
-                transport_info = speaker.get_current_transport_info()
-                if transport_info.get('current_transport_state') == 'PLAYING':
-                    logger.info("Piper TTS playback started successfully")
-                    return True
+                try:
+                    transport_info = speaker.get_current_transport_info()
+                    state = transport_info.get('current_transport_state')
 
-            logger.warning("Piper TTS playback did not start within timeout")
-            return False
+                    if state == 'PLAYING':
+                        logger.info("✅ Piper TTS playback started successfully")
+                        playback_started = True
+                        break
+                    elif state in ['STOPPED', 'PAUSED_PLAYBACK']:
+                        logger.warning(f"⚠️ Piper TTS playback stopped immediately (state: {state})")
+                        break
+                except Exception as e:
+                    logger.warning(f"⚠️ Error checking Piper playback state: {e}")
+
+            if not playback_started:
+                logger.error("❌ Piper TTS playback did not start within timeout")
+                return False
+
+            logger.info("🎉 Piper TTS completed successfully")
+            return True
 
         except Exception as e:
-            logger.error(f"Piper TTS error: {e}")
+            logger.error(f"❌ Piper TTS error: {e}")
+            logger.error(f"Exception type: {type(e).__name__}")
+            import traceback
+            logger.error(f"Traceback: {traceback.format_exc()}")
             return False
         finally:
             # Cleanup in separate thread to avoid blocking
-            if temp_file_path and os.path.exists(temp_file_path):
-                threading.Thread(target=self._cleanup_temp_file, args=(temp_file_path,), daemon=True).start()
+            if cleanup_files:
+                threading.Thread(target=self._cleanup_temp_files, args=(cleanup_files,), daemon=True).start()
 
     def _play_tts_with_wyoming_audio(self, speaker, audio_url, message):
         """Play TTS using pre-generated Wyoming protocol audio"""
@@ -638,10 +896,10 @@ class SonosMQTTBridge:
 
     def _get_local_ip(self):
         """Get local IP address that Sonos speakers can reach"""
-        # Since we know the host IP is 192.168.1.100 and Sonos speakers are on 192.168.1.x
-        # We'll use the host IP directly for better reliability
-        host_ip = "192.168.1.100"
-        logger.info(f"Using host IP for Sonos access: {host_ip}")
+        # Use the host machine's IP address that Sonos speakers can reach
+        # This should be the actual network IP, not the container's internal IP
+        host_ip = "192.168.1.100"  # Host machine IP address
+        logger.info(f"Using host IP for HTTP server: {host_ip}:8081")
         return host_ip
 
     def _get_piper_model_for_language(self, language):
@@ -754,57 +1012,75 @@ class SonosMQTTBridge:
         except Exception as e:
             logger.error(f"Error cleaning up temp file {file_path}: {e}")
 
+    def _cleanup_temp_files(self, file_paths):
+        """Clean up multiple temporary audio files"""
+        for file_path in file_paths:
+            self._cleanup_temp_file(file_path)
+
+    def _test_audio_url(self, audio_url):
+        """Test if audio URL is accessible before playing"""
+        try:
+            import requests
+            response = requests.head(audio_url, timeout=5)
+            if response.status_code == 200:
+                logger.info(f"✅ Audio URL accessible: {audio_url}")
+                return True
+            else:
+                logger.warning(f"⚠️ Audio URL returned status {response.status_code}: {audio_url}")
+                return False
+        except Exception as e:
+            logger.warning(f"⚠️ Could not test audio URL {audio_url}: {e}")
+            return False
+
     def publish_all_status(self):
         """Publish status for all discovered speakers"""
         for speaker_name in self.sonos_speakers.keys():
             self.publish_speaker_status(speaker_name)
 
     def run(self):
-        """Main loop with connection retry logic"""
-        max_retries = 5
-        retry_delay = 5  # seconds
-        retry_count = 0
+        """Main loop with improved connection monitoring and reduced status frequency"""
+        try:
+            logger.info("Sonos MQTT Bridge started successfully")
 
-        while retry_count < max_retries:
-            try:
-                logger.info(f"Attempting to connect to MQTT broker at {MQTT_BROKER}:{MQTT_PORT} (attempt {retry_count + 1}/{max_retries})")
-                self.client.connect(MQTT_BROKER, MQTT_PORT, 60)
-                self.client.loop_start()
+            # Publish initial status
+            time.sleep(3)  # Wait for connection to establish
+            self.publish_all_status()
 
-                logger.info("Sonos MQTT Bridge started successfully")
-
-                # Publish initial status
-                time.sleep(3)  # Wait for connection to establish
-                self.publish_all_status()
-
-                # Reset retry count on successful connection
-                retry_count = 0
-
-                # Keep running
-                while True:
-                    time.sleep(30)  # Publish status every 30 seconds
+            # Keep running with improved monitoring
+            status_interval = 60  # Reduced from 30 to 60 seconds
+            heartbeat_timeout = 300  # 5 minutes without activity
+            
+            while True:
+                time.sleep(10)  # Check every 10 seconds
+                
+                # Check connection health
+                if not self.is_connected:
+                    logger.warning("Connection lost, attempting to reconnect...")
+                    try:
+                        self.client.reconnect()
+                    except Exception as e:
+                        logger.error(f"Reconnection failed: {e}")
+                
+                # Check for heartbeat timeout
+                if time.time() - self.last_heartbeat > heartbeat_timeout:
+                    logger.warning("No activity detected, checking connection...")
+                    if not self.is_connected:
+                        logger.warning("Connection appears to be lost")
+                
+                # Publish status updates less frequently
+                if int(time.time()) % status_interval == 0:
                     self.publish_all_status()
 
-            except KeyboardInterrupt:
-                logger.info("Shutting down...")
-                break
-            except Exception as e:
-                retry_count += 1
-                logger.error(f"Error in main loop (attempt {retry_count}/{max_retries}): {e}")
-
-                if retry_count < max_retries:
-                    logger.info(f"Retrying connection in {retry_delay} seconds...")
-                    time.sleep(retry_delay)
-                    retry_delay = min(retry_delay * 2, 60)  # Exponential backoff, max 60s
-                else:
-                    logger.error("Maximum retry attempts reached. Giving up.")
-                    break
-            finally:
-                try:
-                    self.client.loop_stop()
-                    self.client.disconnect()
-                except:
-                    pass
+        except KeyboardInterrupt:
+            logger.info("Shutting down...")
+        except Exception as e:
+            logger.error(f"Error in main loop: {e}")
+        finally:
+            try:
+                self.client.loop_stop()
+                self.client.disconnect()
+            except:
+                pass
 
         logger.info("Sonos MQTT Bridge stopped")
 

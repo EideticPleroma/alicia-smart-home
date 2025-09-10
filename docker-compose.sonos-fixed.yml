@@ -1,0 +1,58 @@
+services:
+  sonos-bridge:
+    build:
+      context: .
+      dockerfile: Dockerfile.sonos
+    container_name: alicia_sonos_bridge
+    ports:
+      - "8081:8080"  # Map container port 8080 to host 8081
+    environment:
+      - MQTT_BROKER=alicia_mqtt
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=sonos_speaker
+      - MQTT_PASSWORD=alicia_ha_mqtt_2024
+      - HTTP_SERVER_PORT=8080
+      - HOST_IP=host.docker.internal
+    volumes:
+      - ./mqtt-testing/scripts:/app
+      - //c/temp/audio:/tmp/audio:rw
+    working_dir: /app
+    command: python sonos-mqtt-bridge.py
+    restart: unless-stopped
+    depends_on:
+      mqtt:
+        condition: service_healthy
+    networks:
+      - alicia_network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import paho.mqtt.client as mqtt; client = mqtt.Client(); client.connect('alicia_mqtt', 1883, 60); client.disconnect()"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  mqtt:
+    container_name: alicia_mqtt
+    image: eclipse-mosquitto:2.0
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mqtt/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./mqtt/config/acl:/mosquitto/config/acl
+      - ./mqtt/config/passwords:/mosquitto/config/passwords
+      - ./mqtt/data:/mosquitto/data
+      - ./mqtt/log:/mosquitto/log
+    restart: unless-stopped
+    networks:
+      - alicia_network
+    healthcheck:
+      test: ["CMD-SHELL", "mosquitto_sub -t '$$SYS/#' -C 1 -h localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+networks:
+  alicia_network:
+    external: true

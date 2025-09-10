@@ -7,6 +7,7 @@
 ![Docker](https://img.shields.io/badge/Docker-Ready-blue?style=flat-square&logo=docker)
 ![Home Assistant](https://img.shields.io/badge/Home%20Assistant-Integrated-blue?style=flat-square&logo=home-assistant)
 ![MQTT](https://img.shields.io/badge/MQTT-Enabled-blue?style=flat-square&logo=eclipse-mosquitto)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue?style=flat-square&logo=postgresql)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
 **A complete voice-controlled smart home AI assistant with speech-to-text, text-to-speech, and intelligent command processing.**

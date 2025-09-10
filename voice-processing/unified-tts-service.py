@@ -220,62 +220,74 @@ class UnifiedTTSService:
         except Exception as e:
             logger.error(f"Error cleaning up old files: {e}")
 
-class WyomingTTSHandler(AsyncEventHandler):
+class WyomingTTSHandler:
     """Wyoming protocol handler for TTS requests"""
 
     def __init__(self, tts_service: UnifiedTTSService):
         self.tts_service = tts_service
 
-    async def handle_event(self, event: Event) -> bool:
-        """Handle Wyoming events"""
+    async def handle_client(self, reader, writer):
+        """Handle Wyoming client connection"""
         try:
-            if event.type == "synthesize":
-                # Extract synthesis parameters
-                text = event.data.get("text", "")
-                voice = event.data.get("voice", {}).get("name", "en_US-lessac-medium")
+            logger.info("New Wyoming client connected")
 
-                if not text:
-                    logger.warning("Received synthesize event with empty text")
-                    return True
+            while True:
+                # Read event from client
+                try:
+                    event = await Event.read(reader)
+                    if event is None:
+                        break
+                except Exception:
+                    break
 
-                # Generate audio and get URL
-                audio_url = await self.tts_service.handle_wyoming_request(text, voice)
+                logger.info(f"Received Wyoming event: {event.type}")
 
-                if audio_url:
-                    # Send success response
-                    response_event = Event(
-                        type="audio-start",
-                        data={"url": audio_url}
+                # Handle synthesize request
+                if event.type == "synthesize":
+                    text = event.data.get("text", "")
+                    voice = event.data.get("voice", {}).get("name", "en_US-lessac-medium")
+
+                    if not text:
+                        logger.warning("Received synthesize event with empty text")
+                        continue
+
+                    # Generate audio and get URL
+                    audio_url = await self.tts_service.handle_wyoming_request(text, voice)
+
+                    if audio_url:
+                        # Send success response
+                        response_event = Event(
+                            type="audio-start",
+                            data={"url": audio_url}
+                        )
+                        await response_event.write(writer)
+
+                        # Send audio-stop to complete the transaction
+                        stop_event = Event(type="audio-stop")
+                        await stop_event.write(writer)
+                    else:
+                        # Send error response
+                        error_event = Event(
+                            type="error",
+                            data={"message": "TTS generation failed"}
+                        )
+                        await error_event.write(writer)
+
+                elif event.type == "describe":
+                    # Send service description
+                    info = Info(
+                        name="Unified TTS Service",
+                        description="Wyoming-compatible TTS service with Sonos integration",
+                        version="1.0.0"
                     )
-                    await self.write_event(response_event)
-
-                    # Send audio-stop to complete the transaction
-                    await self.write_event(Event(type="audio-stop"))
-                else:
-                    # Send error response
-                    error_event = Event(
-                        type="error",
-                        data={"message": "TTS generation failed"}
-                    )
-                    await self.write_event(error_event)
-
-                return True
-
-            elif event.type == "describe":
-                # Send service description
-                info = Info(
-                    name="Unified TTS Service",
-                    description="Wyoming-compatible TTS service with Sonos integration",
-                    version="1.0.0"
-                )
-                await self.write_event(info.event())
-                return True
-
-            return False
+                    await info.event().write(writer)
 
         except Exception as e:
-            logger.error(f"Error handling Wyoming event: {e}")
-            return False
+            logger.error(f"Error handling Wyoming client: {e}")
+        finally:
+            writer.close()
+            await writer.wait_closed()
+            logger.info("Wyoming client disconnected")
 
 async def main():
     """Main function to run the unified TTS service"""
@@ -296,12 +308,17 @@ async def main():
     # Start cleanup in background
     asyncio.create_task(cleanup_task())
 
-    # Start Wyoming server
-    server = AsyncServer(handler, port=10200)
+    # Start Wyoming server using asyncio
+    server = await asyncio.start_server(
+        handler.handle_client,
+        '0.0.0.0',
+        10200
+    )
     logger.info("Unified TTS Service listening on port 10200")
 
     try:
-        await server.run()
+        async with server:
+            await server.serve_forever()
     except KeyboardInterrupt:
         logger.info("Shutting down Unified TTS Service...")
     finally:

@@ -36,6 +36,7 @@ services:
       - MQTT_PORT=1883
       - MQTT_USERNAME=tts_service
       - MQTT_PASSWORD=alicia_ha_mqtt_2024
+      - HTTP_SERVER_URL=http://alicia_sonos_bridge:8080
     volumes:
       - ./voice-processing/models/piper:/usr/local/bin/piper/models:ro
       - ./tmp/audio:/tmp/audio
@@ -43,10 +44,38 @@ services:
     restart: unless-stopped
     depends_on:
       - mqtt
+      - sonos-bridge
     networks:
       - alicia_network
     healthcheck:
       test: ["CMD", "timeout", "5", "bash", "-c", "echo > /dev/tcp/localhost/10200"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  sonos-bridge:
+    container_name: alicia_sonos_bridge
+    build:
+      context: ./mqtt-testing
+      dockerfile: Dockerfile.sonos
+    ports:
+      - "8081:8080"
+    environment:
+      - MQTT_BROKER=alicia_mqtt
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=sonos_speaker
+      - MQTT_PASSWORD=alicia_ha_mqtt_2024
+    volumes:
+      - ./tmp/audio:/tmp/audio
+    command: ["python", "sonos-mqtt-bridge.py"]
+    restart: unless-stopped
+    depends_on:
+      - mqtt
+    networks:
+      - alicia_network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import socket; s=socket.socket(); s.connect(('localhost', 8080))"]
       interval: 30s
       timeout: 10s
       retries: 3

@@ -4,7 +4,17 @@ FROM python:3.11-slim
 RUN apt-get update && apt-get install -y \
     curl \
     ffmpeg \
+    wget \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Piper TTS
+RUN wget -O piper_amd64.tar.gz https://github.com/rhasspy/piper/releases/download/v1.2.0/piper_amd64.tar.gz \
+    && tar -xzf piper_amd64.tar.gz \
+    && mv piper /usr/local/bin/piper \
+    && rm piper_amd64.tar.gz
+
+# Create Piper models directory
+RUN mkdir -p /usr/local/bin/piper/models
 
 # Set working directory
 WORKDIR /app
@@ -15,6 +25,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY alicia_assistant.py .
+COPY unified-tts-service.py .
 COPY config/ config/
 
 # Create models directory
