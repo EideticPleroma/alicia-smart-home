@@ -24,11 +24,12 @@ Alicia is a comprehensive smart home AI assistant that combines cutting-edge voi
 
 ### ✨ Key Highlights
 
-- 🎤 **Advanced Voice Processing**: OpenAI Whisper STT + Piper Neural TTS
+- 🎤 **Advanced Voice Processing**: OpenAI Whisper STT + Piper Neural TTS + Grok-4 AI
 - 🏠 **Smart Home Integration**: Full Home Assistant compatibility
+- 🤖 **AI Personality**: Witty, sarcastic conversational AI assistant
 - 🔒 **Secure Communication**: MQTT with authentication
 - 📊 **Scalable Architecture**: Containerized microservices
-- 📚 **Complete Documentation**: 14-chapter technical guide
+- 📚 **Complete Documentation**: 18-chapter technical guide
 - 🚀 **Production Ready**: Monitoring, logging, and error handling
 
 ---

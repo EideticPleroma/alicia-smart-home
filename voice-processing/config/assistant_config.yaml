@@ -15,8 +15,9 @@ wyoming:
     language: "en"
   piper:
     url: "tcp://wyoming-piper:10200"
-    voice: "en_US-lessac-medium"
+    voice: "en_GB-jenny_dioco-medium"
     quality: "medium"
+    language: "en_GB"
 
 # MQTT Configuration
 mqtt:

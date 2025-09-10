@@ -8,7 +8,11 @@ wget -O piper_amd64.tar.gz https://github.com/rhasspy/piper/releases/download/v1
 tar -xzf piper_amd64.tar.gz
 
 # Download voice models for multiple languages
-# English
+# English - Primary British Voice
+wget -O en_GB-jenny_dioco-medium.onnx https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_GB/jenny_dioco/medium/en_GB-jenny_dioco-medium.onnx
+wget -O en_GB-jenny_dioco-medium.onnx.json https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_GB/jenny_dioco/medium/en_GB-jenny_dioco-medium.onnx.json
+
+# English - Fallback American Voice
 wget -O en_US-lessac-medium.onnx https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/lessac/medium/en_US-lessac-medium.onnx
 wget -O en_US-lessac-medium.onnx.json https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/lessac/medium/en_US-lessac-medium.onnx.json
 
@@ -27,6 +31,21 @@ wget -O de_DE-thorsten-medium.onnx.json https://huggingface.co/rhasspy/piper-voi
 # Italian
 wget -O it_IT-riccardo-xw.onnx https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/it/it_IT/riccardo/xw/it_IT-riccardo-xw.onnx
 wget -O it_IT-riccardo-xw.onnx.json https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/it/it_IT/riccardo/xw/it_IT-riccardo-xw.onnx.json
+
+# Verify critical model downloads
+echo "Validating model downloads..."
+
+if [ ! -f "en_GB-jenny_dioco-medium.onnx" ]; then
+    echo "❌ ERROR: Failed to download en_GB-jenny model"
+    exit 1
+fi
+
+if [ ! -f "en_GB-jenny_dioco-medium.onnx.json" ]; then
+    echo "❌ ERROR: Failed to download en_GB-jenny config"
+    exit 1
+fi
+
+echo "✅ en_GB-jenny model validation passed"
 
 # Install Python packages
 pip3 install fastapi uvicorn
@@ -49,9 +68,11 @@ async def synthesize_text(request: SynthesizeRequest):
     text = request.text
     language = request.language
 
-    # Map language codes to model files
+    # Map language codes to model files (en-gb-jenny as primary English voice)
     model_map = {
-        "en": "en_US-lessac-medium.onnx",
+        "en": "en_GB-jenny_dioco-medium.onnx",  # Primary English voice
+        "en_gb": "en_GB-jenny_dioco-medium.onnx",
+        "en_us": "en_US-lessac-medium.onnx",    # Fallback
         "es": "es_ES-mls_10246-medium.onnx",
         "fr": "fr_FR-upmc-medium.onnx",
         "de": "de_DE-thorsten-medium.onnx",

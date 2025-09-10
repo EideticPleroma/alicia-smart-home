@@ -127,6 +127,30 @@ This comprehensive guide documents the complete implementation of Alicia, a voic
 - Production deployment options and security
 - Performance monitoring and testing procedures
 
+#### **Chapter 16: Phase 4 - Grok Integration**
+📄 **[16-Phase-4-Grok-Integration.md](16-Phase-4-Grok-Integration.md)**
+- Grok-4 API integration and configuration
+- Context management and prompt generation
+- Rate limiting and error handling
+- Testing procedures and validation
+- Security considerations for API keys
+
+#### **Chapter 17: Phase 4 - Personality System**
+📄 **[17-Phase-4-Personality-System.md](17-Phase-4-Personality-System.md)**
+- Alicia's personality traits and configuration
+- Witty responses and sarcasm system
+- Conversation flow and context awareness
+- Personality customization options
+- Testing and validation procedures
+
+#### **Chapter 18: Phase 4 - Complete Voice Pipeline**
+📄 **[18-Phase-4-Complete-Voice-Pipeline.md](18-Phase-4-Complete-Voice-Pipeline.md)**
+- End-to-end voice processing with AI integration
+- STT → Context → Grok → Personality → TTS flow
+- MQTT integration with personality responses
+- Performance monitoring and optimization
+- Troubleshooting advanced voice pipeline issues
+
 ### **Part 8: Tools & Reference**
 #### **Chapter 14: Tools & Reference Guide**
 📄 **[14-Tools-Reference.md](14-Tools-Reference.md)**

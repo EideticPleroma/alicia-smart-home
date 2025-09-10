@@ -8,25 +8,43 @@ tags: #project-overview #documentation #alicia-project #readme #smart-home #ai-a
 Alicia is an AI-powered home automation system designed to revolutionize smart living by providing a personalized, privacy-focused alternative to existing voice assistants. The project, also referred to as GrokHome in planning documents, aims to create a scalable, open-source platform starting from a hobby prototype and expanding to enterprise applications. Key goals include local processing for privacy, modular design for future-proofing, and seamless integration with existing hardware like Sonos speakers and WiFi bulbs.
 
 ## High-Level Diagram
-The system processes voice input from a USB microphone through Whisper for speech-to-text, routes it via MQTT to Home Assistant (HA) Core, queries the Grok API for responses, and outputs via TTS to Sonos speakers. IoT devices interact bidirectionally through MQTT and HA.
+The system processes voice input from a USB microphone through Porcupine wake word detection, converts speech to text via Whisper STT, maintains conversation context, processes commands through Grok-4 API with personality enhancement, generates natural speech via Piper TTS, and delivers audio through MQTT to Sonos speakers. IoT devices interact bidirectionally through MQTT and Home Assistant.
 
 ```mermaid
-graph LR
-    subgraph Inbound
-        A[USB Mic] -->|Voice| B{Whisper}
+graph TB
+    subgraph "🎤 Input Processing"
+        A[USB Microphone<br/>16kHz] -->|Audio| B{Porcupine<br/>Wake Word}
+        B -->|Voice Command| C[Audio Buffer<br/>WAV]
     end
-    subgraph Processing
-        B -->|Text| C{MQTT}
-        C -->|Text| D{HA Core}
-        D -->|Query| E{Grok API}
-        E -->|Response| D
+
+    subgraph "📝 Speech Processing"
+        C -->|Raw Audio| D[Whisper STT<br/>OpenAI API]
+        D -->|Text + Confidence| E[Text Command]
     end
-    subgraph Outbound
-        D -->|TTS| F[Sonos]
+
+    subgraph "🧠 AI & Personality"
+        E -->|Text| F[Context Manager<br/>Session State]
+        F -->|Context| G[GrokHandler<br/>Grok-4 API]
+        G -->|AI Response| H[PersonalityManager<br/>Witty Enhancement]
+        H -->|Enhanced Response| I[Response Text]
     end
-    G[IoT e.g., ESP32] -->|Instructions| C
-    C -->|Commands| D
-    D -->|Actions| G
+
+    subgraph "🔊 Audio Generation"
+        I -->|Text| J[Piper TTS<br/>Neural Synthesis]
+        J -->|WAV/MP3| K[Audio File]
+    end
+
+    subgraph "📡 Delivery"
+        K -->|HTTP URL| L[HTTP Audio Server<br/>Port 8080]
+        L -->|MQTT Command| M[MQTT Bridge<br/>Sonos Integration]
+        M -->|Audio Stream| N[Sonos Speakers]
+    end
+
+    subgraph "🏠 Smart Home"
+        O[Home Assistant] -->|Device Status| F
+        F -->|Commands| O
+        O -->|Actions| P[IoT Devices<br/>ESP32, Bulbs]
+    end
 ```
 
 ## Project Outline and Approach

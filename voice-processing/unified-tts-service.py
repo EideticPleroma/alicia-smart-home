@@ -167,18 +167,23 @@ class UnifiedTTSService:
             return False
 
     def _get_piper_model_path(self, voice: str) -> Optional[str]:
-        """Get Piper model path for voice"""
-        # Extract language from voice name
-        if voice.startswith("en"):
-            model_name = "en_US-lessac-medium.onnx"
-        elif voice.startswith("es"):
-            model_name = "es_ES-davefx-medium.onnx"
-        elif voice.startswith("fr"):
-            model_name = "fr_FR-siwis-medium.onnx"
-        elif voice.startswith("de"):
-            model_name = "de_DE-thorsten-medium.onnx"
+        """Get Piper model path for voice with en-gb-jenny as default"""
+        # Voice mapping with en-gb-jenny as primary English voice
+        voice_mapping = {
+            "en": "en_GB-jenny_dioco-medium.onnx",  # Primary English voice
+            "en_gb": "en_GB-jenny_dioco-medium.onnx",
+            "en_us": "en_US-lessac-medium.onnx",    # Fallback
+            "es": "es_ES-mls_10246-medium.onnx",
+            "fr": "fr_FR-upmc-medium.onnx",
+            "de": "de_DE-thorsten-medium.onnx",
+            "it": "it_IT-riccardo-xw.onnx"
+        }
+
+        # Default to en-gb-jenny for any English variant
+        if voice.startswith("en") and voice not in voice_mapping:
+            model_name = "en_GB-jenny_dioco-medium.onnx"
         else:
-            model_name = "en_US-lessac-medium.onnx"  # Default
+            model_name = voice_mapping.get(voice, "en_GB-jenny_dioco-medium.onnx")
 
         model_path = f"/usr/local/bin/piper/models/{model_name}"
         return model_path if os.path.exists(model_path) else None
