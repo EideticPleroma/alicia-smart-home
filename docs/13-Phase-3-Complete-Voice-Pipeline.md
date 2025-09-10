@@ -1,8 +1,8 @@
-# Chapter 13: Phase 3 - Piper TTS Integration
+# Chapter 13: Phase 3 - Complete Voice Pipeline (Updated for Phase 4)
 
 ## Overview
 
-This chapter documents the integration of Piper neural text-to-speech synthesis into the Alicia smart home system as part of Phase 3: Voice Processing Integration.
+This chapter documents the complete voice processing pipeline for Alicia, which has evolved from basic TTS integration in Phase 3 to a comprehensive AI-powered voice system in Phase 4. The pipeline now includes speech-to-text, AI processing with Grok-4, personality enhancement, and advanced text-to-speech synthesis.
 
 ## Implementation Details
 

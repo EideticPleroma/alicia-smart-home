@@ -7,37 +7,69 @@ tags: #architecture-diagram #system-diagram #alicia-project #high-level-design #
 This diagram shows the complete data flow for the Alicia smart home system, from voice input to device control.
 
 ## System Flow Overview:
-1. **Voice Input** → USB Microphone captures audio
-2. **Speech Processing** → Whisper converts voice to text
-3. **Message Routing** → MQTT broker distributes messages
-4. **AI Processing** → Home Assistant processes commands
-5. **API Integration** → Grok API provides intelligent responses
-6. **Voice Output** → Text-to-Speech via Sonos speakers
-7. **Device Control** → IoT devices (ESP32, bulbs, etc.) receive commands
+1. **Voice Input** → USB Microphone captures audio with wake word detection
+2. **Speech Processing** → Whisper STT converts voice to text with confidence scoring
+3. **Context Management** → ConversationContext maintains session state and device status
+4. **AI Processing** → GrokHandler processes commands through Grok-4 API with rate limiting
+5. **Personality Enhancement** → PersonalityManager adds wit, sarcasm, and contextual responses
+6. **Voice Output** → Piper TTS generates natural speech with HTTP audio server
+7. **Audio Delivery** → MQTT bridge delivers audio to Sonos speakers
+8. **Device Control** → IoT devices (ESP32, bulbs, etc.) receive commands via MQTT
 
 ## Key Components:
-- **USB Mic**: Audio input device
-- **Whisper**: Speech-to-text processing
-- **MQTT**: Message broker for device communication
-- **HA Core**: Home Assistant automation platform
-- **Grok API**: AI language model for responses
-- **Sonos**: Audio output and voice synthesis
-- **IoT Devices**: Smart home devices (sensors, bulbs, etc.)
+- **USB Microphone**: Audio input with 16kHz sampling
+- **Porcupine**: Wake word detection engine
+- **Whisper STT**: OpenAI speech-to-text with 99+ languages
+- **GrokHandler**: Grok-4 API client with context management
+- **PersonalityManager**: Witty response generation and conversation flow
+- **Piper TTS**: Neural text-to-speech synthesis
+- **HTTP Audio Server**: Audio file serving for Sonos integration
+- **MQTT Broker**: Secure message routing with authentication
+- **Home Assistant**: Smart home automation platform
+- **PostgreSQL**: Database with pgvector for AI model storage
+- **IoT Devices**: ESP32 sensors, TP-Link bulbs, Sonos speakers
 
 ```mermaid
-graph LR
-    subgraph Inbound
-        A[USB Mic] -->|Voice| B{Whisper}
+graph TB
+    subgraph "🎤 Input Processing"
+        A[USB Microphone<br/>16kHz] -->|Audio| B{Porcupine<br/>Wake Word}
+        B -->|Voice Command| C[Audio Buffer<br/>WAV]
     end
-    subgraph Processing
-        B -->|Text| C{MQTT}
-        C -->|Text| D{HA Core}
-        D -->|Query| E{Grok API}
-        E -->|Response| D
+
+    subgraph "📝 Speech Processing"
+        C -->|Raw Audio| D[Whisper STT<br/>OpenAI API]
+        D -->|Text + Confidence| E[Text Command]
     end
-    subgraph Outbound
-        D -->|TTS| F[Sonos]
+
+    subgraph "🧠 AI & Personality"
+        E -->|Text| F[Context Manager<br/>Session State]
+        F -->|Context| G[GrokHandler<br/>Grok-4 API]
+        G -->|AI Response| H[PersonalityManager<br/>Witty Enhancement]
+        H -->|Enhanced Response| I[Response Text]
     end
-    G[IoT e.g., ESP32] -->|Instructions| C
-    C -->|Commands| D
-    D -->|Actions| G
+
+    subgraph "🔊 Audio Generation"
+        I -->|Text| J[Piper TTS<br/>Neural Synthesis]
+        J -->|WAV/MP3| K[Audio File]
+    end
+
+    subgraph "📡 Delivery"
+        K -->|HTTP URL| L[HTTP Audio Server<br/>Port 8080]
+        L -->|MQTT Command| M[MQTT Bridge<br/>Sonos Integration]
+        M -->|Audio Stream| N[Sonos Speakers]
+    end
+
+    subgraph "🏠 Smart Home"
+        O[Home Assistant] -->|Device Status| F
+        F -->|Commands| O
+        O -->|Actions| P[IoT Devices<br/>ESP32, Bulbs]
+    end
+
+    subgraph "💾 Data Storage"
+        Q[PostgreSQL<br/>pgvector] -->|Embeddings| G
+        G -->|Context| Q
+    end
+
+    F -.-> R[Performance<br/>Monitoring]
+    G -.-> R
+    J -.-> R
