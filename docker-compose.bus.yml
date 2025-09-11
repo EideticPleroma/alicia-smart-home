@@ -1,0 +1,214 @@
+# Alicia Bus Architecture - Core Services Docker Compose
+# Phase 1: Bus Core Infrastructure Implementation
+# Latest stable versions as of January 2025
+
+version: '3.8'
+
+services:
+  # ===== ENHANCED MQTT BROKER =====
+  # Eclipse Mosquitto 2.0.18+ with security and performance optimizations
+  alicia-bus-core:
+    container_name: alicia_bus_core
+    image: eclipse-mosquitto:2.0.18
+    ports:
+      - "1883:1883"    # MQTT
+      - "8883:8883"    # MQTTS (secure)
+      - "9001:9001"    # WebSocket
+    volumes:
+      - ./bus-config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./bus-config/passwords:/mosquitto/config/passwords:ro
+      - ./bus-config/acl:/mosquitto/config/acl:ro
+      - ./bus-data:/mosquitto/data
+      - ./bus-logs:/mosquitto/log
+    environment:
+      - MQTT_BROKER_NAME=alicia-bus-core
+      - MQTT_MAX_CONNECTIONS=1000
+      - MQTT_MESSAGE_SIZE_LIMIT=268435456
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "mosquitto_pub", "-h", "localhost", "-t", "alicia/system/health/broker", "-m", "healthy", "-u", "admin", "-P", "alicia_admin_2024"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ===== SECURITY GATEWAY =====
+  # Python 3.11.7+, FastAPI 0.104.1+, centralized authentication and encryption
+  alicia-security-gateway:
+    container_name: alicia_security_gateway
+    build:
+      context: ./bus-services/security-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8443:8443"  # HTTPS API
+      - "8080:8080"  # HTTP API (internal)
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=security_gateway
+      - MQTT_PASSWORD=alicia_security_2024
+      - ENCRYPTION_KEY_PATH=/app/keys
+      - CERTIFICATE_PATH=/app/certs
+    volumes:
+      - ./bus-services/security-gateway/keys:/app/keys:ro
+      - ./bus-services/security-gateway/certs:/app/certs:ro
+      - ./bus-logs/security-gateway:/app/logs
+    depends_on:
+      - alicia-bus-core
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== DEVICE REGISTRY =====
+  # Python 3.11.7+, FastAPI 0.104.1+, centralized device management
+  alicia-device-registry:
+    container_name: alicia_device_registry
+    build:
+      context: ./bus-services/device-registry
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=device_registry
+      - MQTT_PASSWORD=alicia_registry_2024
+      - DATABASE_URL=sqlite:///./devices.db
+      - REGISTRY_DATA_PATH=/app/data
+    volumes:
+      - ./bus-services/device-registry/data:/app/data
+      - ./bus-logs/device-registry:/app/logs
+    depends_on:
+      - alicia-bus-core
+      - alicia-security-gateway
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== DISCOVERY SERVICE =====
+  # Python 3.11.7+, Paho MQTT 1.6.1+, automatic device discovery
+  alicia-discovery-service:
+    container_name: alicia_discovery_service
+    build:
+      context: ./bus-services/discovery-service
+      dockerfile: Dockerfile
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=discovery_service
+      - MQTT_PASSWORD=alicia_discovery_2024
+      - DISCOVERY_INTERVAL=30
+      - DEVICE_TIMEOUT=300
+    volumes:
+      - ./bus-logs/discovery-service:/app/logs
+    depends_on:
+      - alicia-bus-core
+      - alicia-device-registry
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import socket; s=socket.socket(); s.connect(('alicia_bus_core', 1883))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== HEALTH MONITOR =====
+  # Python 3.11.7+, centralized health monitoring and alerting
+  alicia-health-monitor:
+    container_name: alicia_health_monitor
+    build:
+      context: ./bus-services/health-monitor
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=health_monitor
+      - MQTT_PASSWORD=alicia_health_2024
+      - MONITORING_INTERVAL=30
+      - ALERT_THRESHOLD=3
+      - HEALTH_DATA_PATH=/app/data
+    volumes:
+      - ./bus-services/health-monitor/data:/app/data
+      - ./bus-logs/health-monitor:/app/logs
+    depends_on:
+      - alicia-bus-core
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== CONFIGURATION SERVICE =====
+  # Python 3.11.7+, FastAPI 0.104.1+, centralized configuration management
+  alicia-config-service:
+    container_name: alicia_config_service
+    build:
+      context: ./bus-services/config-service
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8084"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=config_service
+      - MQTT_PASSWORD=alicia_config_2024
+      - CONFIG_PATH=/app/config
+      - ENVIRONMENT=development
+    volumes:
+      - ./bus-services/config-service/config:/app/config
+      - ./bus-logs/config-service:/app/logs
+    depends_on:
+      - alicia-bus-core
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8084/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+networks:
+  alicia_bus_network:
+    driver: bridge
+    name: alicia_bus_network
+    driver_opts:
+      com.docker.network.bridge.name: alicia_bus_network
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1
+
+volumes:
+  bus_data:
+    driver: local
+  bus_logs:
+    driver: local
