@@ -1,5 +1,9 @@
 # Alicia Bus Architecture - Complete Services Docker Compose
+<<<<<<< HEAD
 # Phase 1 & 2 & 3 & 4: Bus Core + Voice Pipeline + Device Integration + Advanced Features
+=======
+# Phase 1 & 2 & 3: Bus Core Infrastructure + Voice Pipeline + Device Integration
+>>>>>>> feature/bus-device-integration
 # Latest stable versions as of January 2025
 
 version: '3.8'
@@ -474,6 +478,7 @@ services:
       retries: 3
       start_period: 30s
 
+<<<<<<< HEAD
   # ===== PHASE 4: ADVANCED FEATURES =====
 
   # ===== GROK INTEGRATION =====
@@ -618,6 +623,8 @@ services:
       retries: 3
       start_period: 30s
 
+=======
+>>>>>>> feature/bus-device-integration
 networks:
   alicia_bus_network:
     driver: bridge
