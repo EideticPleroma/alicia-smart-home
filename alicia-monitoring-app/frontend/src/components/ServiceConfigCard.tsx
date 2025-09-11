@@ -154,3 +154,4 @@ const ServiceConfigCard: React.FC<ServiceConfigCardProps> = ({
 };
 
 export default ServiceConfigCard;
+

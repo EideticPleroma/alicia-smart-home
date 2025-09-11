@@ -394,3 +394,4 @@ async def create_environment(
     except Exception as e:
         logger.error(f"Error creating environment {environment}: {e}")
         raise HTTPException(status_code=500, detail="Failed to create environment")
+

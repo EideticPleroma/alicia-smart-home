@@ -229,3 +229,4 @@ class HealthMonitor:
             for metric in history
             if service_name in metric["services"]
         ]
+

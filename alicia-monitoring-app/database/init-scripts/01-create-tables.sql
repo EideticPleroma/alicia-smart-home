@@ -74,3 +74,4 @@ CREATE INDEX IF NOT EXISTS idx_config_history_service_env ON config_history(serv
 CREATE INDEX IF NOT EXISTS idx_metrics_aggregated_service_date ON metrics_aggregated(service_name, date_hour);
 CREATE INDEX IF NOT EXISTS idx_alerts_created_at ON alerts(created_at);
 CREATE INDEX IF NOT EXISTS idx_alerts_acknowledged ON alerts(acknowledged);
+

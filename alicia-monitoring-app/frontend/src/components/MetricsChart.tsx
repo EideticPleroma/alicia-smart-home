@@ -152,3 +152,4 @@ const MetricsChart: React.FC = () => {
 };
 
 export default MetricsChart;
+

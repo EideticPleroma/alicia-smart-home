@@ -371,3 +371,4 @@ async def get_test_stats() -> Dict[str, Any]:
         "average_duration_ms": round(avg_duration, 2),
         "test_types": test_types
     }
+

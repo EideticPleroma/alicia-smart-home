@@ -352,3 +352,4 @@ async def export_metrics(
     except Exception as e:
         logger.error(f"Error exporting metrics: {e}")
         raise HTTPException(status_code=500, detail="Failed to export metrics")
+

@@ -153,3 +153,4 @@ async def get_health_summary(
     except Exception as e:
         logger.error(f"Error getting health summary: {e}")
         raise HTTPException(status_code=500, detail="Failed to get health summary")
+

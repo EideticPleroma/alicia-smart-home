@@ -288,3 +288,4 @@ For support and questions:
 - Create an issue in the repository
 - Check the troubleshooting section
 - Review the API documentation at `/docs`
+
