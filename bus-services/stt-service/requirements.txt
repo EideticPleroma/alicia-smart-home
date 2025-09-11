@@ -1,0 +1,50 @@
+# Alicia Bus Architecture - STT Service Requirements
+# Python 3.11.7+ compatible packages
+
+# Core dependencies
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+paho-mqtt==1.6.1
+python-multipart==0.0.6
+
+# STT Engines
+openai-whisper==20231117
+torch==2.1.0
+torchaudio==2.1.0
+numpy==1.24.4
+
+# Google Cloud Speech (optional)
+google-cloud-speech==2.21.0
+
+# Azure Speech Services (optional)
+azure-cognitiveservices-speech==1.32.1
+
+# Audio processing
+librosa==0.10.1
+soundfile==0.12.1
+scipy==1.11.4
+
+# Data validation
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# HTTP client
+httpx==0.25.2
+aiohttp==3.9.1
+
+# Logging and utilities
+structlog==23.2.0
+python-json-logger==2.0.7
+
+# Additional utilities
+python-dotenv==1.0.0
+requests==2.31.0
+
+# Testing (optional for development)
+pytest==7.4.3
+pytest-asyncio==0.21.1
+
+# Code quality (optional for development)
+black==23.11.0
+flake8==6.1.0
+mypy==1.7.1

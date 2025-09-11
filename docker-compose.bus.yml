@@ -1,5 +1,5 @@
-# Alicia Bus Architecture - Core Services Docker Compose
-# Phase 1: Bus Core Infrastructure Implementation
+# Alicia Bus Architecture - Complete Services Docker Compose
+# Phase 1 & 2 & 3 & 4: Bus Core + Voice Pipeline + Device Integration + Advanced Features
 # Latest stable versions as of January 2025
 
 version: '3.8'
@@ -191,6 +191,428 @@ services:
       - alicia_bus_network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8084/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== VOICE PROCESSING SERVICES =====
+
+  # ===== STT SERVICE =====
+  # Python 3.11.7+, OpenAI Whisper 20231117+, speech-to-text processing
+  alicia-stt-service:
+    container_name: alicia_stt_service
+    build:
+      context: ./bus-services/stt-service
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=stt_service
+      - MQTT_PASSWORD=alicia_stt_2024
+      - STT_ENGINE=whisper
+      - WHISPER_MODEL=base
+      - STT_LANGUAGE=en
+      - MAX_AUDIO_LENGTH=30
+      - CONFIDENCE_THRESHOLD=0.5
+    volumes:
+      - ./bus-services/stt-service/models:/app/models
+      - ./bus-logs/stt-service:/app/logs
+    depends_on:
+      - alicia-bus-core
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # ===== AI SERVICE =====
+  # Python 3.11.7+, OpenAI 1.3.0+, AI processing and conversation management
+  alicia-ai-service:
+    container_name: alicia_ai_service
+    build:
+      context: ./bus-services/ai-service
+      dockerfile: Dockerfile
+    ports:
+      - "8002:8002"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=ai_service
+      - MQTT_PASSWORD=alicia_ai_2024
+      - AI_PROVIDER=grok
+      - GROK_API_KEY=${GROK_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - AI_MODEL=grok-beta
+      - MAX_TOKENS=1000
+      - TEMPERATURE=0.7
+      - MAX_HISTORY_LENGTH=10
+    volumes:
+      - ./bus-services/ai-service/data:/app/data
+      - ./bus-logs/ai-service:/app/logs
+    depends_on:
+      - alicia-bus-core
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== TTS SERVICE =====
+  # Python 3.11.7+, Piper TTS 1.2.0+, text-to-speech synthesis
+  alicia-tts-service:
+    container_name: alicia_tts_service
+    build:
+      context: ./bus-services/tts-service
+      dockerfile: Dockerfile
+    ports:
+      - "8003:8003"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=tts_service
+      - MQTT_PASSWORD=alicia_tts_2024
+      - TTS_ENGINE=piper
+      - VOICE_MODEL=en_US-lessac-medium
+      - SPEAKER_ID=0
+      - SAMPLE_RATE=22050
+      - MAX_TEXT_LENGTH=1000
+    volumes:
+      - ./bus-services/tts-service/models:/app/models
+      - ./bus-logs/tts-service:/app/logs
+    depends_on:
+      - alicia-bus-core
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8003/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== VOICE ROUTER =====
+  # Python 3.11.7+, FastAPI 0.104.1+, voice pipeline orchestration
+  alicia-voice-router:
+    container_name: alicia_voice_router
+    build:
+      context: ./bus-services/voice-router
+      dockerfile: Dockerfile
+    ports:
+      - "8004:8004"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=voice_router
+      - MQTT_PASSWORD=alicia_router_2024
+      - MAX_SESSIONS=10
+      - SESSION_TIMEOUT=300
+      - PIPELINE_TIMEOUT=30
+    volumes:
+      - ./bus-services/voice-router/data:/app/data
+      - ./bus-logs/voice-router:/app/logs
+    depends_on:
+      - alicia-bus-core
+      - alicia-stt-service
+      - alicia-ai-service
+      - alicia-tts-service
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8004/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== DEVICE INTEGRATION SERVICES =====
+
+  # ===== SONOS SERVICE =====
+  # Python 3.11.7+, SoCo 0.29+, Sonos speaker control and integration
+  alicia-sonos-service:
+    container_name: alicia_sonos_service
+    build:
+      context: ./bus-services/sonos-service
+      dockerfile: Dockerfile
+    ports:
+      - "8005:8005"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=sonos_service
+      - MQTT_PASSWORD=alicia_sonos_2024
+      - DISCOVERY_INTERVAL=30
+      - SONOS_NETWORK=192.168.1.0/24
+      - DEFAULT_VOLUME=30
+      - MAX_VOLUME=100
+    volumes:
+      - ./bus-services/sonos-service/audio:/app/audio
+      - ./bus-logs/sonos-service:/app/logs
+    depends_on:
+      - alicia-bus-core
+      - alicia-device-registry
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8005/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== DEVICE MANAGER =====
+  # Python 3.11.7+, FastAPI 0.104.1+, centralized device management
+  alicia-device-manager:
+    container_name: alicia_device_manager
+    build:
+      context: ./bus-services/device-manager
+      dockerfile: Dockerfile
+    ports:
+      - "8006:8006"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=device_manager
+      - MQTT_PASSWORD=alicia_devices_2024
+      - COMMAND_TIMEOUT=30
+      - MAX_CONCURRENT_COMMANDS=10
+      - STATUS_UPDATE_INTERVAL=60
+    volumes:
+      - ./bus-services/device-manager/data:/app/data
+      - ./bus-logs/device-manager:/app/logs
+    depends_on:
+      - alicia-bus-core
+      - alicia-device-registry
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8006/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== HOME ASSISTANT BRIDGE =====
+  # Python 3.11.7+, FastAPI 0.104.1+, HA integration service
+  alicia-ha-bridge:
+    container_name: alicia_ha_bridge
+    build:
+      context: ./bus-services/ha-bridge
+      dockerfile: Dockerfile
+    ports:
+      - "8007:8007"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=ha_bridge
+      - MQTT_PASSWORD=alicia_ha_2024
+      - HA_URL=http://homeassistant:8123
+      - HA_TOKEN=${HA_TOKEN}
+      - DISCOVERY_INTERVAL=60
+      - STATE_UPDATE_INTERVAL=30
+    volumes:
+      - ./bus-services/ha-bridge/data:/app/data
+      - ./bus-logs/ha-bridge:/app/logs
+    depends_on:
+      - alicia-bus-core
+      - alicia-device-registry
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8007/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== DEVICE CONTROL =====
+  # Python 3.11.7+, FastAPI 0.104.1+, generic device control service
+  alicia-device-control:
+    container_name: alicia_device_control
+    build:
+      context: ./bus-services/device-control
+      dockerfile: Dockerfile
+    ports:
+      - "8008:8008"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=device_control
+      - MQTT_PASSWORD=alicia_control_2024
+      - COMMAND_TIMEOUT=30
+      - MAX_CONCURRENT_COMMANDS=20
+      - SESSION_TIMEOUT=300
+    volumes:
+      - ./bus-services/device-control/data:/app/data
+      - ./bus-logs/device-control:/app/logs
+    depends_on:
+      - alicia-bus-core
+      - alicia-device-registry
+      - alicia-device-manager
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8008/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== PHASE 4: ADVANCED FEATURES =====
+
+  # ===== GROK INTEGRATION =====
+  # Python 3.11.7+, FastAPI 0.104.1+, enhanced Grok AI capabilities
+  alicia-grok-integration:
+    container_name: alicia_grok_integration
+    build:
+      context: ./bus-services/grok-integration
+      dockerfile: Dockerfile
+    ports:
+      - "8009:8009"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=grok_integration
+      - MQTT_PASSWORD=alicia_grok_2024
+      - GROK_API_KEY=${GROK_API_KEY}
+      - GROK_BASE_URL=https://api.x.ai/v1
+      - GROK_MODEL=grok-beta
+      - MAX_TOKENS=2000
+      - TEMPERATURE=0.7
+      - CONTEXT_WINDOW=10
+      - REQUEST_TIMEOUT=30
+      - MAX_RETRIES=3
+      - RETRY_DELAY=1.0
+    volumes:
+      - ./bus-services/grok-integration/data:/app/data
+      - ./bus-logs/grok-integration:/app/logs
+    depends_on:
+      - alicia-bus-core
+      - alicia-personality-system
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8009/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== PERSONALITY SYSTEM =====
+  # Python 3.11.7+, FastAPI 0.104.1+, character profile management
+  alicia-personality-system:
+    container_name: alicia_personality_system
+    build:
+      context: ./bus-services/personality-system
+      dockerfile: Dockerfile
+    ports:
+      - "8010:8010"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=personality_system
+      - MQTT_PASSWORD=alicia_personality_2024
+      - PERSONALITY_DATA_PATH=/app/data/personalities
+      - DEFAULT_PERSONALITY=alicia
+      - MAX_PERSONALITIES=50
+      - CACHE_TTL=3600
+    volumes:
+      - ./bus-services/personality-system/data/personalities:/app/data/personalities
+      - ./bus-logs/personality-system:/app/logs
+    depends_on:
+      - alicia-bus-core
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8010/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== MULTI-LANGUAGE SUPPORT =====
+  # Python 3.11.7+, FastAPI 0.104.1+, internationalization service
+  alicia-multi-language:
+    container_name: alicia_multi_language
+    build:
+      context: ./bus-services/multi-language
+      dockerfile: Dockerfile
+    ports:
+      - "8011:8011"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=multi_language
+      - MQTT_PASSWORD=alicia_language_2024
+      - DEFAULT_LANGUAGE=en
+      - SUPPORTED_LANGUAGES=en,es,fr,de,it,pt,zh,ja,ko
+      - CACHE_TTL=3600
+      - MAX_TRANSLATION_LENGTH=5000
+    volumes:
+      - ./bus-services/multi-language/data/languages:/app/data/languages
+      - ./bus-services/multi-language/cache:/app/cache
+      - ./bus-logs/multi-language:/app/logs
+    depends_on:
+      - alicia-bus-core
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8011/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== ADVANCED VOICE PIPELINE =====
+  # Python 3.11.7+, FastAPI 0.104.1+, enhanced audio processing
+  alicia-advanced-voice:
+    container_name: alicia_advanced_voice
+    build:
+      context: ./bus-services/advanced-voice
+      dockerfile: Dockerfile
+    ports:
+      - "8012:8012"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=advanced_voice
+      - MQTT_PASSWORD=alicia_voice_advanced_2024
+      - VAD_SENSITIVITY=0.5
+      - EMOTION_DETECTION=true
+      - NOISE_REDUCTION=true
+      - QUALITY_THRESHOLD=0.7
+      - MAX_AUDIO_LENGTH=300
+    volumes:
+      - ./bus-services/advanced-voice/audio:/app/audio
+      - ./bus-services/advanced-voice/models:/app/models
+      - ./bus-logs/advanced-voice:/app/logs
+    depends_on:
+      - alicia-bus-core
+      - alicia-voice-router
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8012/health"]
       interval: 30s
       timeout: 10s
       retries: 3
