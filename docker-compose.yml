@@ -113,6 +113,35 @@ services:
       retries: 3
       start_period: 30s
 
+  # ===== VOICE INPUT PROCESSOR =====
+  voice-input-processor:
+    container_name: alicia_voice_input
+    build:
+      context: ./voice-processing
+      dockerfile: Dockerfile.assistant
+    environment:
+      - WHISPER_HOST=alicia_wyoming_whisper
+      - WHISPER_PORT=10300
+      - MQTT_BROKER=alicia_mqtt
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=voice_assistant
+      - MQTT_PASSWORD=alicia_ha_mqtt_2024
+    volumes:
+      - /dev/snd:/dev/snd  # Audio device access
+      - ./voice-processing/config:/app/config
+      - ./voice-processing/models:/app/models
+      - /tmp:/tmp  # For temporary audio files
+    devices:
+      - /dev/snd:/dev/snd  # Audio device access
+    privileged: true  # Required for audio device access
+    depends_on:
+      - wyoming-whisper
+      - mqtt
+    restart: unless-stopped
+    networks:
+      - alicia_network
+    command: ["python", "voice_input_processor.py"]
+
   # ===== MQTT BROKER =====
   mqtt:
     container_name: alicia_mqtt

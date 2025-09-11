@@ -56,6 +56,7 @@ class AliciaAssistant:
         self.is_listening = False
         self.conversation_history = []
         self.session_id = str(uuid.uuid4())
+        self.event_loop = None
 
         # LLM integration placeholder
         self.llm_enabled = os.getenv("LLM_ENABLED", "false").lower() == "true"
@@ -196,8 +197,11 @@ class AliciaAssistant:
             logger.info(f"Received MQTT message: {msg.topic} -> {payload}")
 
             if msg.topic == "alicia/voice/command":
-                # Process command asynchronously
-                asyncio.create_task(self.handle_mqtt_command(payload))
+                # Process command asynchronously using thread-safe method
+                asyncio.run_coroutine_threadsafe(
+                    self.handle_mqtt_command(payload), 
+                    self.event_loop
+                )
             elif msg.topic == "alicia/voice/wake":
                 self.handle_wake_word()
             elif msg.topic.startswith("homeassistant/sensor/voice/"):
@@ -409,6 +413,9 @@ class AliciaAssistant:
     async def run(self):
         """Main run method"""
         logger.info("Starting Alicia Enhanced Voice Assistant...")
+
+        # Store the event loop for MQTT callbacks
+        self.event_loop = asyncio.get_event_loop()
 
         # Wait for services to be ready
         await self.wait_for_services()

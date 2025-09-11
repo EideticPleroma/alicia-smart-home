@@ -1,0 +1,140 @@
+# Alicia Monitoring App - Docker Compose
+# Complete monitoring and development tool for Alicia Voice Assistant
+
+version: '3.8'
+
+services:
+  # ===== MONITORING APP BACKEND =====
+  monitoring-backend:
+    container_name: alicia_monitoring_backend
+    build:
+      context: ./backend
+      dockerfile: ../docker/Dockerfile.backend
+    ports:
+      - "8001:8000"  # Different port to avoid conflict with main Alicia app
+    environment:
+      - DATABASE_URL=postgresql://alicia:alicia_password@monitoring-postgres:5432/alicia_monitoring
+      - REDIS_URL=redis://monitoring-redis:6379
+      - WHISPER_HOST=alicia_wyoming_whisper
+      - WHISPER_PORT=10300
+      - PIPER_HOST=alicia_unified_tts
+      - PIPER_PORT=10200
+      - ALICIA_HOST=alicia_assistant
+      - ALICIA_PORT=8000
+      - MQTT_HOST=alicia_mqtt
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=voice_assistant
+      - MQTT_PASSWORD=alicia_ha_mqtt_2024
+      - HA_HOST=homeassistant
+      - HA_PORT=8123
+      - DEBUG=true
+    depends_on:
+      - monitoring-postgres
+      - monitoring-redis
+    restart: unless-stopped
+    networks:
+      - alicia_network
+      - monitoring_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== MONITORING APP FRONTEND =====
+  monitoring-frontend:
+    container_name: alicia_monitoring_frontend
+    build:
+      context: ./frontend
+      dockerfile: ../docker/Dockerfile.frontend
+    ports:
+      - "3001:3000"  # Different port to avoid conflict with other apps
+    environment:
+      - REACT_APP_API_URL=http://localhost:8001
+      - REACT_APP_WS_URL=ws://localhost:8001
+    depends_on:
+      - monitoring-backend
+    restart: unless-stopped
+    networks:
+      - monitoring_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # ===== MONITORING DATABASE =====
+  monitoring-postgres:
+    container_name: alicia_monitoring_postgres
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=alicia_monitoring
+      - POSTGRES_USER=alicia
+      - POSTGRES_PASSWORD=alicia_password
+    ports:
+      - "5433:5432"  # Different port to avoid conflict with main app
+    volumes:
+      - monitoring_postgres_data:/var/lib/postgresql/data
+      - ./database/init-scripts:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+    networks:
+      - monitoring_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U alicia -d alicia_monitoring"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== MONITORING REDIS =====
+  monitoring-redis:
+    container_name: alicia_monitoring_redis
+    image: redis:7-alpine
+    ports:
+      - "6380:6379"  # Different port to avoid conflict with other Redis instances
+    volumes:
+      - monitoring_redis_data:/data
+    restart: unless-stopped
+    networks:
+      - monitoring_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== MONITORING NGINX (Optional) =====
+  monitoring-nginx:
+    container_name: alicia_monitoring_nginx
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - monitoring-frontend
+      - monitoring-backend
+    restart: unless-stopped
+    networks:
+      - monitoring_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  monitoring_postgres_data:
+  monitoring_redis_data:
+
+networks:
+  alicia_network:
+    external: true
+    name: alicia_network
+  monitoring_network:
+    driver: bridge
+    name: alicia_monitoring_network
