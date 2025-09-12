@@ -25,7 +25,7 @@ from fastapi import FastAPI, HTTPException, Query, UploadFile, File
 from fastapi.responses import JSONResponse
 import yaml
 
-from ..service_wrapper import BusServiceWrapper, BusServiceAPI
+from service_wrapper import BusServiceWrapper, BusServiceAPI
 
 
 class ConfigFormat(Enum):

@@ -22,7 +22,7 @@ import paho.mqtt.client as mqtt
 from fastapi import FastAPI, HTTPException, UploadFile, File
 import uvicorn
 
-from ..service_wrapper import BusServiceWrapper, BusServiceAPI
+from service_wrapper import BusServiceWrapper, BusServiceAPI
 
 
 class STTService(BusServiceWrapper):

@@ -1,0 +1,184 @@
+# Cursor Rules for Alicia Smart Home AI Assistant
+
+## 🎯 Project Context
+- **Microservices Architecture**: 23 independent, containerized services
+- **Message Bus**: MQTT-based communication (Eclipse Mosquitto 2.0.18+)
+- **AI Integration**: xAI Grok API, OpenAI, Whisper STT, Piper TTS
+- **Smart Home**: Home Assistant Bridge, Sonos integration, device management
+- **Frontend**: React/TypeScript with real-time WebSocket communication
+
+## 🏗️ Core Architecture Principles
+- **Message-Based Communication**: All services MUST communicate through MQTT bus
+- **Service Independence**: Each service can be developed, deployed, and scaled independently
+- **Centralized Security**: All authentication handled by security gateway
+- **Service Discovery**: Auto-registration with device registry on startup
+- **BusServiceWrapper Pattern**: All services MUST extend the base BusServiceWrapper
+
+## 🔒 Security Rules
+- **TLS Encryption**: End-to-end encrypted communication
+- **JWT Authentication**: Token-based service authentication
+- **ACL Authorization**: Fine-grained access control via MQTT ACLs
+- **Input Validation**: Validate all inputs on both client and server
+- **API Key Security**: Never expose full API keys in UI
+
+## 💻 Code Standards
+- **TypeScript Strict Mode**: All code must be properly typed
+- **Python Type Hints**: Use type hints for all Python functions
+- **Error Handling**: Implement proper error boundaries and exception handling
+- **Performance**: Use React.memo, useCallback, useMemo appropriately
+- **Testing**: Unit tests, integration tests, E2E tests with proper mocking
+
+## 🔧 Technology Stack
+- **Backend**: Python 3.11+ with FastAPI, Node.js for some services
+- **Frontend**: React 18.2.0, TypeScript 4.9.0, React Flow 11.10.1
+- **Message Bus**: MQTT (mqtt 5.1.0), WebSocket (Socket.io 4.7.0)
+- **AI/ML**: xAI Grok API, OpenAI API, Whisper, Piper TTS
+- **Styling**: Tailwind CSS 3.3.0, responsive design
+- **Containerization**: Docker, Docker Compose
+
+## 📊 Performance Rules
+- **Response Time**: Voice processing under 2 seconds
+- **Memory Usage**: Keep service memory usage under 200MB
+- **Load Balancing**: Distribute load across service instances
+- **Caching**: Implement effective caching strategies
+- **Resource Management**: Monitor and optimize resource usage
+
+## 📝 Documentation Standards
+- **Implementation Book**: Technical deep-dive documentation
+- **User Guide**: User-friendly manual for non-technical users
+- **API Documentation**: Comprehensive API reference
+- **Code Comments**: JSDoc/Python docstrings for all public functions
+- **Obsidian Integration**: Visual knowledge base with MOCs and diagrams
+
+## 🎯 Service Management Rules
+- **Service Lifecycle**: Services MUST start in dependency order (bus core → security → registry → services)
+- **Health Checks**: All services MUST implement health check endpoints
+- **Graceful Shutdown**: Services MUST handle SIGTERM and unregister from bus
+- **Service Discovery**: Services MUST register with device registry on startup
+- **Message Flow**: Use proper topic hierarchy for message routing
+
+## 🐳 Docker Management
+- **Service Dependencies**: Deploy services in dependency order
+- **Network Configuration**: Use alicia_bus_network for all bus services
+- **Security Integration**: Implement bus-level security (TLS, certificates, ACLs)
+- **Health Monitoring**: Implement health checks and monitoring for all bus services
+
+## 🎤 Voice Processing Services
+- **STT Service**: Processes audio via alicia/voice/stt/request → alicia/voice/stt/response
+- **AI Service**: Processes text via alicia/voice/ai/request → alicia/voice/ai/response
+- **TTS Service**: Generates audio via alicia/voice/tts/request → alicia/voice/tts/response
+- **Voice Router**: Routes voice commands and orchestrates the pipeline
+
+## 🏠 Device Integration Services
+- **Device Manager**: Universal device control and management
+- **HA Bridge**: Home Assistant integration and entity synchronization
+- **Sonos Service**: Multi-room audio control and speaker management
+- **Device Registry**: Device discovery and capability management
+
+## 🌿 Git Workflow Rules
+- **Branch Structure**: main (production) → develop (integration) → feature/ (new work)
+- **Feature Branches**: Branch from develop, merge back via PR
+- **Release Branches**: Branch from develop, merge to main and develop after QA
+- **Hotfix Branches**: Branch from main for urgent fixes
+- **Semantic Commits**: Use conventional commit format (feat:, fix:, docs:, etc.)
+
+## 🚨 Error Handling Process
+1. **Reproduce Error**: Gather exact error messages, environment details, reproduction steps
+2. **Diagnose Root Cause**: Categorize errors (syntax, config, network, permissions, resources)
+3. **Propose Fixes**: Provide 2-3 prioritized solutions with specific commands
+4. **Verify Resolution**: Test fixes with appropriate commands and monitor for edge cases
+5. **Prevent Recurrence**: Implement best practices and monitoring
+
+## 🧪 Testing Framework
+- **Unit Tests**: Test individual components and functions
+- **Integration Tests**: Test service interactions and MQTT communication
+- **E2E Tests**: Test complete user workflows and voice commands
+- **Performance Tests**: Test response times, memory usage, and throughput
+- **Security Tests**: Test authentication, authorization, and data encryption
+
+## 📊 Phase-Based Deployment
+- **Phase 1**: Core infrastructure (MQTT broker, security gateway, device registry)
+- **Phase 2**: Voice pipeline (STT, AI, TTS services with bus integration)
+- **Phase 3**: Device integration (Sonos, sensors, Home Assistant bridge)
+- **Phase 4**: Advanced features (analytics, load balancing, performance optimization)
+
+## 🔌 Hardware Integration
+- **Audio Devices**: Microphones, speakers, audio interfaces
+- **Smart Home Devices**: Lights, thermostats, sensors, switches
+- **Communication Devices**: MQTT brokers, network equipment
+- **Computing Devices**: Raspberry Pi, ESP32, Arduino boards
+
+## 🖥️ Windows Environment
+- **PowerShell Commands**: Use Get-ChildItem, Get-Content, New-Item
+- **Docker on Windows**: Use docker-compose (with hyphen) not docker compose
+- **Path Handling**: Use Windows paths with backslashes
+- **Environment Variables**: Use $env:VARIABLE syntax
+
+## 🎯 Enforcement Guidelines
+- **Bus Compliance Check**: Verify service follows bus patterns
+- **Security Validation**: Ensure security requirements are met
+- **Style Review**: Always include style assessment in code responses
+- **Integration Plan**: Show how service integrates with existing bus services
+- **Rejection Policy**: Reject non-compliant code with specific improvement suggestions
+
+## ✅ Service Development Checklist
+- [ ] Extends BusServiceWrapper
+- [ ] Implements required MQTT topics
+- [ ] Registers with device registry
+- [ ] Handles standard message types
+- [ ] Uses centralized configuration
+- [ ] Implements proper error handling
+- [ ] Sends periodic heartbeats
+- [ ] Authenticates with security gateway
+- [ ] Uses certificate-based authentication
+- [ ] Implements proper access controls
+- [ ] Encrypts sensitive messages
+- [ ] Logs security events
+
+## 🔗 Integration with Other Rules
+- **Service Management**: Use service-management.md for implementation details
+- **Development Workflow**: Use development-workflow.md for Git and error handling
+- **Deployment**: Use deployment-workflow.md for testing and deployment
+- **Windows Environment**: Use windows-environment.md for Windows-specific commands
+
+## 🚨 Common Violations to Avoid
+- ❌ **Direct Service Communication** - Use MQTT bus instead
+- ❌ **Missing Service Registration** - Register with device registry
+- ❌ **Insecure Message Handling** - Encrypt sensitive data
+- ❌ **Bash Commands on Windows** - Use PowerShell syntax
+- ❌ **Missing Health Checks** - Implement proper monitoring
+
+## 📞 Quick Reference Commands
+
+### Service Management
+```powershell
+# Deploy services
+docker-compose -f docker-compose.bus.yml up -d
+
+# Check status
+docker ps --filter "name=alicia"
+
+# Monitor logs
+docker-compose logs -f service-name
+```
+
+### Testing
+```powershell
+# Run integration tests
+docker-compose -f docker-compose.bus.yml up -d
+curl http://localhost:8081/health
+
+# Check MQTT connectivity
+mosquitto_sub -h localhost -t "alicia/#" -v
+```
+
+### Development
+```powershell
+# Git workflow
+git checkout -b feature/new-feature develop
+git add .
+git commit -m "feat(service): add new feature"
+git push origin feature/new-feature
+```
+
+**Confirm**: "Following Alicia Smart Home AI Assistant rules for Cursor IDE."

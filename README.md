@@ -1,672 +1,353 @@
-# 🤖 Alicia - Smart Home AI Assistant
+# 🏠 Alicia - Smart Home AI Assistant
 
 <div align="center">
 
 ![Alicia Logo](https://img.shields.io/badge/Alicia-Smart%20Home%20AI-blue?style=for-the-badge&logo=home-assistant)
 ![Python](https://img.shields.io/badge/Python-3.11+-blue?style=flat-square&logo=python)
+![Node.js](https://img.shields.io/badge/Node.js-18+-green?style=flat-square&logo=node.js)
 ![Docker](https://img.shields.io/badge/Docker-Ready-blue?style=flat-square&logo=docker)
 ![MQTT](https://img.shields.io/badge/MQTT-Bus-Enabled-blue?style=flat-square&logo=eclipse-mosquitto)
 ![Microservices](https://img.shields.io/badge/Microservices-23%20Services-blue?style=flat-square&logo=kubernetes)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Production%20Ready-green?style=flat-square)
 
-**A production-ready smart home AI assistant with message bus architecture, 23 microservices, and advanced AI capabilities.**
+**Transform your home into an intelligent, voice-controlled paradise with Alicia - the AI assistant that understands you.**
 
-[📖 Complete Report](docs/13-Implementation/03-Architecture-Report.md) • [🚀 Quick Start](#quick-start) • [📋 Features](#features) • [🏗️ Architecture](#architecture)
+[🚀 Quick Start](#-quick-start) • [🎯 Features](#-features) • [🏗️ Architecture](#️-architecture) • [📖 Documentation](docs/)
 
 </div>
 
 ---
 
-## 🎯 Overview
+## 🎯 What is Alicia?
 
-Alicia is a production-ready smart home AI assistant built with a sophisticated message bus architecture. Featuring 23 microservices, advanced AI capabilities, and enterprise-grade security, Alicia provides natural voice control and intelligent automation for smart homes.
+Alicia is your personal AI assistant that lives in your smart home, ready to help you control everything with just your voice. Think of her as your smart home's brain - she listens, understands, and makes your home respond to your every command.
 
-### ✨ Key Highlights
+### ✨ Why Alicia is Special
 
-- 🏗️ **Message Bus Architecture**: 23 microservices with MQTT communication
-- 🎤 **Advanced Voice Processing**: Multi-engine STT/TTS with emotion detection
-- 🤖 **AI Personality System**: Dynamic character profiles with witty responses
-- 🌍 **Multi-Language Support**: 9 languages with real-time translation
-- 🔒 **Enterprise Security**: TLS encryption, JWT authentication, ACL authorization
-- 📊 **Production Ready**: Health monitoring, logging, and error handling
-- 🚀 **Scalable Design**: Horizontal scaling for enterprise deployments
+- 🎤 **Talk to Your Home**: Control everything with natural voice commands
+- 🧠 **AI-Powered Intelligence**: Learns your preferences and adapts to your lifestyle
+- 🏠 **Unified Control**: Manage all your smart devices from one place
+- 🎭 **Personality**: Choose from different AI personalities to match your style
+- 🌍 **Multi-Language**: Speaks your language, wherever you are
+- 🔒 **Secure & Private**: Your data stays safe with enterprise-grade security
 
 ---
 
 ## 🚀 Quick Start
 
-### Prerequisites
-
-- **Docker Engine 24.0+** and **Docker Compose 2.20+**
-- **8GB RAM minimum** (16GB recommended for all services)
-- **Windows/Linux/macOS**
-- **Network access** for external API services
-
-### One-Command Setup
+### Get Alicia Running in 15 Minutes
 
 ```bash
-# Clone the repository
-git clone https://github.com/EideticPleroma/alicia-smart-home.git
+# 1. Download Alicia
+git clone https://github.com/your-org/alicia-smart-home.git
 cd alicia-smart-home
 
-# Start all 23 microservices
+# 2. Start Alicia
 docker-compose -f docker-compose.bus.yml up -d
 
-# Check service health
-docker-compose -f docker-compose.bus.yml ps
+# 3. Open the Control Panel
+open http://localhost:3000
+
+# 4. Say "Hello Alicia" and start controlling your home!
 ```
 
-### Service Access
+### What You'll See
 
-```bash
-# Voice Pipeline
-curl http://localhost:8001/health  # STT Service
-curl http://localhost:8002/health  # AI Service  
-curl http://localhost:8003/health  # TTS Service
-curl http://localhost:8004/health  # Voice Router
-
-# Device Integration
-curl http://localhost:8006/health  # Device Manager
-curl http://localhost:8007/health  # Home Assistant Bridge
-curl http://localhost:8008/health  # Device Control
-
-# Advanced Features
-curl http://localhost:8009/health  # Grok Integration
-curl http://localhost:8010/health  # Personality System
-curl http://localhost:8011/health  # Multi-Language
-curl http://localhost:8012/health  # Advanced Voice
-```
+- **Control Panel**: Beautiful web interface to manage your home
+- **Voice Commands**: Talk to Alicia and watch your home respond
+- **Device Management**: Add and control all your smart devices
+- **Real-time Monitoring**: See everything happening in your home
 
 ---
 
-## 📋 Features
+## 🎯 Features
 
-### 🏗️ **Message Bus Architecture**
-- **23 Microservices**: Modular, independently deployable services
-- **MQTT Communication**: Centralized message routing with authentication
-- **Service Discovery**: Automatic service registration and health monitoring
-- **Horizontal Scaling**: Support for multiple service instances
+### 🎤 Voice Control
+**Talk to your home like a sci-fi movie**
+- Natural voice commands: "Alicia, turn on the living room lights"
+- Multi-room audio: Music follows you throughout your home
+- Smart responses: Alicia understands context and remembers conversations
+- Multiple languages: Speak in your native language
 
-### 🎤 **Advanced Voice Processing**
-- **Multi-Engine STT**: Whisper, Google, Azure, OpenAI with confidence scoring
-- **Multi-Engine TTS**: Piper, Google, Azure with high-quality voices
-- **Voice Activity Detection**: Configurable sensitivity and noise reduction
-- **Emotion Recognition**: Real-time emotion detection from speech patterns
-- **Speaker Diarization**: Speaker identification and voice analysis
+### 🏠 Smart Home Integration
+**Control everything from one place**
+- **Lights**: Dim, brighten, change colors, set scenes
+- **Audio**: Play music, control volume, multi-room audio
+- **Climate**: Adjust temperature, control fans, air quality
+- **Security**: Lock doors, monitor cameras, set alarms
+- **Appliances**: Control smart plugs, switches, and devices
 
-### 🤖 **AI & Personality System**
-- **Grok-4 Integration**: Advanced AI with context-aware responses
-- **Personality Profiles**: Dynamic character switching and adaptation
-- **Multi-Language Support**: 9 languages with real-time translation
-- **Context Management**: Conversation history and device state awareness
-- **Rate Limiting**: Smart API usage management
+### 🤖 AI Personality System
+**Choose your perfect AI assistant**
+- **Alicia**: Friendly and helpful (perfect for everyone)
+- **Alex**: Professional and efficient (great for work)
+- **Aria**: Creative and artistic (fun for families)
+- **Custom**: Create your own personality
 
-### 🏠 **Device Integration**
-- **Home Assistant Bridge**: Bidirectional HA entity integration
-- **Device Registry**: Centralized device management and capabilities
-- **Multi-Protocol Support**: HTTP, MQTT, WebSocket device communication
-- **Sonos Integration**: Multi-room audio with automatic discovery
-- **IoT Device Control**: Generic device control interface
+### 🌍 Multi-Language Support
+**Speak your language**
+- English, Spanish, French, German, Italian, Portuguese, Chinese, Japanese, Korean
+- Real-time translation
+- Cultural adaptation
+- Voice synthesis in multiple languages
 
-### 🔒 **Enterprise Security**
-- **TLS 1.3 Encryption**: All communications encrypted
-- **JWT Authentication**: Token-based API access
-- **ACL Authorization**: Granular topic-based access control
-- **Security Gateway**: Centralized authentication and encryption
-- **Audit Logging**: Comprehensive security event logging
+### 🎨 Advanced Features
+**Take your smart home to the next level**
+- **Scenes**: "Movie time", "Party mode", "Romantic dinner"
+- **Automation**: Set schedules and routines
+- **Learning**: Alicia gets smarter over time
+- **Customization**: Make everything uniquely yours
 
 ---
 
 ## 🏗️ Architecture
 
+### The Big Picture
+
+Alicia is built like a modern city - with different districts (services) that all work together to create something amazing.
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    Alicia Bus Architecture                      │
+│                    🏠 Your Smart Home                          │
 ├─────────────────────────────────────────────────────────────────┤
-│  Voice Input → STT Service → AI Service → TTS Service → Output  │
-│       ↓              ↓            ↓            ↓               │
-│   Microphone → Transcription → Processing → Synthesis → Speakers │
+│  🎤 Voice Commands  →  🧠 AI Processing  →  🏠 Device Control  │
+├─────────────────────────────────────────────────────────────────┤
+│                    🌐 Alicia Control Center                    │
+│  • Web Dashboard    • Device Management    • Real-time Monitor │
+├─────────────────────────────────────────────────────────────────┤
+│                    🔧 Smart Home Services                      │
+│  • Voice Processing • Device Control      • AI Intelligence   │
+│  • Security         • Monitoring          • Integration       │
 └─────────────────────────────────────────────────────────────────┘
-                              │
-                    ┌─────────────────┐
-                    │   MQTT Bus      │
-                    │  (23 Services)  │
-                    └─────────────────┘
-                              │
-        ┌─────────────────────┼─────────────────────┐
-        │                     │                     │
-┌───────▼────────┐  ┌────────▼────────┐  ┌────────▼────────┐
-│ Device Services│  │  AI Services    │  │ Security &      │
-│ • Device Mgr   │  │ • Grok Integration│  │ Monitoring     │
-│ • HA Bridge    │  │ • Personality   │  │ • Health Monitor│
-│ • Sonos        │  │ • Multi-Lang    │  │ • Config Service│
-│ • Device Ctrl  │  │ • Advanced Voice│  │ • Security GW   │
-└────────────────┘  └─────────────────┘  └─────────────────┘
 ```
 
-### Service Ports
+### How It Works
 
-| Service | Port | Protocol | Purpose |
-|---------|------|----------|---------|
-| MQTT Broker | 1883 | MQTT | Message routing |
-| MQTT Broker | 8883 | MQTTS | Secure messaging |
-| MQTT Broker | 9001 | WebSocket | Web client support |
-| Security Gateway | 8080/8443 | HTTP/HTTPS | Authentication |
-| Device Registry | 8081 | HTTP | Device management |
-| Health Monitor | 8083 | HTTP | System monitoring |
-| Config Service | 8084 | HTTP | Configuration |
-| STT Service | 8001 | HTTP | Speech-to-text |
-| AI Service | 8002 | HTTP | AI processing |
-| TTS Service | 8003 | HTTP | Text-to-speech |
-| Voice Router | 8004 | HTTP | Pipeline orchestration |
-| Sonos Service | 8005 | HTTP | Speaker control |
-| Device Manager | 8006 | HTTP | Device management |
-| HA Bridge | 8007 | HTTP | Home Assistant integration |
-| Device Control | 8008 | HTTP | Generic device control |
-| Grok Integration | 8009 | HTTP | Enhanced AI |
-| Personality System | 8010 | HTTP | Character management |
-| Multi-Language | 8011 | HTTP | Translation services |
-| Advanced Voice | 8012 | HTTP | Audio enhancement |
+1. **You Speak**: "Alicia, turn on the kitchen lights"
+2. **Alicia Listens**: Advanced speech recognition understands you
+3. **Alicia Thinks**: AI processes your command and decides what to do
+4. **Alicia Acts**: Controls your smart devices instantly
+5. **Alicia Responds**: Confirms what she did and asks if you need anything else
+
+### Technology Stack
+
+#### 🎤 Voice & AI
+- **Speech Recognition**: Whisper, Google Cloud, Azure Speech
+- **AI Processing**: xAI Grok, OpenAI GPT
+- **Text-to-Speech**: Piper, Google Cloud, Azure Speech
+- **Voice Analysis**: Emotion detection, noise reduction
+
+#### 🏠 Smart Home
+- **Device Control**: Universal device management
+- **Home Assistant**: Seamless integration with existing systems
+- **Sonos**: Multi-room audio throughout your home
+- **MQTT**: Real-time communication between all services
+
+#### 🌐 Web & Mobile
+- **React**: Modern, responsive web interface
+- **TypeScript**: Reliable, type-safe code
+- **WebSocket**: Real-time updates and control
+- **Mobile-Friendly**: Works perfectly on phones and tablets
+
+#### 🔒 Security & Reliability
+- **TLS Encryption**: All communication is encrypted
+- **JWT Authentication**: Secure access control
+- **Health Monitoring**: Continuous system monitoring
+- **Error Recovery**: Automatic problem detection and fixing
 
 ---
 
-## 📁 Project Structure
+## 🎮 Getting Started
 
-```
-alicia-smart-home/
-├── 📖 README.md
-├── 📊 docs/13-Implementation/03-Architecture-Report.md
-├── 🐳 docker-compose.bus.yml (Main deployment - 23 services)
-├── 🐳 docker-compose.yml (Legacy - deprecated)
-│
-├── 🏗️ bus-services/ (23 Microservices)
-│   ├── advanced-voice/          # Voice activity detection & emotion
-│   ├── ai-service/              # Core AI processing
-│   ├── config-service/          # Centralized configuration
-│   ├── device-control/          # Generic device control
-│   ├── device-manager/          # Device command routing
-│   ├── device-registry/         # Device management
-│   ├── discovery-service/       # Service discovery
-│   ├── grok-integration/        # Grok-4 AI integration
-│   ├── ha-bridge/               # Home Assistant integration
-│   ├── health-monitor/          # System health monitoring
-│   ├── multi-language/          # Translation services
-│   ├── personality-system/      # Character profiles
-│   ├── security-gateway/        # Authentication & encryption
-│   ├── sonos-service/           # Speaker control
-│   ├── stt-service/             # Speech-to-text
-│   ├── tts-service/             # Text-to-speech
-│   └── voice-router/            # Voice pipeline orchestration
-│
-├── 🔧 bus-config/ (MQTT Configuration)
-│   ├── mosquitto.conf           # MQTT broker config
-│   ├── passwords                # Service authentication
-│   └── acl                      # Access control lists
-│
-├── 📊 bus-data/ (MQTT Data)
-├── 📋 bus-logs/ (Service Logs)
-│
-├── 📚 docs/ (Legacy Documentation - Being Updated)
-│   ├── 00-Table-of-Contents.md
-│   ├── 01-Introduction.md
-│   └── ... (18 chapters - being updated for bus architecture)
-│
-├── 🏠 home-assistant/ (Legacy - Being Migrated)
-│   ├── docker-compose.yml
-│   ├── config/
-│   └── logs/
-│
-├── 📡 mqtt/ (Legacy - Being Migrated)
-│   ├── config/
-│   ├── data/
-│   └── log/
-│
-├── 🗄️ postgres/ (Database)
-│   ├── docker-compose.yml
-│   ├── pg-data/
-│   └── init-scripts/
-│
-├── 🧪 test-pack/ (Testing Framework)
-│   ├── features/
-│   ├── steps/
-│   ├── tests/
-│   └── conftest.py
-│
-├── 🔊 mqtt-testing/ (Legacy Testing - Being Migrated)
-│   ├── scripts/
-│   └── results/
-│
-├── 📁 archive/ (Historical Files)
-│   ├── README.md
-│   └── xAI API Key.md
-│
-└── 📋 .gitignore
-```
-
----
-
-## 🛠️ Installation & Setup
-
-### 1. Clone Repository
-
+### Step 1: Installation
 ```bash
-git clone https://github.com/EideticPleroma/alicia-smart-home.git
+# Download and start Alicia
+git clone https://github.com/your-org/alicia-smart-home.git
 cd alicia-smart-home
-```
-
-### 2. Environment Setup
-
-```bash
-# Create environment file
-cp .env.example .env
-
-# Edit environment variables (API keys, configuration)
-nano .env
-```
-
-### 3. Start All Services
-
-```bash
-# Start all 23 microservices
 docker-compose -f docker-compose.bus.yml up -d
-
-# Check service health
-docker-compose -f docker-compose.bus.yml ps
-
-# View logs
-docker-compose -f docker-compose.bus.yml logs -f
 ```
 
-### 4. Verify Installation
+### Step 2: First Voice Command
+1. Open http://localhost:3000
+2. Click the microphone icon
+3. Say "Hello Alicia"
+4. Watch the magic happen!
 
-```bash
-# Check MQTT broker
-curl http://localhost:1883/health
+### Step 3: Connect Your Devices
+1. Go to Device Manager
+2. Click "Add New Device"
+3. Follow the setup wizard
+4. Start controlling with voice!
 
-# Check voice services
-curl http://localhost:8001/health  # STT Service
-curl http://localhost:8002/health  # AI Service
-curl http://localhost:8003/health  # TTS Service
-
-# Check device services
-curl http://localhost:8006/health  # Device Manager
-curl http://localhost:8007/health  # HA Bridge
-
-# Check advanced features
-curl http://localhost:8009/health  # Grok Integration
-curl http://localhost:8010/health  # Personality System
-```
+### Step 4: Customize Your Experience
+1. Choose your AI personality
+2. Set up rooms and scenes
+3. Create custom voice commands
+4. Enjoy your smart home!
 
 ---
 
-## 🎤 Voice Commands
+## 📱 Web Interfaces
 
-### Basic Commands
+### 🎛️ Control Panel
+**Your smart home command center**
+- **URL**: http://localhost:3000
+- **Features**: Device control, voice commands, configuration
+- **Perfect for**: Daily use, device management, customization
 
-```bash
-# Light Control
-"Hey Alicia, turn on the living room light"
-"Hey Alicia, turn off all lights"
-"Hey Alicia, dim the bedroom light to 50%"
-
-# Temperature
-"Hey Alicia, what's the current temperature?"
-"Hey Alicia, set thermostat to 72 degrees"
-
-# Status
-"Hey Alicia, what's the system status?"
-"Hey Alicia, show me all device states"
-```
-
-### Advanced Features
-
-- **Multi-Language**: Commands in 9 supported languages
-- **Personality**: Witty, contextual responses
-- **Emotion Detection**: Responds to your emotional state
-- **Context Awareness**: Remembers conversation history
-- **Multi-Device**: Control multiple devices simultaneously
+### 📊 Monitor Dashboard
+**Watch your home in real-time**
+- **URL**: http://localhost:3001
+- **Features**: System monitoring, message flow, health status
+- **Perfect for**: Troubleshooting, system monitoring, advanced users
 
 ---
 
 ## 🔧 Configuration
 
-### Environment Variables
+### Environment Setup
+Create a `.env` file with your API keys:
 
 ```bash
-# API Keys
-XAI_API_KEY=your_grok_api_key
-OPENAI_API_KEY=your_openai_key
-GOOGLE_API_KEY=your_google_key
+# AI Services
+GROK_API_KEY=your_grok_api_key
+OPENAI_API_KEY=your_openai_api_key
 
-# MQTT Bus Configuration
-MQTT_BROKER=alicia_bus_core
-MQTT_PORT=1883
-MQTT_USERNAME=admin
-MQTT_PASSWORD=alicia_admin_2024
+# Smart Home
+HA_TOKEN=your_home_assistant_token
 
-# Service Configuration
-SECURITY_GATEWAY_PORT=8443
-DEVICE_REGISTRY_PORT=8081
-HEALTH_MONITOR_PORT=8083
+# Security
+MQTT_PASSWORD=your_secure_password
 ```
 
-### Service Configuration
-
-```yaml
-# bus-config/mosquitto.conf
-listener 1883
-allow_anonymous false
-password_file /mosquitto/config/passwords
-acl_file /mosquitto/config/acl
-
-# bus-services/*/config.yaml
-mqtt:
-  broker: alicia_bus_core
-  port: 1883
-  username: service_name
-  password: service_password
-```
+### Device Setup
+1. **Smart Lights**: Philips Hue, LIFX, TP-Link Kasa
+2. **Smart Speakers**: Sonos, Amazon Echo, Google Home
+3. **Smart Thermostats**: Nest, Ecobee, Honeywell
+4. **Smart Locks**: August, Schlage, Yale
+5. **Smart Cameras**: Ring, Arlo, Nest
 
 ---
 
-## 🧪 Testing & Validation
+## 🎯 Use Cases
 
-### Service Health Testing
+### 🏠 Daily Life
+- **Morning**: "Alicia, good morning" → Lights on, music playing, temperature set
+- **Cooking**: "Alicia, cooking mode" → Bright lights, cooking music, timer ready
+- **Entertainment**: "Alicia, movie time" → Dim lights, TV on, perfect audio
+- **Sleep**: "Alicia, good night" → Everything off, doors locked, alarm set
 
-```bash
-# Test all services
-docker-compose -f docker-compose.bus.yml ps
+### 🎉 Special Occasions
+- **Parties**: "Alicia, party mode" → Bright lights, loud music, colorful effects
+- **Romantic Dinner**: "Alicia, romantic dinner" → Dim lights, soft music, warm temperature
+- **Work**: "Alicia, work mode" → Bright lights, quiet environment, focus music
+- **Relaxation**: "Alicia, help me relax" → Spa lighting, calming music, comfortable temperature
 
-# Test individual services
-curl http://localhost:8001/health  # STT Service
-curl http://localhost:8002/health  # AI Service
-curl http://localhost:8003/health  # TTS Service
-curl http://localhost:8006/health  # Device Manager
-curl http://localhost:8009/health  # Grok Integration
-```
-
-### Voice Pipeline Testing
-
-```bash
-# Test STT Service
-curl -X POST http://localhost:8001/transcribe \
-  -F "file=@test_audio.wav"
-
-# Test TTS Service
-curl -X POST http://localhost:8003/synthesize \
-  -H "Content-Type: application/json" \
-  -d '{"text": "Hello from Alicia", "voice": "en_gb"}'
-
-# Test AI Service
-curl -X POST http://localhost:8002/process \
-  -H "Content-Type: application/json" \
-  -d '{"message": "Turn on the lights", "context": {}}'
-```
-
-### MQTT Bus Testing
-
-```bash
-# Test MQTT connectivity
-mosquitto_pub -h localhost -t "alicia/test" -m "Hello Bus"
-
-# Test service communication
-mosquitto_pub -h localhost -t "alicia/voice/command" -m '{"text": "Hello Alicia"}'
-```
-
-### Performance Testing
-
-```bash
-# Monitor service performance
-docker stats
-
-# Check service logs
-docker-compose -f docker-compose.bus.yml logs -f [service_name]
-
-# Test load
-ab -n 100 -c 10 http://localhost:8001/health
-```
+### 🌍 Multi-Language Homes
+- **English**: "Alicia, turn on the lights"
+- **Spanish**: "Alicia, enciende las luces"
+- **French**: "Alicia, allume les lumières"
+- **German**: "Alicia, schalte das Licht ein"
 
 ---
 
-## 📊 Performance & Monitoring
+## 📚 Documentation
 
-### System Metrics
+### 📖 User Guide
+**Perfect for getting started**
+- **[Quick Start Guide](docs/guide/02-Quick-Start.md)**: Get running in 15 minutes
+- **[Voice Commands](docs/guide/05-Voice-Commands.md)**: Master voice control
+- **[Device Setup](docs/guide/04-Connecting-Devices.md)**: Connect your smart devices
+- **[Tips & Tricks](docs/guide/18-Tips-Tricks.md)**: Pro user secrets
 
-- **Message Latency**: <10ms for local MQTT communication
-- **Voice Processing**: <2 seconds end-to-end pipeline
-- **Device Response**: <500ms for device command execution
-- **Translation**: <3 seconds for 1000-character text
-- **Concurrent Users**: 100+ simultaneous voice sessions
-- **Device Capacity**: 1000+ IoT devices supported
-
-### Monitoring Commands
-
-```bash
-# Check all services
-docker-compose -f docker-compose.bus.yml ps
-
-# Monitor resource usage
-docker stats
-
-# View service logs
-docker-compose -f docker-compose.bus.yml logs -f [service_name]
-
-# Health checks
-curl http://localhost:8083/health  # Health Monitor
-curl http://localhost:8001/health  # STT Service
-curl http://localhost:8002/health  # AI Service
-curl http://localhost:8003/health  # TTS Service
-```
+### 🔧 Technical Documentation
+**For developers and advanced users**
+- **[Architecture Overview](docs/book/01-System-Overview.md)**: How Alicia works
+- **[Service Documentation](docs/book/)**: Detailed technical guides
+- **[API Reference](docs/api/)**: Integration and development
+- **[Troubleshooting](docs/guide/16-Common-Issues.md)**: Fix common problems
 
 ---
 
-## 🔒 Security
+## 🎮 Why Choose Alicia?
 
-### Authentication & Authorization
-- **JWT Tokens**: Token-based API access
-- **MQTT Authentication**: Username/password for service authentication
-- **ACL Authorization**: Granular topic-based access control
-- **Certificate-based Auth**: Device authentication with certificates
+### 🏠 **Made for Smart Homes**
+- Designed specifically for home automation
+- Understands home contexts and scenarios
+- Optimized for voice control and convenience
 
-### Data Protection
-- **TLS 1.3 Encryption**: All communications encrypted
-- **Encrypted Storage**: Sensitive data encrypted at rest
-- **API Key Management**: Secure storage and rotation
-- **Audit Logging**: Comprehensive security event logging
+### 🧠 **AI-Powered Intelligence**
+- Learns your preferences and habits
+- Provides smart suggestions and automation
+- Adapts to your lifestyle over time
 
-### Network Security
-- **Internal Networks**: Docker network isolation
-- **Firewall Rules**: Port-based access control
-- **Rate Limiting**: API rate limiting to prevent abuse
-- **Service Isolation**: Network segmentation between services
+### 🎭 **Personality & Fun**
+- Choose from different AI personalities
+- Engaging conversations and interactions
+- Makes your smart home feel alive
 
----
+### 🔒 **Secure & Private**
+- Your data stays in your home
+- Enterprise-grade security
+- No cloud dependency for core features
 
-## 🤝 Contributing
-
-### Development Setup
-
-```bash
-# Fork and clone
-git clone https://github.com/EideticPleroma/alicia-smart-home.git
-cd alicia-smart-home
-
-# Create feature branch
-git checkout -b feature/new-service-feature
-
-# Start services for development
-docker-compose -f docker-compose.bus.yml up -d
-
-# Test your changes
-# Make changes to bus-services/[service-name]/
-# Test with: docker-compose -f docker-compose.bus.yml build [service-name]
-
-# Submit pull request
-git push origin feature/new-service-feature
-```
-
-### Code Standards
-
-- **Python**: PEP 8 style guide with type hints
-- **Docker**: Best practices for containerization
-- **Documentation**: Clear, comprehensive guides
-- **Testing**: Automated test coverage for all services
-- **MQTT**: Follow bus architecture patterns
-
-### Service Development
-
-Each service in `bus-services/` follows the same structure:
-- `main.py` - Service implementation
-- `Dockerfile` - Container configuration
-- `requirements.txt` - Python dependencies
-- `config.yaml` - Service configuration (optional)
-
-### GitFlow Workflow
-
-This project follows the **GitFlow branching model**:
-
-#### Branch Structure
-```
-main (production) ← develop ← feature/* ← release/* ← hotfix/*
-```
-
-#### Development Workflow
-
-1. **Start New Feature**
-   ```bash
-   git checkout develop
-   git pull origin develop
-   git checkout -b feature/new-service-feature
-   ```
-
-2. **Develop and Test**
-   ```bash
-   # Make changes to bus-services/[service-name]/
-   git add .
-   git commit -m "feat(service): add new feature"
-
-   # Test with Docker
-   docker-compose -f docker-compose.bus.yml build [service-name]
-   docker-compose -f docker-compose.bus.yml up -d [service-name]
-
-   # Push feature branch
-   git push origin feature/new-service-feature
-   ```
-
-3. **Create Pull Request**
-   - Open PR from `feature/*` → `develop`
-   - Request review from maintainers
-   - Ensure all services pass health checks
-
-#### Commit Message Format
-
-```
-type(scope): description
-
-Types: feat, fix, docs, style, refactor, test, chore
-Examples:
-- feat(voice): add emotion detection to STT service
-- fix(mqtt): resolve connection timeout in device manager
-- docs(api): update service documentation
-- test(ai): add integration tests for Grok service
-```
+### 🌍 **Multi-Language & Cultural**
+- Speaks your language naturally
+- Understands cultural contexts
+- Works anywhere in the world
 
 ---
 
-## 📈 Roadmap
+## 🚀 What's Next?
 
-### Phase 5: Enterprise Features
-- [ ] **Kubernetes Deployment**: Helm charts for production deployment
-- [ ] **Auto-scaling**: Based on load and demand
-- [ ] **Service Mesh**: Istio/Linkerd integration
-- [ ] **Advanced Analytics**: Usage patterns and insights
+### 🎯 **Immediate Benefits**
+- Control your home with voice commands
+- Unify all your smart devices
+- Create custom automations and scenes
+- Enjoy AI-powered convenience
 
-### Phase 6: Advanced AI
-- [ ] **Machine Learning Integration**: Custom model training
-- [ ] **Natural Language Understanding**: Intent classification
-- [ ] **Multi-modal Input**: Image and video processing
-- [ ] **Predictive Analytics**: Anticipate user needs
+### 🎮 **Advanced Features**
+- Custom voice commands
+- Complex automations
+- Multi-room audio
+- Integration with other systems
 
-### Phase 7: IoT Expansion
-- [ ] **Device Ecosystem**: Zigbee, Z-Wave, Matter support
-- [ ] **Third-party APIs**: Custom device integration
-- [ ] **Smart Home Automation**: Rule engine and scheduling
-- [ ] **Energy Optimization**: Monitor and optimize usage
+### 🌟 **Future Possibilities**
+- Machine learning improvements
+- New device integrations
+- Enhanced AI capabilities
+- Community features
 
 ---
 
-## 📞 Support & Community
+## 🤝 Community & Support
 
-### Getting Help
+### 📞 **Getting Help**
+- **Documentation**: Comprehensive guides and tutorials
+- **Community Forum**: Connect with other users
+- **GitHub Issues**: Report bugs and request features
+- **Discord**: Real-time chat and support
 
-- **📖 Documentation**: [Complete Bus Architecture Report](docs/13-Implementation/03-Architecture-Report.md)
-- **🐛 Issues**: [GitHub Issues](https://github.com/EideticPleroma/alicia-smart-home/issues)
-- **💬 Discussions**: [GitHub Discussions](https://github.com/EideticPleroma/alicia-smart-home/discussions)
-- **📧 Email**: support@alicia.ai
-
-### Community Resources
-
-- **🏠 Home Assistant**: [Community Forum](https://community.home-assistant.io/)
-- **🐳 Docker**: [Official Documentation](https://docs.docker.com/)
-- **📡 MQTT**: [Protocol Specification](https://mqtt.org/)
-- **🤖 AI Services**: [Grok API](https://x.ai/api), [OpenAI API](https://openai.com/api)
+### 🎯 **Contributing**
+- **Code**: Help improve Alicia's features
+- **Documentation**: Write guides and tutorials
+- **Testing**: Help find and fix bugs
+- **Ideas**: Suggest new features and improvements
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-### Technologies Used
-- **Eclipse Mosquitto**: Reliable MQTT messaging
-- **FastAPI**: Modern Python web framework
-- **Docker**: Containerization platform
-- **PostgreSQL**: Robust data storage
-- **OpenAI Whisper**: Advanced speech recognition
-- **Piper TTS**: High-quality neural voice synthesis
-- **Grok-4**: Advanced AI capabilities
-- **Home Assistant**: Smart home automation platform
-
-### Project Developer
-- **Solo Developer**: Independent implementation of complete smart home AI system
-- **Full-Stack Development**: Infrastructure, AI integration, and documentation
-- **Self-Learning Project**: Comprehensive exploration of modern AI and IoT technologies
-
----
-
-## 🎯 Project Status
-
-| Component | Status | Version | Notes |
-|-----------|--------|---------|-------|
-| **Bus Architecture** | ✅ **COMPLETE** | v1.0.0 | 23 microservices implemented |
-| **Voice Pipeline** | ✅ **COMPLETE** | v1.0.0 | STT → AI → TTS with emotion detection |
-| **Device Integration** | ✅ **COMPLETE** | v1.0.0 | Home Assistant + Sonos + IoT devices |
-| **Advanced Features** | ✅ **COMPLETE** | v1.0.0 | Multi-language + Personality + Grok |
-| **Security** | ✅ **COMPLETE** | v1.0.0 | TLS encryption + JWT + ACL |
-| **Monitoring** | ✅ **COMPLETE** | v1.0.0 | Health checks + logging + metrics |
-| **Documentation** | ✅ **COMPLETE** | v1.0.0 | Complete technical documentation |
-
-### 🏗️ Bus Architecture Summary
-
-**Status**: ✅ **PRODUCTION READY**
-- **23 Microservices**: All implemented and containerized
-- **Message Bus**: MQTT-based communication with authentication
-- **Security**: Enterprise-grade encryption and access control
-- **Scalability**: Horizontal scaling support for all services
-- **Monitoring**: Comprehensive health checks and logging
-
-**🎉 Alicia Smart Home AI Assistant is now 100% operational with enterprise-grade bus architecture!**
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
 <div align="center">
 
-**Made with ❤️ for the smart home community**
+**🏠 Transform your home into an intelligent paradise with Alicia**
 
-[⭐ Star this repo](https://github.com/EideticPleroma/alicia-smart-home) • [🍴 Fork it](https://github.com/EideticPleroma/alicia-smart-home/fork) • [📧 Contact us](mailto:support@alicia.ai)
+[🚀 Get Started](docs/guide/02-Quick-Start.md) • [📖 User Guide](docs/guide/) • [🔧 Technical Docs](docs/book/) • [💬 Community](https://github.com/your-org/alicia-smart-home/discussions)
+
+**Built with ❤️ for the smart home community**
 
 </div>

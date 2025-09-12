@@ -1,0 +1,144 @@
+{
+  "scoring_criteria": {
+    "code_quality": {
+      "weight": 30,
+      "description": "Code structure, maintainability, and best practices",
+      "metrics": [
+        "typescript_compliance",
+        "react_patterns",
+        "error_handling",
+        "code_organization",
+        "documentation_coverage"
+      ],
+      "thresholds": {
+        "excellent": 9.0,
+        "good": 7.0,
+        "acceptable": 5.0,
+        "poor": 3.0
+      }
+    },
+    "functionality": {
+      "weight": 25,
+      "description": "Feature implementation and requirements compliance",
+      "metrics": [
+        "mqtt_integration",
+        "api_design",
+        "service_communication",
+        "real_time_updates",
+        "error_handling"
+      ],
+      "thresholds": {
+        "excellent": 9.0,
+        "good": 7.0,
+        "acceptable": 5.0,
+        "poor": 3.0
+      }
+    },
+    "performance": {
+      "weight": 20,
+      "description": "System performance and resource utilization",
+      "metrics": [
+        "memory_usage",
+        "response_times",
+        "real_time_latency",
+        "resource_efficiency",
+        "scalability"
+      ],
+      "thresholds": {
+        "excellent": 9.0,
+        "good": 7.0,
+        "acceptable": 5.0,
+        "poor": 3.0
+      }
+    },
+    "security": {
+      "weight": 15,
+      "description": "Security implementation and vulnerability assessment",
+      "metrics": [
+        "api_key_handling",
+        "mqtt_security",
+        "input_validation",
+        "data_protection",
+        "authentication"
+      ],
+      "thresholds": {
+        "excellent": 9.0,
+        "good": 7.0,
+        "acceptable": 5.0,
+        "poor": 3.0
+      }
+    },
+    "documentation": {
+      "weight": 10,
+      "description": "Documentation completeness and quality",
+      "metrics": [
+        "api_documentation",
+        "readme_quality",
+        "inline_comments",
+        "setup_instructions",
+        "integration_docs"
+      ],
+      "thresholds": {
+        "excellent": 9.0,
+        "good": 7.0,
+        "acceptable": 5.0,
+        "poor": 3.0
+      }
+    }
+  },
+  "quality_gates": {
+    "passing_score": 9.0,
+    "retry_threshold": 7.0,
+    "escalation_threshold": 5.0,
+    "max_retries": 3,
+    "critical_issues": [
+      "security_vulnerabilities",
+      "data_loss_risk",
+      "system_crashes",
+      "performance_bottlenecks"
+    ]
+  },
+  "alicia_specific": {
+    "mqtt_integration": {
+      "required_topics": [
+        "alicia/system/health/#",
+        "alicia/system/discovery/#",
+        "alicia/config/#",
+        "alicia/device/#"
+      ],
+      "security_requirements": [
+        "mqtt_authentication",
+        "topic_authorization",
+        "message_encryption"
+      ]
+    },
+    "service_patterns": {
+      "required_components": [
+        "health_endpoint",
+        "mqtt_integration",
+        "error_handling",
+        "logging",
+        "configuration"
+      ],
+      "api_standards": [
+        "restful_design",
+        "error_responses",
+        "status_codes",
+        "request_validation"
+      ]
+    },
+    "docker_integration": {
+      "required_files": [
+        "Dockerfile",
+        "requirements.txt",
+        "health_check"
+      ],
+      "docker_compose": [
+        "service_definition",
+        "environment_variables",
+        "volume_mounts",
+        "network_configuration"
+      ]
+    }
+  }
+}

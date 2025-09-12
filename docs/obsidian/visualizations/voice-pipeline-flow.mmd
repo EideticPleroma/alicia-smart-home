@@ -1,0 +1,129 @@
+graph TD
+    subgraph "Voice Input"
+        MIC[Microphone<br/>Audio Input]
+        VAD[Voice Activity Detection<br/>Detect Speech]
+        NR[Noise Reduction<br/>Clean Audio]
+    end
+    
+    subgraph "Speech-to-Text Processing"
+        STT[STT Service<br/>Speech Recognition]
+        WHISPER[Whisper Engine<br/>Local AI STT]
+        GOOGLE[Google Cloud STT<br/>Cloud STT]
+        AZURE[Azure Speech<br/>Cloud STT]
+        CONF[Confidence Scoring<br/>Quality Assessment]
+    end
+    
+    subgraph "AI Processing"
+        AI[AI Service<br/>Natural Language Understanding]
+        GROK[Grok Integration<br/>Advanced AI]
+        CONTEXT[Context Management<br/>Conversation Memory]
+        INTENT[Intent Recognition<br/>Understand Command]
+        RESPONSE[Response Generation<br/>Create Response]
+    end
+    
+    subgraph "Text-to-Speech Processing"
+        TTS[TTS Service<br/>Voice Synthesis]
+        PIPER[Piper TTS<br/>Local Voice]
+        GOOGLE_TTS[Google Cloud TTS<br/>Cloud Voice]
+        AZURE_TTS[Azure Speech TTS<br/>Cloud Voice]
+        VOICE[Voice Customization<br/>Personality & Style]
+    end
+    
+    subgraph "Audio Output"
+        SPEAKERS[Speakers<br/>Audio Output]
+        SONOS[Sonos Integration<br/>Multi-room Audio]
+        VOL[Volume Control<br/>Audio Level]
+        QUAL[Quality Control<br/>Audio Quality]
+    end
+    
+    subgraph "Voice Router & Orchestration"
+        VR[Voice Router<br/>Pipeline Orchestration]
+        SESSION[Session Management<br/>Conversation Tracking]
+        ERROR[Error Handling<br/>Fallback & Recovery]
+        PERF[Performance Monitoring<br/>Speed & Quality]
+    end
+    
+    subgraph "Advanced Features"
+        EMOTION[Emotion Detection<br/>Voice Emotion Analysis]
+        DIARIZATION[Speaker Diarization<br/>Speaker Identification]
+        LANGUAGE[Language Detection<br/>Auto Language Detection]
+        TRANSLATE[Translation<br/>Multi-language Support]
+    end
+    
+    %% Voice Input Flow
+    MIC --> VAD
+    VAD --> NR
+    NR --> STT
+    
+    %% STT Processing Flow
+    STT --> WHISPER
+    STT --> GOOGLE
+    STT --> AZURE
+    WHISPER --> CONF
+    GOOGLE --> CONF
+    AZURE --> CONF
+    CONF --> AI
+    
+    %% AI Processing Flow
+    AI --> GROK
+    AI --> CONTEXT
+    CONTEXT --> INTENT
+    INTENT --> RESPONSE
+    RESPONSE --> TTS
+    
+    %% TTS Processing Flow
+    TTS --> PIPER
+    TTS --> GOOGLE_TTS
+    TTS --> AZURE_TTS
+    PIPER --> VOICE
+    GOOGLE_TTS --> VOICE
+    AZURE_TTS --> VOICE
+    VOICE --> SPEAKERS
+    
+    %% Audio Output Flow
+    SPEAKERS --> SONOS
+    SPEAKERS --> VOL
+    VOL --> QUAL
+    QUAL --> SPEAKERS
+    
+    %% Voice Router Orchestration
+    VR --> STT
+    VR --> AI
+    VR --> TTS
+    VR --> SESSION
+    VR --> ERROR
+    VR --> PERF
+    
+    %% Advanced Features Integration
+    EMOTION --> AI
+    DIARIZATION --> STT
+    LANGUAGE --> STT
+    TRANSLATE --> AI
+    
+    %% Error Handling and Fallbacks
+    ERROR --> STT
+    ERROR --> AI
+    ERROR --> TTS
+    
+    %% Performance Monitoring
+    PERF --> STT
+    PERF --> AI
+    PERF --> TTS
+    PERF --> VR
+    
+    %% Styling
+    classDef voiceInput fill:#e3f2fd,stroke:#0277bd,stroke-width:2px
+    classDef sttProcessing fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef aiProcessing fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    classDef ttsProcessing fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    classDef audioOutput fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef orchestration fill:#fff8e1,stroke:#f9a825,stroke-width:2px
+    classDef advanced fill:#e0f2f1,stroke:#00695c,stroke-width:2px
+    
+    class MIC,VAD,NR voiceInput
+    class STT,WHISPER,GOOGLE,AZURE,CONF sttProcessing
+    class AI,GROK,CONTEXT,INTENT,RESPONSE aiProcessing
+    class TTS,PIPER,GOOGLE_TTS,AZURE_TTS,VOICE ttsProcessing
+    class SPEAKERS,SONOS,VOL,QUAL audioOutput
+    class VR,SESSION,ERROR,PERF orchestration
+    class EMOTION,DIARIZATION,LANGUAGE,TRANSLATE advanced

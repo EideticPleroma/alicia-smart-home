@@ -18,7 +18,7 @@ import paho.mqtt.client as mqtt
 from fastapi import FastAPI, HTTPException
 import uvicorn
 
-from ..service_wrapper import BusServiceWrapper, BusServiceAPI
+from service_wrapper import BusServiceWrapper, BusServiceAPI
 
 
 class DeviceControl(BusServiceWrapper):

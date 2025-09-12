@@ -31,3 +31,6 @@ dataclasses
 
 # Additional utilities
 uuid
+
+# Additional dependencies
+psutil==5.9.6

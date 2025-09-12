@@ -43,3 +43,6 @@ concurrent.futures
 
 # Schedule library for cron-like functionality
 schedule==1.2.0
+
+# Additional dependencies
+apscheduler==3.10.4

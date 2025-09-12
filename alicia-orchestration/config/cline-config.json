@@ -1,0 +1,57 @@
+{
+  "model": "grok-code-fast-1",
+  "mcp_server": {
+    "host": "localhost",
+    "port": 4000,
+    "protocol": "mcp"
+  },
+  "project": {
+    "name": "alicia-microservices",
+    "path": "../",
+    "services_path": "bus-services",
+    "config_path": "alicia-config-manager",
+    "orchestration_path": "alicia-orchestration"
+  },
+  "git": {
+    "auto_push": false,
+    "branch_prefix": "feature/phase",
+    "commit_convention": "conventional",
+    "tag_prefix": "phase",
+    "merge_strategy": "squash"
+  },
+  "quality_gates": {
+    "min_score": 9.0,
+    "max_retries": 3,
+    "escalation_threshold": 7.0,
+    "critical_threshold": 5.0
+  },
+  "alicia_integration": {
+    "mqtt_broker": "alicia_bus_core",
+    "mqtt_port": 1883,
+    "mqtt_username": "orchestrator",
+    "mqtt_password": "alicia_orchestrator_2024",
+    "topic_prefix": "alicia/",
+    "service_discovery": true,
+    "health_monitoring": true
+  },
+  "development": {
+    "auto_save": true,
+    "auto_test": true,
+    "auto_document": true,
+    "code_review": true,
+    "performance_check": true
+  },
+  "phases": {
+    "current_phase": null,
+    "phase_timeout_hours": 72,
+    "auto_progression": false,
+    "manual_approval": true
+  },
+  "tools": {
+    "static_analysis": true,
+    "security_scan": true,
+    "performance_test": true,
+    "integration_test": true,
+    "documentation_generation": true
+  }
+}

@@ -1,0 +1,145 @@
+graph TB
+    subgraph "User Interface Layer"
+        UI1[Config Manager<br/>React/TypeScript]
+        UI2[Monitor Dashboard<br/>React/TypeScript]
+        UI3[Mobile Interface<br/>Responsive Web]
+    end
+    
+    subgraph "API Gateway Layer"
+        GW[Security Gateway<br/>Authentication & Authorization]
+    end
+    
+    subgraph "Message Bus Layer"
+        MQTT[MQTT Broker<br/>Eclipse Mosquitto 2.0.18+]
+    end
+    
+    subgraph "Voice Processing Services"
+        STT[STT Service<br/>Speech-to-Text]
+        AI[AI Service<br/>Natural Language Processing]
+        TTS[TTS Service<br/>Text-to-Speech]
+        VR[Voice Router<br/>Pipeline Orchestration]
+    end
+    
+    subgraph "Device Integration Services"
+        DM[Device Manager<br/>Universal Device Control]
+        HA[HA Bridge<br/>Home Assistant Integration]
+        SONOS[Sonos Service<br/>Multi-room Audio]
+        DC[Device Control<br/>Generic Device Commands]
+    end
+    
+    subgraph "AI & Intelligence Services"
+        PS[Personality System<br/>AI Personalities]
+        ML[Multi-Language<br/>Translation & i18n]
+        GROK[Grok Integration<br/>Advanced AI]
+        AV[Advanced Voice<br/>Emotion Detection]
+    end
+    
+    subgraph "Core Infrastructure Services"
+        CS[Config Service<br/>Configuration Management]
+        DR[Device Registry<br/>Device Discovery]
+        HM[Health Monitor<br/>System Health]
+        LB[Load Balancer<br/>Traffic Distribution]
+        MC[Metrics Collector<br/>Performance Analytics]
+    end
+    
+    subgraph "Supporting Services"
+        ES[Event Scheduler<br/>Task Scheduling]
+        SO[Service Orchestrator<br/>Lifecycle Management]
+        DS[Discovery Service<br/>Service Registration]
+    end
+    
+    subgraph "External Systems"
+        HA_EXT[Home Assistant<br/>Smart Home Platform]
+        SONOS_EXT[Sonos Speakers<br/>Audio Devices]
+        AI_EXT[AI Providers<br/>Grok, OpenAI, etc.]
+        DEVICES[Smart Devices<br/>Lights, Thermostats, etc.]
+    end
+    
+    %% User Interface to API Gateway
+    UI1 --> GW
+    UI2 --> GW
+    UI3 --> GW
+    
+    %% API Gateway to Message Bus
+    GW --> MQTT
+    
+    %% Message Bus to Services
+    MQTT --> STT
+    MQTT --> AI
+    MQTT --> TTS
+    MQTT --> VR
+    MQTT --> DM
+    MQTT --> HA
+    MQTT --> SONOS
+    MQTT --> DC
+    MQTT --> PS
+    MQTT --> ML
+    MQTT --> GROK
+    MQTT --> AV
+    MQTT --> CS
+    MQTT --> DR
+    MQTT --> HM
+    MQTT --> LB
+    MQTT --> MC
+    MQTT --> ES
+    MQTT --> SO
+    MQTT --> DS
+    
+    %% Voice Pipeline Flow
+    STT --> AI
+    AI --> TTS
+    VR --> STT
+    VR --> AI
+    VR --> TTS
+    
+    %% Device Integration Flow
+    DM --> DC
+    HA --> HA_EXT
+    SONOS --> SONOS_EXT
+    DC --> DEVICES
+    
+    %% AI Integration Flow
+    AI --> GROK
+    AI --> PS
+    AI --> ML
+    STT --> AV
+    TTS --> AV
+    
+    %% Core Infrastructure Flow
+    CS --> MQTT
+    DR --> MQTT
+    HM --> MQTT
+    LB --> MQTT
+    MC --> MQTT
+    
+    %% Supporting Services Flow
+    ES --> MQTT
+    SO --> MQTT
+    DS --> MQTT
+    
+    %% External System Connections
+    HA --> HA_EXT
+    SONOS --> SONOS_EXT
+    GROK --> AI_EXT
+    DC --> DEVICES
+    
+    %% Styling
+    classDef userInterface fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef apiGateway fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef messageBus fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef voiceServices fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef deviceServices fill:#e0f2f1,stroke:#004d40,stroke-width:2px
+    classDef aiServices fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    classDef coreServices fill:#f1f8e9,stroke:#33691e,stroke-width:2px
+    classDef supportingServices fill:#f9fbe7,stroke:#827717,stroke-width:2px
+    classDef externalSystems fill:#ffebee,stroke:#b71c1c,stroke-width:2px
+    
+    class UI1,UI2,UI3 userInterface
+    class GW apiGateway
+    class MQTT messageBus
+    class STT,AI,TTS,VR voiceServices
+    class DM,HA,SONOS,DC deviceServices
+    class PS,ML,GROK,AV aiServices
+    class CS,DR,HM,LB,MC coreServices
+    class ES,SO,DS supportingServices
+    class HA_EXT,SONOS_EXT,AI_EXT,DEVICES externalSystems

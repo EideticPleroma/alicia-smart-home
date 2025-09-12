@@ -1,0 +1,39 @@
+{
+  "name": "alicia-config-manager",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": ["frontend", "backend"],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:frontend": "cd frontend && npm run start",
+    "start:backend": "cd backend && npm run start",
+    "install:all": "npm install && npm run install:frontend && npm run install:backend",
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd backend && npm install",
+    "clean": "npm run clean:frontend && npm run clean:backend",
+    "clean:frontend": "cd frontend && rm -rf node_modules package-lock.json",
+    "clean:backend": "cd backend && rm -rf node_modules package-lock.json",
+    "type-check": "npm run type-check:frontend",
+    "type-check:frontend": "cd frontend && npm run type-check",
+    "lint": "npm run lint:frontend",
+    "lint:frontend": "cd frontend && npm run lint",
+    "update-dependencies": "node scripts/update-dependencies.js",
+    "validate-dependencies": "node scripts/validate-dependencies.js",
+    "audit": "npm audit && npm run audit:frontend && npm run audit:backend",
+    "audit:frontend": "cd frontend && npm audit",
+    "audit:backend": "cd backend && npm audit"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}

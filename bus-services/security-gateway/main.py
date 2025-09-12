@@ -24,7 +24,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import jwt
 import paho.mqtt.client as mqtt
 
-from ..service_wrapper import BusServiceWrapper, BusServiceAPI
+from service_wrapper import BusServiceWrapper, BusServiceAPI
 
 
 class SecurityGateway(BusServiceWrapper):

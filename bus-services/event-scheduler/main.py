@@ -24,7 +24,7 @@ from fastapi import FastAPI, HTTPException, Query, BackgroundTasks
 from fastapi.responses import JSONResponse
 import schedule
 
-from ..service_wrapper import BusServiceWrapper, BusServiceAPI
+from service_wrapper import BusServiceWrapper, BusServiceAPI
 
 
 class ScheduleType(Enum):

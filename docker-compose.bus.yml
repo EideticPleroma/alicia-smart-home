@@ -15,7 +15,7 @@ services:
       - "8883:8883"    # MQTTS (secure)
       - "9001:9001"    # WebSocket
     volumes:
-      - ./bus-config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./bus-config/mosquitto-dev.conf:/mosquitto/config/mosquitto.conf:ro
       - ./bus-config/passwords:/mosquitto/config/passwords:ro
       - ./bus-config/acl:/mosquitto/config/acl:ro
       - ./bus-data:/mosquitto/data
@@ -26,7 +26,7 @@ services:
       - MQTT_MESSAGE_SIZE_LIMIT=268435456
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
       test: ["CMD", "mosquitto_pub", "-h", "localhost", "-t", "alicia/system/health/broker", "-m", "healthy", "-u", "admin", "-P", "alicia_admin_2024"]
       interval: 30s
@@ -64,9 +64,9 @@ services:
       - alicia-bus-core
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8080/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -96,9 +96,9 @@ services:
       - alicia-security-gateway
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8081/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -125,7 +125,7 @@ services:
       - alicia-device-registry
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
       test: ["CMD", "python", "-c", "import socket; s=socket.socket(); s.connect(('alicia_bus_core', 1883))"]
       interval: 30s
@@ -157,9 +157,9 @@ services:
       - alicia-bus-core
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8083/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8083/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -188,9 +188,9 @@ services:
       - alicia-bus-core
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8084/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8084/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -224,9 +224,9 @@ services:
       - alicia-health-monitor
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8013/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8013/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -259,9 +259,9 @@ services:
       - alicia-health-monitor
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8014/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8014/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -293,9 +293,9 @@ services:
       - alicia-configuration-manager
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8015/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8015/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -327,9 +327,9 @@ services:
       - alicia-device-registry
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8016/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8016/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -362,9 +362,9 @@ services:
       - alicia-configuration-manager
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8017/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8017/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -398,9 +398,9 @@ services:
       - alicia-bus-core
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8001/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -434,9 +434,9 @@ services:
       - alicia-bus-core
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8002/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -468,9 +468,9 @@ services:
       - alicia-bus-core
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8003/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8003/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -503,9 +503,9 @@ services:
       - alicia-tts-service
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8004/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8004/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -539,9 +539,9 @@ services:
       - alicia-device-registry
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8005/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8005/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -572,9 +572,9 @@ services:
       - alicia-device-registry
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8006/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8006/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -606,9 +606,9 @@ services:
       - alicia-device-registry
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8007/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8007/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -640,9 +640,9 @@ services:
       - alicia-device-manager
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8008/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8008/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -681,9 +681,9 @@ services:
       - alicia-personality-system
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8009/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8009/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -714,9 +714,9 @@ services:
       - alicia-bus-core
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8010/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8010/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -748,9 +748,9 @@ services:
       - alicia-bus-core
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8011/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8011/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -784,20 +784,20 @@ services:
       - alicia-voice-router
     restart: unless-stopped
     networks:
-      - alicia_bus_network
+      - alicia_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8012/health"]
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8012/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 30s
 
 networks:
-  alicia_bus_network:
+  alicia_network:
     driver: bridge
-    name: alicia_bus_network
+    name: alicia_network
     driver_opts:
-      com.docker.network.bridge.name: alicia_bus_network
+      com.docker.network.bridge.name: alicia_network
     ipam:
       config:
         - subnet: 172.20.0.0/16
