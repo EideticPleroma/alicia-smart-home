@@ -1,0 +1,33 @@
+# Alicia Discovery Service Requirements
+# Python 3.11.7+, FastAPI 0.104.1+, Paho MQTT 1.6.1+
+
+# Core dependencies
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+paho-mqtt==1.6.1
+pydantic==2.5.0
+
+# Network discovery
+zeroconf==0.132.2
+
+# Async support
+asyncio
+
+# Logging
+logging
+
+# JSON handling
+json
+
+# Time and datetime
+datetime
+time
+
+# Type hints
+typing
+
+# Data structures
+dataclasses
+
+# Additional utilities
+uuid

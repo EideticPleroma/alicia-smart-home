@@ -196,6 +196,180 @@ services:
       retries: 3
       start_period: 30s
 
+  # ===== MANAGEMENT & OPERATIONS SERVICES =====
+
+  # ===== LOAD BALANCER =====
+  # Python 3.11.7+, FastAPI 0.104.1+, intelligent load balancing and traffic distribution
+  alicia-load-balancer:
+    container_name: alicia_load_balancer
+    build:
+      context: ./bus-services/load-balancer
+      dockerfile: Dockerfile
+    ports:
+      - "8013:8013"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=load_balancer
+      - MQTT_PASSWORD=alicia_load_2024
+      - LOAD_BALANCING_ALGORITHM=round_robin
+      - HEALTH_CHECK_INTERVAL=30
+      - MAX_CONNECTIONS_PER_SERVICE=100
+      - REQUEST_TIMEOUT=30
+    volumes:
+      - ./bus-services/load-balancer/data:/app/data
+      - ./bus-logs/load-balancer:/app/logs
+    depends_on:
+      - alicia-bus-core
+      - alicia-health-monitor
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8013/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== METRICS COLLECTOR =====
+  # Python 3.11.7+, FastAPI 0.104.1+, comprehensive monitoring and analytics
+  alicia-metrics-collector:
+    container_name: alicia_metrics_collector
+    build:
+      context: ./bus-services/metrics-collector
+      dockerfile: Dockerfile
+    ports:
+      - "8014:8014"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=metrics_collector
+      - MQTT_PASSWORD=alicia_metrics_2024
+      - METRICS_RETENTION_DAYS=30
+      - COLLECTION_INTERVAL=60
+      - ALERT_THRESHOLD_CPU=80
+      - ALERT_THRESHOLD_MEMORY=85
+      - METRICS_DATABASE_PATH=/app/data/metrics.db
+    volumes:
+      - ./bus-services/metrics-collector/data:/app/data
+      - ./bus-logs/metrics-collector:/app/logs
+    depends_on:
+      - alicia-bus-core
+      - alicia-health-monitor
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8014/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== EVENT SCHEDULER =====
+  # Python 3.11.7+, FastAPI 0.104.1+, cron-like event scheduling and execution
+  alicia-event-scheduler:
+    container_name: alicia_event_scheduler
+    build:
+      context: ./bus-services/event-scheduler
+      dockerfile: Dockerfile
+    ports:
+      - "8015:8015"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=event_scheduler
+      - MQTT_PASSWORD=alicia_scheduler_2024
+      - MAX_SCHEDULED_EVENTS=1000
+      - EXECUTION_TIMEOUT=300
+      - RETRY_ATTEMPTS=3
+      - SCHEDULER_DATA_PATH=/app/data
+    volumes:
+      - ./bus-services/event-scheduler/data:/app/data
+      - ./bus-logs/event-scheduler:/app/logs
+    depends_on:
+      - alicia-bus-core
+      - alicia-configuration-manager
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8015/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== CONFIGURATION MANAGER =====
+  # Python 3.11.7+, FastAPI 0.104.1+, centralized configuration management
+  alicia-configuration-manager:
+    container_name: alicia_configuration_manager
+    build:
+      context: ./bus-services/configuration-manager
+      dockerfile: Dockerfile
+    ports:
+      - "8016:8016"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=configuration_manager
+      - MQTT_PASSWORD=alicia_config_mgr_2024
+      - CONFIG_STORAGE_PATH=/app/config
+      - BACKUP_INTERVAL=3600
+      - MAX_VERSIONS_PER_CONFIG=10
+      - VALIDATION_ENABLED=true
+    volumes:
+      - ./bus-services/configuration-manager/config:/app/config
+      - ./bus-logs/configuration-manager:/app/logs
+    depends_on:
+      - alicia-bus-core
+      - alicia-device-registry
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8016/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== SERVICE ORCHESTRATOR =====
+  # Python 3.11.7+, FastAPI 0.104.1+, service lifecycle management and coordination
+  alicia-service-orchestrator:
+    container_name: alicia_service_orchestrator
+    build:
+      context: ./bus-services/service-orchestrator
+      dockerfile: Dockerfile
+    ports:
+      - "8017:8017"  # HTTP API
+    environment:
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=service_orchestrator
+      - MQTT_PASSWORD=alicia_orchestrator_2024
+      - MAX_CONCURRENT_TASKS=5
+      - TASK_TIMEOUT=300
+      - HEALTH_CHECK_INTERVAL=30
+      - AUTO_RECOVERY=true
+    volumes:
+      - ./bus-services/service-orchestrator/data:/app/data
+      - ./bus-logs/service-orchestrator:/app/logs
+    depends_on:
+      - alicia-bus-core
+      - alicia-health-monitor
+      - alicia-configuration-manager
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8017/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
   # ===== VOICE PROCESSING SERVICES =====
 
   # ===== STT SERVICE =====
