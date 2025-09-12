@@ -1,0 +1,153 @@
+/* ===== APP COMPONENT STYLES ===== */
+.App {
+  @apply h-screen flex flex-col bg-gray-50;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+.App-header {
+  @apply bg-gradient-to-r from-gray-900 to-gray-800 text-white p-6 shadow-lg;
+  background-image: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+}
+
+.App-header h1 {
+  @apply m-0 text-4xl font-bold tracking-tight;
+  background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.App-header p {
+  @apply mt-3 text-lg opacity-90 font-light leading-relaxed;
+  color: #e5e7eb;
+}
+
+.main-content {
+  @apply flex flex-1 overflow-hidden;
+}
+
+.graph-view {
+  @apply flex-1 relative bg-gray-50;
+  background-image:
+    radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+}
+
+.side-panel {
+  @apply w-96 bg-white shadow-2xl border-l border-gray-200 overflow-y-auto;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.side-panel.closed {
+  @apply w-0 overflow-hidden;
+}
+
+/* ===== ADDITIONAL UTILITY CLASSES ===== */
+.loading-spinner {
+  @apply inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin;
+}
+
+.fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+.slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .App-header {
+    @apply p-4;
+  }
+
+  .App-header h1 {
+    @apply text-2xl;
+  }
+
+  .App-header p {
+    @apply text-base;
+  }
+
+  .side-panel {
+    @apply w-full;
+  }
+
+  .main-content {
+    @apply flex-col;
+  }
+}
+
+@media (max-width: 640px) {
+  .App-header h1 {
+    @apply text-xl;
+  }
+
+  .App-header p {
+    @apply text-sm;
+  }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+  }
+}
+
+/* ===== FOCUS STATES ===== */
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  @apply outline-none ring-2 ring-blue-500 ring-opacity-50;
+}
+
+/* ===== CUSTOM SCROLLBAR FOR SIDE PANEL ===== */
+.side-panel::-webkit-scrollbar {
+  @apply w-2;
+}
+
+.side-panel::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+.side-panel::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
+}
+
+.side-panel::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}

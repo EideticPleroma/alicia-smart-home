@@ -1,0 +1,124 @@
+# Cline Rules for Alicia Configuration Manager
+
+## Project Context
+- This is a SEPARATE application from the existing alicia-monitor
+- It's a configuration management web app for Docker microservices
+- Must integrate with existing MQTT bus architecture
+- Should NOT modify existing alicia-monitor code
+
+## Architecture Principles
+- **Separation of Concerns**: Config manager is independent of monitoring
+- **Microservices Pattern**: Each app has its own purpose and scope
+- **Bus Integration**: Both apps communicate via MQTT topics
+- **Shared Infrastructure**: Both use same MQTT broker and Docker network
+
+## Technology Stack
+- **Frontend**: React 18.2.0, TypeScript 4.9.0, React Flow 11.10.1
+- **Backend**: Node.js 18+, Express 4.18.2, Socket.io 4.7.0
+- **MQTT**: mqtt 5.1.0 (same as existing system)
+- **Styling**: Tailwind CSS 3.3.0 (consistent with existing)
+- **Build**: Vite 4.0+ (faster than Create React App)
+
+## Code Standards
+- **TypeScript Strict Mode**: All code must be properly typed
+- **Functional Components**: Use React hooks, no class components
+- **Custom Hooks**: Extract reusable logic into custom hooks
+- **Error Boundaries**: Implement proper error handling
+- **Performance**: Use React.memo, useCallback, useMemo appropriately
+
+## File Structure
+```
+alicia-config-manager/
+├── src/
+│   ├── components/          # React components
+│   ├── hooks/              # Custom React hooks
+│   ├── services/           # API and MQTT services
+│   ├── types/              # TypeScript type definitions
+│   ├── utils/              # Utility functions
+│   └── App.tsx             # Main application
+├── server/
+│   ├── routes/             # Express routes
+│   ├── services/           # Business logic
+│   └── index.js            # Server entry point
+├── config/                 # Configuration files (Docker volumes)
+├── docker-compose.yml      # Docker configuration
+└── package.json            # Dependencies
+```
+
+## MQTT Topic Conventions
+- **Config Topics**: `alicia/config/#` (separate from monitoring)
+- **Device Topics**: `alicia/device/#` (separate from monitoring)
+- **System Topics**: `alicia/system/#` (shared with monitoring)
+- **Avoid Conflicts**: Don't use `alicia/monitor/#` topics
+
+## API Conventions
+- **Base Path**: `/api/config` (different from monitoring)
+- **Versioning**: Use `/api/v1/config` for future compatibility
+- **Response Format**: Consistent JSON responses with error handling
+- **Status Codes**: Proper HTTP status codes for all responses
+
+## Docker Conventions
+- **Service Name**: `alicia-config-manager` (not alicia-monitor)
+- **Port**: 3002 (different from monitoring on 3000/3001)
+- **Network**: `alicia_network` (shared with existing services)
+- **Volumes**: Separate config directories
+
+## Integration Rules
+- **No Direct Dependencies**: Don't import from alicia-monitor
+- **MQTT Communication**: Use MQTT for inter-app communication
+- **Shared Services**: Can use same MQTT broker and database
+- **Independent Deployment**: Must be deployable separately
+
+## Security Rules
+- **Input Validation**: Validate all inputs on both client and server
+- **API Key Masking**: Never expose full API keys in UI
+- **CORS**: Configure CORS for cross-origin requests
+- **Rate Limiting**: Implement rate limiting for API endpoints
+- **Authentication**: Prepare for future JWT authentication
+
+## Testing Rules
+- **Unit Tests**: Test all components and hooks
+- **Integration Tests**: Test API endpoints and MQTT integration
+- **E2E Tests**: Test complete user workflows
+- **Mock External Dependencies**: Mock MQTT and API calls in tests
+
+## Performance Rules
+- **Bundle Size**: Keep bundle size under 1MB
+- **Load Time**: Initial load under 2 seconds
+- **Real-time Updates**: MQTT message processing under 100ms
+- **Memory Usage**: Keep memory usage under 100MB
+
+## Documentation Rules
+- **README**: Clear setup and usage instructions
+- **API Docs**: Document all API endpoints
+- **Code Comments**: JSDoc comments for all public functions
+- **Type Definitions**: Comprehensive TypeScript interfaces
+
+## Deployment Rules
+- **Environment Variables**: Use env vars for configuration
+- **Health Checks**: Implement proper health check endpoints
+- **Logging**: Use structured logging with proper levels
+- **Monitoring**: Integrate with existing monitoring system
+- **Backup**: Implement configuration backup/restore
+
+## Error Handling Rules
+- **Graceful Degradation**: App should work even if some services are down
+- **User Feedback**: Clear error messages for users
+- **Retry Logic**: Implement retry for failed operations
+- **Fallback UI**: Show fallback when services are unavailable
+- **Error Reporting**: Log errors for debugging
+
+## Code Quality Rules
+- **ESLint**: Use strict ESLint configuration
+- **Prettier**: Use Prettier for code formatting
+- **TypeScript**: Use strict TypeScript configuration
+- **Imports**: Organize imports properly
+- **Naming**: Use descriptive, consistent naming conventions
+
+## Future Extensibility
+- **Plugin Architecture**: Design for future plugin support
+- **Multi-tenant**: Prepare for multi-user support
+- **Configuration Encryption**: Plan for sensitive data encryption
+- **Audit Logging**: Implement audit trails for changes
+- **Role-based Access**: Prepare for user roles and permissions
+
