@@ -12,7 +12,7 @@
 
 **Transform your home into an intelligent, voice-controlled paradise with Alicia - the AI assistant that understands you.**
 
-[🚀 Quick Start](#-quick-start) • [🎯 Features](#-features) • [🏗️ Architecture](#️-architecture) • [📖 Documentation](docs/)
+[🚀 Quick Start](#-quick-start) • [🏗️ Architecture](#️-architecture) • [📖 Documentation](docs/)
 
 </div>
 
@@ -20,325 +20,263 @@
 
 ## 🎯 What is Alicia?
 
-Alicia is your personal AI assistant that lives in your smart home, ready to help you control everything with just your voice. Think of her as your smart home's brain - she listens, understands, and makes your home respond to your every command.
+Alicia is a sophisticated smart home AI assistant built on a microservices architecture. She transforms your home into an intelligent, voice-controlled environment where you can manage all your smart devices through natural conversation. Alicia combines advanced AI processing with seamless device integration to create a truly intelligent home experience.
 
 ### ✨ Why Alicia is Special
 
-- 🎤 **Talk to Your Home**: Control everything with natural voice commands
-- 🧠 **AI-Powered Intelligence**: Learns your preferences and adapts to your lifestyle
-- 🏠 **Unified Control**: Manage all your smart devices from one place
-- 🎭 **Personality**: Choose from different AI personalities to match your style
-- 🌍 **Multi-Language**: Speaks your language, wherever you are
-- 🔒 **Secure & Private**: Your data stays safe with enterprise-grade security
+- 🎤 **Natural Voice Control**: Control everything with conversational voice commands
+- 🧠 **AI-Powered Intelligence**: Advanced AI processing with xAI Grok and OpenAI integration
+- 🏠 **Unified Device Management**: Control all smart devices from a single interface
+- 🎭 **Personality System**: Choose from different AI personalities to match your style
+- 🌍 **Multi-Language Support**: Speak your language with real-time translation
+- 🔒 **Enterprise Security**: TLS encryption, JWT authentication, and zero-trust architecture
+- 🏗️ **Microservices Architecture**: 23 independent services working in harmony
+
+---
+
+## 🏗️ Architecture Overview
+
+### Microservices Foundation
+
+Alicia is built on a pure microservices architecture with 23 independent, containerized services that communicate through an MQTT message bus. This design ensures scalability, maintainability, and fault isolation.
+
+### Core Architecture Principles
+
+- **Service Independence**: Each service can be developed, deployed, and scaled independently
+- **Message-Based Communication**: All services communicate through MQTT bus using standardized message formats
+- **Event-Driven Design**: Asynchronous, event-driven communication for real-time responsiveness
+- **Fault Isolation**: Service failures don't cascade to other services
+- **Zero-Trust Security**: Every communication is authenticated and authorized
+
+### Technology Stack
+
+#### Backend Services
+- **Python 3.11+ with FastAPI**: High-performance web framework for service APIs
+- **Eclipse Mosquitto 2.0.18+**: MQTT message broker for inter-service communication
+- **Docker & Docker Compose**: Containerization for consistent deployment
+- **TLS Encryption**: End-to-end encrypted communication
+
+#### AI & Voice Processing
+- **xAI Grok API**: Advanced AI processing and natural language understanding
+- **OpenAI GPT**: Backup AI processing and specialized tasks
+- **Whisper**: Speech-to-text processing
+- **Piper TTS**: Text-to-speech synthesis
+- **Multi-language Support**: Real-time translation and cultural adaptation
+
+#### Frontend & Interfaces
+- **React 18+ with TypeScript**: Modern, type-safe web interface
+- **Tailwind CSS**: Responsive, mobile-friendly design
+- **WebSocket Communication**: Real-time updates and control
+- **Service Monitoring**: Real-time system health and message flow visualization
+
+#### Smart Home Integration
+- **Home Assistant Bridge**: Seamless integration with existing smart home systems
+- **Sonos Service**: Multi-room audio control and management
+- **Universal Device Control**: Support for lights, thermostats, locks, cameras, and more
+- **MQTT Device Communication**: Real-time device status and control
+
+---
+
+## 🔧 Service Architecture
+
+### Core Infrastructure Services
+
+**Message Bus Core**
+- MQTT broker with TLS encryption and authentication
+- WebSocket support for real-time web communication
+- ACL-based access control for secure topic management
+
+**Security Gateway**
+- Centralized authentication and authorization
+- JWT token management and validation
+- Certificate-based service authentication
+
+**Device Registry**
+- Service discovery and capability management
+- Device registration and health monitoring
+- Service dependency tracking
+
+### Voice Processing Pipeline
+
+**Speech-to-Text Service**
+- Real-time audio processing and transcription
+- Multi-language support with Whisper integration
+- Noise reduction and audio enhancement
+
+**AI Service**
+- Natural language understanding and processing
+- xAI Grok and OpenAI API integration
+- Context-aware conversation management
+
+**Text-to-Speech Service**
+- High-quality voice synthesis with Piper TTS
+- Multi-language voice generation
+- Emotional tone and personality adaptation
+
+**Voice Router**
+- Orchestrates the complete voice processing pipeline
+- Routes voice commands to appropriate services
+- Manages conversation flow and context
+
+### Device Integration Services
+
+**Device Manager**
+- Universal device control and management
+- Device capability discovery and mapping
+- Standardized device control interface
+
+**Home Assistant Bridge**
+- Seamless integration with Home Assistant
+- Entity synchronization and state management
+- Custom component support
+
+**Sonos Service**
+- Multi-room audio control and management
+- Playlist and queue management
+- Volume and audio routing control
+
+### Advanced Features
+
+**Personality System**
+- Multiple AI personality options
+- Customizable response styles and behaviors
+- Context-aware personality adaptation
+
+**Multi-Language Service**
+- Real-time translation and localization
+- Cultural context adaptation
+- Voice synthesis in multiple languages
+
+**Event Scheduler**
+- Automated routine and scene management
+- Time-based and condition-based triggers
+- Complex automation workflows
+
+**Health Monitor**
+- System-wide health monitoring and alerting
+- Performance metrics and resource tracking
+- Automated recovery and failover
 
 ---
 
 ## 🚀 Quick Start
 
-### Get Alicia Running in 15 Minutes
+### Prerequisites
+- Docker and Docker Compose
+- API keys for AI services (xAI Grok, OpenAI)
+- Smart home devices (optional for initial setup)
 
-```bash
-# 1. Download Alicia
-git clone https://github.com/your-org/alicia-smart-home.git
-cd alicia-smart-home
+### Installation
+1. Clone the repository
+2. Configure environment variables with your API keys
+3. Start the services with Docker Compose
+4. Access the web interface at http://localhost:3000
 
-# 2. Start Alicia
-docker-compose -f docker-compose.bus.yml up -d
-
-# 3. Open the Control Panel
-open http://localhost:3000
-
-# 4. Say "Hello Alicia" and start controlling your home!
-```
-
-### What You'll See
-
-- **Control Panel**: Beautiful web interface to manage your home
-- **Voice Commands**: Talk to Alicia and watch your home respond
-- **Device Management**: Add and control all your smart devices
-- **Real-time Monitoring**: See everything happening in your home
-
----
-
-## 🎯 Features
-
-### 🎤 Voice Control
-**Talk to your home like a sci-fi movie**
-- Natural voice commands: "Alicia, turn on the living room lights"
-- Multi-room audio: Music follows you throughout your home
-- Smart responses: Alicia understands context and remembers conversations
-- Multiple languages: Speak in your native language
-
-### 🏠 Smart Home Integration
-**Control everything from one place**
-- **Lights**: Dim, brighten, change colors, set scenes
-- **Audio**: Play music, control volume, multi-room audio
-- **Climate**: Adjust temperature, control fans, air quality
-- **Security**: Lock doors, monitor cameras, set alarms
-- **Appliances**: Control smart plugs, switches, and devices
-
-### 🤖 AI Personality System
-**Choose your perfect AI assistant**
-- **Alicia**: Friendly and helpful (perfect for everyone)
-- **Alex**: Professional and efficient (great for work)
-- **Aria**: Creative and artistic (fun for families)
-- **Custom**: Create your own personality
-
-### 🌍 Multi-Language Support
-**Speak your language**
-- English, Spanish, French, German, Italian, Portuguese, Chinese, Japanese, Korean
-- Real-time translation
-- Cultural adaptation
-- Voice synthesis in multiple languages
-
-### 🎨 Advanced Features
-**Take your smart home to the next level**
-- **Scenes**: "Movie time", "Party mode", "Romantic dinner"
-- **Automation**: Set schedules and routines
-- **Learning**: Alicia gets smarter over time
-- **Customization**: Make everything uniquely yours
-
----
-
-## 🏗️ Architecture
-
-### The Big Picture
-
-Alicia is built like a modern city - with different districts (services) that all work together to create something amazing.
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    🏠 Your Smart Home                          │
-├─────────────────────────────────────────────────────────────────┤
-│  🎤 Voice Commands  →  🧠 AI Processing  →  🏠 Device Control  │
-├─────────────────────────────────────────────────────────────────┤
-│                    🌐 Alicia Control Center                    │
-│  • Web Dashboard    • Device Management    • Real-time Monitor │
-├─────────────────────────────────────────────────────────────────┤
-│                    🔧 Smart Home Services                      │
-│  • Voice Processing • Device Control      • AI Intelligence   │
-│  • Security         • Monitoring          • Integration       │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-### How It Works
-
-1. **You Speak**: "Alicia, turn on the kitchen lights"
-2. **Alicia Listens**: Advanced speech recognition understands you
-3. **Alicia Thinks**: AI processes your command and decides what to do
-4. **Alicia Acts**: Controls your smart devices instantly
-5. **Alicia Responds**: Confirms what she did and asks if you need anything else
-
-### Technology Stack
-
-#### 🎤 Voice & AI
-- **Speech Recognition**: Whisper, Google Cloud, Azure Speech
-- **AI Processing**: xAI Grok, OpenAI GPT
-- **Text-to-Speech**: Piper, Google Cloud, Azure Speech
-- **Voice Analysis**: Emotion detection, noise reduction
-
-#### 🏠 Smart Home
-- **Device Control**: Universal device management
-- **Home Assistant**: Seamless integration with existing systems
-- **Sonos**: Multi-room audio throughout your home
-- **MQTT**: Real-time communication between all services
-
-#### 🌐 Web & Mobile
-- **React**: Modern, responsive web interface
-- **TypeScript**: Reliable, type-safe code
-- **WebSocket**: Real-time updates and control
-- **Mobile-Friendly**: Works perfectly on phones and tablets
-
-#### 🔒 Security & Reliability
-- **TLS Encryption**: All communication is encrypted
-- **JWT Authentication**: Secure access control
-- **Health Monitoring**: Continuous system monitoring
-- **Error Recovery**: Automatic problem detection and fixing
-
----
-
-## 🎮 Getting Started
-
-### Step 1: Installation
-```bash
-# Download and start Alicia
-git clone https://github.com/your-org/alicia-smart-home.git
-cd alicia-smart-home
-docker-compose -f docker-compose.bus.yml up -d
-```
-
-### Step 2: First Voice Command
-1. Open http://localhost:3000
-2. Click the microphone icon
-3. Say "Hello Alicia"
-4. Watch the magic happen!
-
-### Step 3: Connect Your Devices
-1. Go to Device Manager
-2. Click "Add New Device"
-3. Follow the setup wizard
-4. Start controlling with voice!
-
-### Step 4: Customize Your Experience
-1. Choose your AI personality
-2. Set up rooms and scenes
-3. Create custom voice commands
-4. Enjoy your smart home!
+### First Steps
+1. Open the Control Panel
+2. Configure your AI personality preferences
+3. Connect your smart home devices
+4. Start using voice commands
 
 ---
 
 ## 📱 Web Interfaces
 
-### 🎛️ Control Panel
-**Your smart home command center**
+### Control Panel
 - **URL**: http://localhost:3000
-- **Features**: Device control, voice commands, configuration
-- **Perfect for**: Daily use, device management, customization
+- **Purpose**: Daily smart home management and control
+- **Features**: Device control, voice commands, configuration, scene management
 
-### 📊 Monitor Dashboard
-**Watch your home in real-time**
+### Monitor Dashboard
 - **URL**: http://localhost:3001
-- **Features**: System monitoring, message flow, health status
-- **Perfect for**: Troubleshooting, system monitoring, advanced users
+- **Purpose**: System monitoring and troubleshooting
+- **Features**: Service health, message flow, performance metrics, system logs
 
 ---
 
-## 🔧 Configuration
+## 🔒 Security Architecture
 
-### Environment Setup
-Create a `.env` file with your API keys:
+### Multi-Layer Security
+- **Network Security**: TLS encryption for all communications
+- **Authentication**: JWT-based authentication for API access
+- **Authorization**: ACL-based access control for MQTT topics
+- **Service Security**: Individual credentials for each service
+- **Data Privacy**: Local processing with optional cloud integration
 
-```bash
-# AI Services
-GROK_API_KEY=your_grok_api_key
-OPENAI_API_KEY=your_openai_api_key
-
-# Smart Home
-HA_TOKEN=your_home_assistant_token
-
-# Security
-MQTT_PASSWORD=your_secure_password
-```
-
-### Device Setup
-1. **Smart Lights**: Philips Hue, LIFX, TP-Link Kasa
-2. **Smart Speakers**: Sonos, Amazon Echo, Google Home
-3. **Smart Thermostats**: Nest, Ecobee, Honeywell
-4. **Smart Locks**: August, Schlage, Yale
-5. **Smart Cameras**: Ring, Arlo, Nest
+### Zero-Trust Principles
+- Every communication is authenticated and authorized
+- Services operate with minimal required permissions
+- Continuous security monitoring and threat detection
+- Encrypted message payloads for sensitive data
 
 ---
 
-## 🎯 Use Cases
+## 📊 Scalability & Performance
 
-### 🏠 Daily Life
-- **Morning**: "Alicia, good morning" → Lights on, music playing, temperature set
-- **Cooking**: "Alicia, cooking mode" → Bright lights, cooking music, timer ready
-- **Entertainment**: "Alicia, movie time" → Dim lights, TV on, perfect audio
-- **Sleep**: "Alicia, good night" → Everything off, doors locked, alarm set
+### Horizontal Scaling
+- Individual services can be scaled based on demand
+- Load balancing across multiple service instances
+- Resource optimization for different workload types
 
-### 🎉 Special Occasions
-- **Parties**: "Alicia, party mode" → Bright lights, loud music, colorful effects
-- **Romantic Dinner**: "Alicia, romantic dinner" → Dim lights, soft music, warm temperature
-- **Work**: "Alicia, work mode" → Bright lights, quiet environment, focus music
-- **Relaxation**: "Alicia, help me relax" → Spa lighting, calming music, comfortable temperature
-
-### 🌍 Multi-Language Homes
-- **English**: "Alicia, turn on the lights"
-- **Spanish**: "Alicia, enciende las luces"
-- **French**: "Alicia, allume les lumières"
-- **German**: "Alicia, schalte das Licht ein"
+### Performance Optimization
+- Asynchronous processing for real-time responsiveness
+- Connection pooling and resource management
+- Strategic caching for frequently accessed data
+- Health monitoring and automatic recovery
 
 ---
 
 ## 📚 Documentation
 
-### 📖 User Guide
-**Perfect for getting started**
-- **[Quick Start Guide](docs/guide/02-Quick-Start.md)**: Get running in 15 minutes
-- **[Voice Commands](docs/guide/05-Voice-Commands.md)**: Master voice control
-- **[Device Setup](docs/guide/04-Connecting-Devices.md)**: Connect your smart devices
-- **[Tips & Tricks](docs/guide/18-Tips-Tricks.md)**: Pro user secrets
+### User Documentation
+- **Quick Start Guide**: Get running in minutes
+- **Voice Commands**: Master voice control
+- **Device Setup**: Connect your smart devices
+- **Tips & Tricks**: Advanced usage patterns
 
-### 🔧 Technical Documentation
-**For developers and advanced users**
-- **[Architecture Overview](docs/book/01-System-Overview.md)**: How Alicia works
-- **[Service Documentation](docs/book/)**: Detailed technical guides
-- **[API Reference](docs/api/)**: Integration and development
-- **[Troubleshooting](docs/guide/16-Common-Issues.md)**: Fix common problems
+### Technical Documentation
+- **System Overview**: Complete architecture documentation
+- **Service Documentation**: Detailed technical guides for each service
+- **API Reference**: Integration and development documentation
+- **Troubleshooting**: Common issues and solutions
 
 ---
 
-## 🎮 Why Choose Alicia?
+## 🎯 Use Cases
 
-### 🏠 **Made for Smart Homes**
-- Designed specifically for home automation
-- Understands home contexts and scenarios
-- Optimized for voice control and convenience
+### Daily Life Automation
+- Morning routines with automated lighting and music
+- Cooking assistance with smart kitchen controls
+- Entertainment scenes for movies and parties
+- Sleep preparation with automated home security
 
-### 🧠 **AI-Powered Intelligence**
-- Learns your preferences and habits
-- Provides smart suggestions and automation
-- Adapts to your lifestyle over time
+### Multi-Language Homes
+- Support for 9+ languages with cultural adaptation
+- Real-time translation for international families
+- Voice synthesis in multiple languages
+- Cultural context understanding
 
-### 🎭 **Personality & Fun**
-- Choose from different AI personalities
-- Engaging conversations and interactions
-- Makes your smart home feel alive
-
-### 🔒 **Secure & Private**
-- Your data stays in your home
-- Enterprise-grade security
-- No cloud dependency for core features
-
-### 🌍 **Multi-Language & Cultural**
-- Speaks your language naturally
-- Understands cultural contexts
-- Works anywhere in the world
+### Advanced Automation
+- Complex scene management and scheduling
+- Conditional automation based on time, weather, and presence
+- Learning algorithms that adapt to user preferences
+- Integration with external services and APIs
 
 ---
 
-## 🚀 What's Next?
+## 🚀 Future Roadmap
 
-### 🎯 **Immediate Benefits**
-- Control your home with voice commands
-- Unify all your smart devices
-- Create custom automations and scenes
-- Enjoy AI-powered convenience
+### Immediate Enhancements
+- Enhanced AI capabilities with latest models
+- Expanded device integration support
+- Improved voice recognition accuracy
+- Advanced automation features
 
-### 🎮 **Advanced Features**
-- Custom voice commands
-- Complex automations
-- Multi-room audio
-- Integration with other systems
-
-### 🌟 **Future Possibilities**
-- Machine learning improvements
-- New device integrations
-- Enhanced AI capabilities
-- Community features
-
----
-
-## 🤝 Community & Support
-
-### 📞 **Getting Help**
-- **Documentation**: Comprehensive guides and tutorials
-- **Community Forum**: Connect with other users
-- **GitHub Issues**: Report bugs and request features
-- **Discord**: Real-time chat and support
-
-### 🎯 **Contributing**
-- **Code**: Help improve Alicia's features
-- **Documentation**: Write guides and tutorials
-- **Testing**: Help find and fix bugs
-- **Ideas**: Suggest new features and improvements
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### Long-term Vision
+- Machine learning improvements for personalization
+- Community-driven device integrations
+- Advanced analytics and insights
+- Enterprise and commercial deployments
 
 ---
 
@@ -346,7 +284,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **🏠 Transform your home into an intelligent paradise with Alicia**
 
-[🚀 Get Started](docs/guide/02-Quick-Start.md) • [📖 User Guide](docs/guide/) • [🔧 Technical Docs](docs/book/) • [💬 Community](https://github.com/your-org/alicia-smart-home/discussions)
+[🚀 Get Started](docs/guide/02-Quick-Start.md) • [📖 User Guide](docs/guide/) • [🔧 Technical Docs](docs/book/)
 
 **Built with ❤️ for the smart home community**
 
