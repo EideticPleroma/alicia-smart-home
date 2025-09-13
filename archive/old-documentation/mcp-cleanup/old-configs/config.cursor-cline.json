@@ -1,0 +1,144 @@
+{
+  "cursor_orchestrator": {
+    "service_id": "cursor_orchestrator",
+    "version": "1.0.0",
+    "port": 8080,
+    "log_level": "INFO",
+    "mqtt": {
+      "broker_url": "mqtts://localhost:8883",
+      "username": "alicia_mcp_user",
+      "password": "alicia_mcp_password",
+      "client_id": "cursor_orchestrator",
+      "topics": {
+        "orchestrator": "alicia/mcp/qa/orchestrator/",
+        "specialist": "alicia/mcp/qa/specialist/",
+        "shared": "alicia/mcp/qa/shared/",
+        "system": "alicia/system/"
+      }
+    },
+    "quality_gates": {
+      "bdd_coverage": 8.0,
+      "test_quality": 7.0,
+      "code_review": 7.0,
+      "max_bugs": 3
+    },
+    "task_management": {
+      "max_iterations": 3,
+      "task_timeout": 300,
+      "retry_attempts": 3,
+      "heartbeat_interval": 30
+    },
+    "alicia_integration": {
+      "security_gateway_url": "https://localhost:8443",
+      "service_registry_url": "https://localhost:8080",
+      "device_registry_url": "https://localhost:8081"
+    }
+  },
+  "cline_specialist": {
+    "service_id": "cline_specialist",
+    "version": "1.0.0",
+    "port": 8081,
+    "log_level": "INFO",
+    "mqtt": {
+      "broker_url": "mqtts://localhost:8883",
+      "username": "alicia_mcp_user",
+      "password": "alicia_mcp_password",
+      "client_id": "cline_specialist",
+      "topics": {
+        "specialist": "alicia/mcp/qa/specialist/cline/",
+        "orchestrator": "alicia/mcp/qa/orchestrator/",
+        "shared": "alicia/mcp/qa/shared/"
+      }
+    },
+    "grok_api": {
+      "api_key": "free_with_cline",
+      "base_url": "https://api.grok.com/v1",
+      "model": "grok-code-fast-1",
+      "timeout": 30,
+      "max_tokens": 4000,
+      "temperature": 0.7
+    },
+    "capabilities": [
+      "bdd_generation",
+      "test_code_creation",
+      "code_review",
+      "quality_analysis"
+    ],
+    "task_processing": {
+      "max_concurrent_tasks": 3,
+      "task_timeout": 300,
+      "heartbeat_interval": 30
+    }
+  },
+  "mqtt_broker": {
+    "host": "localhost",
+    "port": 8883,
+    "tls": true,
+    "username": "alicia_mcp_user",
+    "password": "alicia_mcp_password",
+    "client_id_prefix": "alicia_mcp",
+    "keepalive": 60,
+    "clean_session": true,
+    "will_topic": "alicia/system/status",
+    "will_message": "offline",
+    "will_qos": 1,
+    "will_retain": true
+  },
+  "logging": {
+    "level": "INFO",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    "file_path": "./logs/mcp_system.log",
+    "max_size": "10MB",
+    "backup_count": 5,
+    "console_output": true
+  },
+  "output": {
+    "base_dir": "./output",
+    "bdd_scenarios_dir": "./output/bdd_scenarios",
+    "test_files_dir": "./output/test_files",
+    "reports_dir": "./output/reports",
+    "package_tests": true,
+    "include_timestamps": true,
+    "compress_results": true
+  },
+  "performance": {
+    "max_concurrent_agents": 4,
+    "memory_limit_mb": 1024,
+    "cpu_limit_percent": 80,
+    "connection_pool_size": 10,
+    "request_timeout": 30,
+    "enable_metrics": true,
+    "enable_tracing": true
+  },
+  "monitoring": {
+    "enabled": true,
+    "port": 8082,
+    "health_check_interval": 30,
+    "metrics_retention_days": 7,
+    "alert_thresholds": {
+      "memory_usage_percent": 80,
+      "cpu_usage_percent": 80,
+      "task_failure_rate": 0.1,
+      "response_time_ms": 5000
+    }
+  },
+  "security": {
+    "enable_tls": true,
+    "enable_authentication": true,
+    "enable_acl": true,
+    "cors_origins": [
+      "http://localhost:3000",
+      "http://localhost:8080",
+      "http://localhost:8081"
+    ],
+    "jwt_secret": "your_jwt_secret_here",
+    "service_token": "your_service_token_here"
+  },
+  "development": {
+    "debug_mode": false,
+    "mock_llm_responses": false,
+    "enable_hot_reload": false,
+    "log_sql_queries": false,
+    "profile_performance": false
+  }
+}

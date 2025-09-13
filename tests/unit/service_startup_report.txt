@@ -1,0 +1,18 @@
+
+============================================================
+SERVICE STARTUP TEST REPORT
+============================================================
+Generated: 2025-09-13 01:45:54
+
+SUMMARY:
+  Total Services: 2
+  Passed: 0
+  Failed: 2
+  Success Rate: 0.0%
+
+DETAILED RESULTS:
+  1. AI Service: ❌ FAIL
+  2. STT Service: ❌ FAIL
+
+⚠️ Service startup testing completed with issues.
+============================================================

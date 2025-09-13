@@ -1,0 +1,11 @@
+{
+  "environment": "staging",
+  "debug_mode": false,
+  "log_level": "INFO",
+  "mqtt_broker": "mqtts://staging.alicia.local:8883",
+  "database": {
+    "host": "staging-db.alicia.local",
+    "port": 5432,
+    "name": "alicia_staging"
+  }
+}

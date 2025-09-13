@@ -1,0 +1,252 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== BASE STYLES ===== */
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply m-0 font-sans antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    @apply bg-gray-50 text-gray-900;
+  }
+
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+    @apply bg-gray-100 px-1 py-0.5 rounded text-sm;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400;
+  }
+}
+
+/* ===== COMPONENT STYLES ===== */
+@layer components {
+  /* Status indicators */
+  .status-indicator {
+    @apply w-3 h-3 rounded-full mr-2;
+  }
+
+  .status-indicator.healthy {
+    @apply bg-green-500;
+  }
+
+  .status-indicator.unhealthy {
+    @apply bg-red-500;
+  }
+
+  .status-indicator.unknown {
+    @apply bg-gray-400;
+  }
+
+  /* Service nodes */
+  .service-node {
+    @apply transition-all duration-300 ease-in-out cursor-pointer;
+  }
+
+  .service-node:hover {
+    @apply transform scale-110 shadow-xl;
+  }
+
+  /* Status colors */
+  .bg-healthy {
+    @apply bg-green-500;
+  }
+
+  .bg-unhealthy {
+    @apply bg-red-500;
+  }
+
+  .bg-inactive {
+    @apply bg-gray-400;
+  }
+
+  .bg-connected {
+    @apply bg-green-500;
+  }
+
+  .bg-disconnected {
+    @apply bg-red-500;
+  }
+
+  /* Layout components */
+  .graph-view {
+    @apply w-full h-screen bg-gray-50;
+  }
+
+  .main-content {
+    @apply flex h-screen;
+  }
+
+  .side-panel {
+    @apply w-96 bg-white shadow-2xl border-l border-gray-200 overflow-y-auto;
+  }
+
+  .side-panel.closed {
+    @apply w-0 overflow-hidden;
+  }
+
+  /* Text shadows for better readability */
+  .text-shadow {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Custom animations */
+  .animate-flow {
+    animation: flow 2s linear infinite;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse-slow 3s ease-in-out infinite;
+  }
+}
+
+/* ===== UTILITIES ===== */
+@layer utilities {
+  /* Custom text sizes */
+  .text-xs-custom {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  .text-sm-custom {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  /* Custom spacing */
+  .space-x-custom > * + * {
+    margin-left: 0.5rem;
+  }
+
+  /* Custom shadows */
+  .shadow-custom {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  .shadow-custom-lg {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes flow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 20;
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .side-panel {
+    @apply w-full;
+  }
+
+  .main-content {
+    @apply flex-col;
+  }
+}
+
+@media (max-width: 640px) {
+  .status-bar {
+    @apply flex-col space-y-2 p-2;
+  }
+
+  .service-node {
+    @apply w-12 h-12;
+  }
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+@media (prefers-color-scheme: dark) {
+  body {
+    @apply bg-gray-900 text-white;
+  }
+
+  .graph-view {
+    @apply bg-gray-800;
+  }
+
+  .side-panel {
+    @apply bg-gray-800 border-gray-700;
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  .side-panel,
+  .status-bar {
+    display: none !important;
+  }
+
+  .graph-view {
+    @apply bg-white;
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "environment": "production",
+  "debug_mode": false,
+  "log_level": "WARNING",
+  "mqtt_broker": "mqtts://mqtt.alicia.local:8883",
+  "database": {
+    "host": "prod-db.alicia.local",
+    "port": 5432,
+    "name": "alicia_prod"
+  }
+}

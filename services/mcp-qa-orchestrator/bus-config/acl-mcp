@@ -1,0 +1,16 @@
+# Alicia MCP QA Services ACL Configuration
+# User: alicia_mcp_user
+
+# Cursor Orchestrator permissions
+user alicia_mcp_user
+topic read alicia/mcp/qa/orchestrator/+
+topic write alicia/mcp/qa/orchestrator/+
+topic read alicia/mcp/qa/specialist/+
+topic write alicia/mcp/qa/specialist/+
+topic read alicia/mcp/qa/shared/+
+topic write alicia/mcp/qa/shared/+
+topic read alicia/system/+
+topic write alicia/system/+
+
+# Allow system status monitoring
+topic read $SYS/#

@@ -1,0 +1,9 @@
+{
+  "service_name": "alicia-monitor-proxy",
+  "port": 3003,
+  "log_level": "INFO",
+  "upstream_services": [
+    "alicia-config-manager:3000",
+    "alicia-monitor:3002"
+  ]
+}

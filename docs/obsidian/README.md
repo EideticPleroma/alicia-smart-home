@@ -25,6 +25,9 @@ This Obsidian vault transforms the Alicia documentation into a **visual, interco
 - **[🏠 Alicia System MOC](MOCs/Alicia-System-MOC.md)** - Complete system overview
 - **[🎤 Voice Pipeline MOC](MOCs/Voice-Pipeline-MOC.md)** - Voice processing deep dive
 - **[🏗️ Architecture MOC](MOCs/Architecture-MOC.md)** - System architecture guide
+- **[🕸️ Service Dependencies MOC](MOCs/Service-Dependencies-MOC.md)** - Service relationships and dependencies
+- **[🚀 Deployment Pipeline MOC](MOCs/Deployment-Pipeline-MOC.md)** - Deployment and orchestration guide
+- **[🔧 Troubleshooting MOC](MOCs/Troubleshooting-MOC.md)** - Problem resolution and diagnostics
 - **[🎮 User Guide MOC](MOCs/User-Guide-MOC.md)** - User manual navigation
 - **[🔧 Technical MOC](MOCs/Technical-MOC.md)** - Technical documentation hub
 

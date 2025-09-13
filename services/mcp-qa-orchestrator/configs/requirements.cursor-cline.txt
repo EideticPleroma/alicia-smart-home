@@ -1,0 +1,70 @@
+# Alicia MCP QA Orchestration System - Cursor-Cline Integration
+# Requirements for Cursor Orchestrator and Cline Specialist
+
+# Core dependencies
+asyncio>=3.4.3
+aiohttp>=3.8.0
+aiofiles>=23.0.0
+pydantic>=2.0.0
+structlog>=23.0.0
+rich>=13.0.0
+
+# MQTT integration
+asyncio-mqtt>=0.16.0
+paho-mqtt>=1.6.0
+
+# HTTP and API clients
+requests>=2.31.0
+httpx>=0.24.0
+
+# Data processing
+pandas>=1.5.0
+numpy>=1.24.0
+
+# Configuration and environment
+python-dotenv>=1.0.0
+pyyaml>=6.0.0
+toml>=0.10.2
+
+# Logging and monitoring
+colorama>=0.4.6
+click>=8.1.0
+prometheus-client>=0.17.0
+
+# Testing dependencies
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+pytest-mock>=3.10.0
+pytest-cov>=4.0.0
+pytest-xdist>=3.0.0
+
+# Development dependencies
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.0.0
+pre-commit>=3.0.0
+isort>=5.12.0
+
+# Security
+cryptography>=41.0.0
+pyjwt>=2.8.0
+
+# Performance monitoring
+psutil>=5.9.0
+memory-profiler>=0.60.0
+
+# Optional: Grok API support (when not using free Cline integration)
+# grok-api>=0.1.0
+
+# Optional: Additional LLM providers
+# openai>=1.0.0
+# anthropic>=0.3.0
+
+# Optional: Database support
+# sqlalchemy>=2.0.0
+# alembic>=1.11.0
+# redis>=4.6.0
+
+# Optional: Message queue alternatives
+# celery>=5.3.0
+# rq>=1.15.0

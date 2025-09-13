@@ -1,0 +1,17 @@
+{
+  "service_name": "mcp-qa-orchestrator",
+  "cursor_orchestrator_port": 8080,
+  "cline_specialist_port": 8081,
+  "log_level": "INFO",
+  "mqtt_topics": [
+    "alicia/mcp/qa/orchestrator/+",
+    "alicia/mcp/qa/specialist/+",
+    "alicia/mcp/qa/shared/+"
+  ],
+  "quality_thresholds": {
+    "bdd_coverage": 8.0,
+    "test_quality": 7.0,
+    "code_review": 7.0,
+    "max_bugs": 3
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "whisper-service": {
+    "service_name": "whisper-service",
+    "service_type": "stt",
+    "status": "unknown",
+    "enabled": true,
+    "version": "1.0.0",
+    "last_updated": "2025-09-12T11:55:07.326Z",
+    "config": {
+      "api_key": "",
+      "provider": "openai",
+      "model": "whisper-1",
+      "language": "en",
+      "endpoints": [
+        {
+          "type": "stt",
+          "model": "whisper-1",
+          "ip": "http://whisper:8001",
+          "port": 8001,
+          "protocol": "http"
+        }
+      ],
+      "settings": {
+        "temperature": 0,
+        "max_tokens": 1000,
+        "timeout": 30
+      }
+    }
+  }
+}

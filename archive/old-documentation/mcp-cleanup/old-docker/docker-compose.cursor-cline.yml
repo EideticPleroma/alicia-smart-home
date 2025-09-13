@@ -1,0 +1,134 @@
+version: '3.8'
+
+services:
+  # Cursor Orchestrator Service
+  cursor-orchestrator:
+    build:
+      context: .
+      dockerfile: Dockerfile.cursor
+    container_name: alicia-cursor-orchestrator
+    environment:
+      - MQTT_BROKER_URL=mqtts://alicia-mqtt-broker:8883
+      - MQTT_USERNAME=${MQTT_USERNAME}
+      - MQTT_PASSWORD=${MQTT_PASSWORD}
+      - ALICIA_SECURITY_GATEWAY_URL=https://alicia-security-gateway:8443
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - QUALITY_THRESHOLDS_BDD_COVERAGE=${BDD_THRESHOLD:-8.0}
+      - QUALITY_THRESHOLDS_TEST_QUALITY=${TEST_THRESHOLD:-7.0}
+      - QUALITY_THRESHOLDS_CODE_REVIEW=${REVIEW_THRESHOLD:-7.0}
+    volumes:
+      - ./logs:/app/logs
+      - ./output:/app/output
+      - ./config:/app/config
+    ports:
+      - "8080:8080"  # Health check endpoint
+    depends_on:
+      - alicia-mqtt-broker
+      - alicia-security-gateway
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - alicia_bus_network
+
+  # Cline Specialist Service
+  cline-specialist:
+    build:
+      context: .
+      dockerfile: Dockerfile.cline
+    container_name: alicia-cline-specialist
+    environment:
+      - MQTT_BROKER_URL=mqtts://alicia-mqtt-broker:8883
+      - MQTT_USERNAME=${MQTT_USERNAME}
+      - MQTT_PASSWORD=${MQTT_PASSWORD}
+      - GROK_API_KEY=${GROK_API_KEY}
+      - GROK_BASE_URL=${GROK_BASE_URL:-https://api.grok.com/v1}
+      - MODEL_NAME=${MODEL_NAME:-grok-code-fast-1}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - MAX_CONCURRENT_TASKS=${MAX_CONCURRENT_TASKS:-3}
+    volumes:
+      - ./logs:/app/logs
+      - ./output:/app/output
+    ports:
+      - "8081:8081"  # Health check endpoint
+    depends_on:
+      - alicia-mqtt-broker
+      - cursor-orchestrator
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - alicia_bus_network
+    deploy:
+      replicas: 2  # Scale Cline specialists
+
+  # MQTT Broker (if not using external)
+  alicia-mqtt-broker:
+    image: eclipse-mosquitto:2.0.18
+    container_name: alicia-mqtt-broker
+    ports:
+      - "1883:1883"
+      - "8883:8883"
+    volumes:
+      - ./bus-config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./bus-config/passwords:/mosquitto/config/passwords
+      - ./bus-config/acl:/mosquitto/config/acl
+      - mqtt_data:/mosquitto/data
+      - mqtt_logs:/mosquitto/log
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+
+  # Security Gateway (if not using external)
+  alicia-security-gateway:
+    image: alicia/security-gateway:latest
+    container_name: alicia-security-gateway
+    ports:
+      - "8443:8443"
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
+      - MQTT_BROKER_URL=mqtts://alicia-mqtt-broker:8883
+    volumes:
+      - ./certs:/app/certs
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+
+  # Monitoring Service
+  mcp-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile.monitor
+    container_name: alicia-mcp-monitor
+    environment:
+      - MQTT_BROKER_URL=mqtts://alicia-mqtt-broker:8883
+      - MQTT_USERNAME=${MQTT_USERNAME}
+      - MQTT_PASSWORD=${MQTT_PASSWORD}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - ./logs:/app/logs
+    ports:
+      - "8082:8082"  # Monitoring dashboard
+    depends_on:
+      - cursor-orchestrator
+      - cline-specialist
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+
+volumes:
+  mqtt_data:
+  mqtt_logs:
+
+networks:
+  alicia_bus_network:
+    driver: bridge
+    name: alicia_bus_network

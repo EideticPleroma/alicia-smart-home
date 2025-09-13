@@ -56,6 +56,12 @@ This comprehensive implementation book provides a deep technical dive into Alici
 - Configuration service architecture
 - Metrics collection and alerting
 
+#### **Chapter 6.5: Config Service Implementation**
+- [06-Config-Service.md](06-Config-Service.md)
+- Centralized configuration management
+- Dynamic configuration updates
+- Environment-specific settings
+
 ### **Part III: Voice Processing Pipeline**
 
 #### **Chapter 7: STT Service Implementation**

@@ -1,0 +1,38 @@
+{
+  "devices": [
+    {
+      "id": "sonos_living_room",
+      "name": "Sonos Living Room",
+      "type": "speaker",
+      "status": "online",
+      "last_seen": "2025-09-12T11:55:07.336Z",
+      "metadata": {
+        "manufacturer": "Sonos",
+        "model": "One",
+        "capabilities": [
+          "play",
+          "pause",
+          "volume"
+        ],
+        "ip_address": "192.168.1.100"
+      }
+    },
+    {
+      "id": "tv_main",
+      "name": "Main TV",
+      "type": "tv",
+      "status": "online",
+      "last_seen": "2025-09-12T11:55:07.336Z",
+      "metadata": {
+        "manufacturer": "Samsung",
+        "model": "Q900",
+        "capabilities": [
+          "power",
+          "volume",
+          "input"
+        ],
+        "ip_address": "192.168.1.101"
+      }
+    }
+  ]
+}

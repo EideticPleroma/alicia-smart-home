@@ -1,0 +1,135 @@
+# Alicia Smart Home AI Assistant - Services Docker Compose
+# Builds and runs all services with proper networking and environment
+
+version: '3.8'
+
+services:
+  # MQTT Broker
+  mqtt-broker:
+    image: eclipse-mosquitto:2.0.18
+    container_name: alicia-mqtt-broker
+    ports:
+      - "1883:1883"
+      - "8883:8883"
+    volumes:
+      - ./config/mqtt/mosquitto-simple.conf:/mosquitto/config/mosquitto.conf
+    networks:
+      - alicia_network
+    restart: unless-stopped
+
+  # AI Service
+  ai-service:
+    build:
+      context: ./services/bus-services/ai-service
+      dockerfile: Dockerfile
+    container_name: alicia-ai-service
+    ports:
+      - "8005:8005"
+    environment:
+      - MQTT_BROKER=mqtt-broker
+      - MQTT_PORT=1883
+      - GROK_API_KEY=${GROK_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - mqtt-broker
+    networks:
+      - alicia_network
+    restart: unless-stopped
+
+  # STT Service
+  stt-service:
+    build:
+      context: ./services/bus-services/stt-service
+      dockerfile: Dockerfile
+    container_name: alicia-stt-service
+    ports:
+      - "8004:8004"
+    environment:
+      - MQTT_BROKER=mqtt-broker
+      - MQTT_PORT=1883
+      - STT_ENGINE=whisper
+    depends_on:
+      - mqtt-broker
+    networks:
+      - alicia_network
+    restart: unless-stopped
+
+  # TTS Service
+  tts-service:
+    build:
+      context: ./services/bus-services/tts-service
+      dockerfile: Dockerfile
+    container_name: alicia-tts-service
+    ports:
+      - "8006:8006"
+    environment:
+      - MQTT_BROKER=mqtt-broker
+      - MQTT_PORT=1883
+      - TTS_ENGINE=piper
+    depends_on:
+      - mqtt-broker
+    networks:
+      - alicia_network
+    restart: unless-stopped
+
+  # Voice Router
+  voice-router:
+    build:
+      context: ./services/bus-services/voice-router
+      dockerfile: Dockerfile
+    container_name: alicia-voice-router
+    ports:
+      - "8007:8007"
+    environment:
+      - MQTT_BROKER=mqtt-broker
+      - MQTT_PORT=1883
+    depends_on:
+      - mqtt-broker
+      - ai-service
+      - stt-service
+      - tts-service
+    networks:
+      - alicia_network
+    restart: unless-stopped
+
+  # Device Manager
+  device-manager:
+    build:
+      context: ./services/bus-services/device-manager
+      dockerfile: Dockerfile
+    container_name: alicia-device-manager
+    ports:
+      - "8008:8008"
+    environment:
+      - MQTT_BROKER=mqtt-broker
+      - MQTT_PORT=1883
+    depends_on:
+      - mqtt-broker
+    networks:
+      - alicia_network
+    restart: unless-stopped
+
+  # Health Monitor
+  health-monitor:
+    build:
+      context: ./services/bus-services/health-monitor
+      dockerfile: Dockerfile
+    container_name: alicia-health-monitor
+    ports:
+      - "8009:8009"
+    environment:
+      - MQTT_BROKER=mqtt-broker
+      - MQTT_PORT=1883
+    depends_on:
+      - mqtt-broker
+    networks:
+      - alicia_network
+    restart: unless-stopped
+
+networks:
+  alicia_network:
+    driver: bridge
+
+
+
+

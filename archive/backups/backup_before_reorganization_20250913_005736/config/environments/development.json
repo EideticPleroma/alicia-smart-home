@@ -1,0 +1,11 @@
+{
+  "environment": "development",
+  "debug_mode": true,
+  "log_level": "DEBUG",
+  "mqtt_broker": "mqtts://localhost:8883",
+  "database": {
+    "host": "localhost",
+    "port": 5432,
+    "name": "alicia_dev"
+  }
+}

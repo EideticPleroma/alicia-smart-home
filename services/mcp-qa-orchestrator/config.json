@@ -1,0 +1,57 @@
+{
+  "mcp_config": {
+    "bdd_threshold": 9.0,
+    "quality_threshold": 8.0,
+    "max_iterations": 3,
+    "max_bugs": 3,
+    "llm_provider": "openai",
+    "timeout": 30,
+    "retry_attempts": 3
+  },
+  "agent_configs": {
+    "scenario_builder": {
+      "model": "gpt-4",
+      "temperature": 0.7,
+      "max_tokens": 3000,
+      "timeout": 30,
+      "retry_attempts": 3
+    },
+    "reviewer": {
+      "model": "gpt-4",
+      "temperature": 0.3,
+      "max_tokens": 2000,
+      "timeout": 30,
+      "retry_attempts": 3
+    },
+    "test_coder": {
+      "model": "gpt-4",
+      "temperature": 0.5,
+      "max_tokens": 4000,
+      "timeout": 30,
+      "retry_attempts": 3
+    },
+    "code_reviewer": {
+      "model": "gpt-4",
+      "temperature": 0.2,
+      "max_tokens": 3000,
+      "timeout": 30,
+      "retry_attempts": 3
+    }
+  },
+  "logging": {
+    "level": "INFO",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    "file": "logs/mcp_orchestrator.log"
+  },
+  "output": {
+    "bdd_output_dir": "output/bdd_scenarios",
+    "test_output_dir": "output/test_files",
+    "report_output_dir": "output/reports",
+    "package_tests": true
+  },
+  "performance": {
+    "max_concurrent_agents": 4,
+    "memory_limit_mb": 1024,
+    "cpu_limit_percent": 80
+  }
+}

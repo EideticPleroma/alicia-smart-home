@@ -1,0 +1,20 @@
+# Alicia Configuration Manager Service Requirements
+# Python 3.11.7+, FastAPI 0.104.1+, Paho MQTT 1.6.1+
+
+# Core dependencies
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+paho-mqtt==1.6.1
+pydantic==2.5.0
+
+# HTTP client for health checks
+httpx==0.25.2
+
+# YAML support for configuration files
+pyyaml==6.0.1
+
+# Environment variable support
+python-dotenv==1.0.0
+
+# Form data support
+python-multipart==0.0.6

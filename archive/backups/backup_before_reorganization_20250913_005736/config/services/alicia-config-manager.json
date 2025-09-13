@@ -1,0 +1,11 @@
+{
+  "service_name": "alicia-config-manager",
+  "port": 3000,
+  "backend_port": 3001,
+  "log_level": "INFO",
+  "mqtt_topics": [
+    "alicia/config/request",
+    "alicia/config/response",
+    "alicia/config/update"
+  ]
+}

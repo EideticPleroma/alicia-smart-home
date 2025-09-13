@@ -1,0 +1,71 @@
+# ===== ALICIA BUS ARCHITECTURE MONITOR PROXY =====
+# Docker Compose configuration for the Bus Architecture Monitor Proxy Service
+# This service provides a secure proxy between the web monitor and the MQTT bus
+
+version: '3.8'
+
+services:
+  # ===== MONITOR PROXY SERVICE =====
+  # Node.js 18 Alpine, secure proxy for bus architecture monitoring
+  alicia-monitor-proxy:
+    container_name: alicia_monitor_proxy
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"  # HTTP API for web monitor
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - MQTT_BROKER=alicia_bus_core
+      - MQTT_PORT=1883
+      - MQTT_USERNAME=monitor_proxy
+      - MQTT_PASSWORD=alicia_monitor_2024
+      - CORS_ORIGIN=http://localhost:3000
+      - LOG_LEVEL=info
+      - CACHE_TTL=300
+      - MAX_CONNECTIONS=100
+      - REQUEST_TIMEOUT=30000
+    volumes:
+      - ./logs:/app/logs:rw
+      - ./data:/app/data:rw
+    depends_on:
+      - alicia-bus-core
+    restart: unless-stopped
+    networks:
+      - alicia_bus_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+
+networks:
+  alicia_bus_network:
+    external: true
+    name: alicia_bus_network
+
+volumes:
+  monitor_logs:
+    driver: local
+  monitor_data:
+    driver: local

@@ -1,0 +1,128 @@
+# Alicia Bus Architecture - MQTT Access Control List
+# Comprehensive ACL for secure service communication
+# Updated for bus architecture with hierarchical topic structure
+
+# ===== SYSTEM SERVICES =====
+# Security Gateway - Full system access
+user security_gateway
+topic readwrite alicia/system/#
+topic readwrite $SYS/#
+topic readwrite alicia/monitoring/#
+
+# Device Registry - Device management access
+user device_registry
+topic readwrite alicia/system/registry/#
+topic readwrite alicia/system/discovery/#
+topic readwrite alicia/devices/#
+topic read alicia/system/health/#
+
+# Discovery Service - Discovery and registration
+user discovery_service
+topic readwrite alicia/system/discovery/#
+topic readwrite alicia/system/registry/#
+topic readwrite alicia/system/health/#
+
+# Health Monitor - Health monitoring access
+user health_monitor
+topic readwrite alicia/system/health/#
+topic readwrite alicia/monitoring/#
+topic read alicia/system/#
+
+# Configuration Service - Configuration management
+user config_service
+topic readwrite alicia/system/config/#
+topic readwrite alicia/system/health/#
+
+# ===== VOICE PROCESSING SERVICES =====
+# STT Service - Speech-to-text processing
+user stt_service
+topic readwrite alicia/voice/stt/#
+topic read alicia/voice/command/#
+topic read alicia/system/health/stt_service
+topic write alicia/monitoring/stt_service
+
+# AI Service - AI processing and Grok integration
+user ai_service
+topic readwrite alicia/voice/ai/#
+topic read alicia/voice/stt/response
+topic read alicia/voice/command/#
+topic write alicia/monitoring/ai_service
+
+# TTS Service - Text-to-speech processing
+user tts_service
+topic readwrite alicia/voice/tts/#
+topic read alicia/voice/ai/response
+topic read alicia/voice/command/#
+topic write alicia/monitoring/tts_service
+
+# Voice Router - Voice command routing
+user voice_router
+topic readwrite alicia/voice/command/#
+topic readwrite alicia/voice/stt/#
+topic readwrite alicia/voice/ai/#
+topic readwrite alicia/voice/tts/#
+topic write alicia/monitoring/voice_router
+
+# ===== DEVICE SERVICES =====
+# Sonos Service - Speaker control
+user sonos_service
+topic readwrite alicia/devices/sonos/#
+topic read alicia/devices/speakers/#
+topic read alicia/system/discovery/#
+topic write alicia/monitoring/sonos_service
+
+# Device Manager - General device management
+user device_manager
+topic readwrite alicia/devices/#
+topic read alicia/system/registry/#
+topic read alicia/system/discovery/#
+topic write alicia/monitoring/device_manager
+
+# ===== INTEGRATION SERVICES =====
+# Home Assistant Bridge
+user ha_bridge
+topic readwrite alicia/integration/ha/#
+topic read alicia/devices/#
+topic read alicia/system/registry/#
+topic write alicia/monitoring/ha_bridge
+
+# API Gateway - External API integration
+user api_gateway
+topic readwrite alicia/integration/api/#
+topic read alicia/system/config/#
+topic write alicia/monitoring/api_gateway
+
+# ===== MONITORING AND ANALYTICS =====
+# Analytics Service
+user analytics_service
+topic read alicia/#  # Read-only access to all topics for analytics
+topic write alicia/monitoring/analytics
+topic write alicia/analytics/#
+
+# Load Balancer
+user load_balancer
+topic readwrite alicia/system/load/#
+topic read alicia/monitoring/#
+topic write alicia/monitoring/load_balancer
+
+# ===== LEGACY COMPATIBILITY =====
+# Voice Assistant (legacy) - Limited access during migration
+user voice_assistant
+topic readwrite alicia/voice/#
+topic read alicia/devices/speakers/#
+topic write alicia/monitoring/voice_assistant
+
+# ===== ADMIN ACCESS =====
+# Admin user for management and debugging
+user admin
+topic readwrite alicia/#
+topic readwrite $SYS/#
+
+# ===== DENY RULES =====
+# Deny all other access
+topic deny alicia/#
+
+# ===== WILDCARD PATTERNS =====
+# Allow capability-based topic access
+pattern read alicia/capability/%c
+pattern write alicia/capability/%c

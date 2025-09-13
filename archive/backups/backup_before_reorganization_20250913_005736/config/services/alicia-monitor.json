@@ -1,0 +1,10 @@
+{
+  "service_name": "alicia-monitor",
+  "port": 3002,
+  "log_level": "INFO",
+  "mqtt_topics": [
+    "alicia/monitor/status",
+    "alicia/monitor/metrics",
+    "alicia/monitor/alerts"
+  ]
+}

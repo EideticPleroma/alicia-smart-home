@@ -1,0 +1,16 @@
+# Alicia Bus Architecture - Development MQTT Access Control List
+# Simplified ACL for development and testing
+
+# Allow all access for development
+# In production, use the full acl file with proper restrictions
+
+# Admin user for management and debugging
+user admin
+topic readwrite alicia/#
+topic readwrite $SYS/#
+
+# Allow anonymous access for development
+topic readwrite alicia/#
+
+# Deny all other access (this won't apply in development mode)
+topic deny alicia/#
