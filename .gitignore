@@ -230,6 +230,7 @@ $RECYCLE.BIN/
 # Test files
 test_*
 *_test.*
+tests/
 
 # ===========================================
 # BACKUP FILES
