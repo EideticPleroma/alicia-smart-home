@@ -1,223 +1,62 @@
-# Alicia Smart Home AI Assistant - Main Docker Compose
-# This is the primary deployment configuration for the entire system
-# Uses Wyoming Protocol for voice processing (modern approach)
-
 version: '3.8'
 
 services:
-  # ===== VOICE PROCESSING SERVICES (Wyoming Protocol) =====
-  wyoming-whisper:
-    container_name: alicia_wyoming_whisper
-    image: rhasspy/wyoming-whisper:latest
-    ports:
-      - "10300:10300"
-    volumes:
-      - ./voice-processing/models/whisper:/data
-    command: --model medium --language en --uri tcp://0.0.0.0:10300
-    restart: unless-stopped
-    networks:
-      - alicia_network
-    healthcheck:
-      test: ["CMD", "timeout", "5", "bash", "-c", "echo > /dev/tcp/localhost/10300"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
-
-  unified-tts-service:
-    container_name: alicia_unified_tts
-    build:
-      context: ./voice-processing
-      dockerfile: Dockerfile.assistant
-    ports:
-      - "10200:10200"
-    environment:
-      - MQTT_BROKER=alicia_mqtt
-      - MQTT_PORT=1883
-      - MQTT_USERNAME=tts_service
-      - MQTT_PASSWORD=alicia_ha_mqtt_2024
-      - HTTP_SERVER_URL=http://alicia_sonos_bridge:8080
-    volumes:
-      - ./voice-processing/models/piper:/usr/local/bin/piper/models:ro
-      - ./tmp/audio:/tmp/audio
-    command: ["python", "unified-tts-service.py"]
-    restart: unless-stopped
-    depends_on:
-      - mqtt
-      - sonos-bridge
-    networks:
-      - alicia_network
-    healthcheck:
-      test: ["CMD", "timeout", "5", "bash", "-c", "echo > /dev/tcp/localhost/10200"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
-
-  sonos-bridge:
-    container_name: alicia_sonos_bridge
-    build:
-      context: ./mqtt-testing
-      dockerfile: Dockerfile.sonos
-    ports:
-      - "8081:8080"
-    environment:
-      - MQTT_BROKER=alicia_mqtt
-      - MQTT_PORT=1883
-      - MQTT_USERNAME=sonos_speaker
-      - MQTT_PASSWORD=alicia_ha_mqtt_2024
-    volumes:
-      - ./tmp/audio:/tmp/audio
-    command: ["python", "sonos-mqtt-bridge.py"]
-    restart: unless-stopped
-    depends_on:
-      - mqtt
-    networks:
-      - alicia_network
-    healthcheck:
-      test: ["CMD", "python", "-c", "import socket; s=socket.socket(); s.connect(('localhost', 8080))"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
-
-  # ===== LOCAL ASSISTANT SERVICE =====
-  alicia-assistant:
-    container_name: alicia_assistant
-    build:
-      context: ./voice-processing
-      dockerfile: Dockerfile.assistant
-    ports:
-      - "8000:8000"
-    environment:
-      - WHISPER_URL=tcp://alicia_wyoming_whisper:10300
-      - PIPER_URL=tcp://alicia_unified_tts:10200
-      - MQTT_BROKER=alicia_mqtt
-      - MQTT_PORT=1883
-      - MQTT_USERNAME=voice_assistant
-      - MQTT_PASSWORD=alicia_ha_mqtt_2024
-    volumes:
-      - ./voice-processing/config:/app/config
-      - ./voice-processing/models:/app/models
-    depends_on:
-      - wyoming-whisper
-      - unified-tts-service
-      - mqtt
-    restart: unless-stopped
-    networks:
-      - alicia_network
-    healthcheck:
-      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/health')"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
-
-  # ===== VOICE INPUT PROCESSOR =====
-  voice-input-processor:
-    container_name: alicia_voice_input
-    build:
-      context: ./voice-processing
-      dockerfile: Dockerfile.assistant
-    environment:
-      - WHISPER_HOST=alicia_wyoming_whisper
-      - WHISPER_PORT=10300
-      - MQTT_BROKER=alicia_mqtt
-      - MQTT_PORT=1883
-      - MQTT_USERNAME=voice_assistant
-      - MQTT_PASSWORD=alicia_ha_mqtt_2024
-    volumes:
-      - /dev/snd:/dev/snd  # Audio device access
-      - ./voice-processing/config:/app/config
-      - ./voice-processing/models:/app/models
-      - /tmp:/tmp  # For temporary audio files
-    devices:
-      - /dev/snd:/dev/snd  # Audio device access
-    privileged: true  # Required for audio device access
-    depends_on:
-      - wyoming-whisper
-      - mqtt
-    restart: unless-stopped
-    networks:
-      - alicia_network
-    command: ["python", "voice_input_processor.py"]
-
-  # ===== MQTT BROKER =====
-  mqtt:
-    container_name: alicia_mqtt
-    image: eclipse-mosquitto:2.0
+  # MQTT Broker
+  mqtt-broker:
+    image: eclipse-mosquitto:2.0.18
+    container_name: alicia-mqtt-broker
     ports:
       - "1883:1883"
-      - "9001:9001"
+      - "8883:8883"
     volumes:
-      - ./mqtt/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
-      - ./mqtt/config/acl:/mosquitto/config/acl
-      - ./mqtt/config/passwords:/mosquitto/config/passwords
-      - ./mqtt/data:/mosquitto/data
-      - ./mqtt/log:/mosquitto/log
-    restart: unless-stopped
+      - ./config/mqtt/mosquitto-simple.conf:/mosquitto/config/mosquitto.conf
+      - ./config/mqtt/passwords:/mosquitto/config/passwords
+      - ./config/mqtt/acl:/mosquitto/config/acl
     networks:
       - alicia_network
-    healthcheck:
-      test: ["CMD-SHELL", "mosquitto_sub -t '$$SYS/#' -C 1 -h localhost"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
 
-  # ===== POSTGRES DATABASE =====
-  postgres:
-    container_name: alicia_postgres
-    image: postgres:15
-    environment:
-      - POSTGRES_DB=alicia
-      - POSTGRES_USER=alicia
-      - POSTGRES_PASSWORD=alicia_password
+  # Alicia Config Manager
+  alicia-config-manager:
+    build: ./services/alicia-config-manager
+    container_name: alicia-config-manager
     ports:
-      - "5432:5432"
-    volumes:
-      - ./postgres/pg-data:/var/lib/postgresql/data
-      - ./postgres/init-scripts:/docker-entrypoint-initdb.d
-    restart: unless-stopped
-    networks:
-      - alicia_network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U alicia -d alicia"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
-
-  # ===== HOME ASSISTANT =====
-  homeassistant:
-    container_name: homeassistant
-    image: "ghcr.io/home-assistant/home-assistant:stable"
-    env_file:
-      - ./home-assistant/.env
+      - "3000:3000"
+      - "3001:3001"
     environment:
-      - TZ=Europe/London
-    volumes:
-      - ./home-assistant/config:/config
-      - ./home-assistant/logs:/config/logs
-      - /etc/localtime:/etc/localtime:ro
-      - ./home-assistant/setup-mqtt.sh:/setup-mqtt.sh
-    ports:
-      - "8123:8123"
-    restart: unless-stopped
+      - MQTT_BROKER_URL=mqtts://mqtt-broker:8883
     depends_on:
-      - mqtt
+      - mqtt-broker
     networks:
       - alicia_network
-    command: ["/bin/bash", "-c", "python -m homeassistant --config /config & sleep 30 && /setup-mqtt.sh && wait"]
-    healthcheck:
-      test: ["CMD", "curl", "-f", "-H", "Authorization: Bearer ${HA_API_PASSWORD}", "http://localhost:8123/api/"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
+
+  # Alicia Monitor
+  alicia-monitor:
+    build: ./services/alicia-monitor
+    container_name: alicia-monitor
+    ports:
+      - "3002:3002"
+    environment:
+      - MQTT_BROKER_URL=mqtts://mqtt-broker:8883
+    depends_on:
+      - mqtt-broker
+    networks:
+      - alicia_network
+
+  # MCP QA Orchestrator
+  mcp-qa-orchestrator:
+    build: ./services/mcp-qa-orchestrator
+    container_name: mcp-qa-orchestrator
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+      - MQTT_BROKER_URL=mqtts://mqtt-broker:8883
+      - GROK_API_KEY=free_with_cline
+    depends_on:
+      - mqtt-broker
+    networks:
+      - alicia_network
 
 networks:
   alicia_network:
     driver: bridge
-    name: alicia_network
-    external: true

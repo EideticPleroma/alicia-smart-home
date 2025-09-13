@@ -3,5 +3,6 @@
   "obsidian-kanban",
   "obsidian-excalidraw-plugin",
   "calendar",
-  "obsidian-git"
+  "obsidian-git",
+  "obsidian-local-rest-api"
 ]
